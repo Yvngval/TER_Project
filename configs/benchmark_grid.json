@@ -1,0 +1,34 @@
+{
+  "base_config": "configs/base_config.json",
+  "qi_pool": [
+    "age",
+    "sex",
+    "race",
+    "marital-status",
+    "native-country"
+  ],
+  "qi_subset_sizes": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "k_values": [
+    2,
+    5,
+    10,
+    20
+  ],
+  "l_values": [
+    2
+  ],
+  "t_values": [
+    null
+  ],
+  "suppression_limits": [
+    10
+  ],
+  "backend": "arx",
+  "save_anonymized_csv": true,
+  "stop_on_error": false
+}

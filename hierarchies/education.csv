@@ -1,0 +1,16 @@
+10th,Secondary-incomplete,Pre-higher-education,*
+11th,Secondary-incomplete,Pre-higher-education,*
+12th,Secondary-incomplete,Pre-higher-education,*
+1st-4th,Primary-school,Pre-higher-education,*
+5th-6th,Primary-school,Pre-higher-education,*
+7th-8th,Middle-school,Pre-higher-education,*
+9th,Secondary-incomplete,Pre-higher-education,*
+Assoc-acdm,Associate-degree,Higher-education,*
+Assoc-voc,Associate-degree,Higher-education,*
+Bachelors,Bachelors-degree,Higher-education,*
+Doctorate,Advanced-degree,Higher-education,*
+HS-grad,Secondary-complete,Pre-higher-education,*
+Masters,Advanced-degree,Higher-education,*
+Preschool,School-before-primary,Pre-higher-education,*
+Prof-school,Advanced-degree,Higher-education,*
+Some-college,Postsecondary-no-degree,Higher-education,*
