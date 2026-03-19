@@ -1,3 +1,5 @@
+# Run a single anonymization experiment and save its outputs, metrics, and summary.
+
 from __future__ import annotations
 
 import argparse
@@ -21,12 +23,14 @@ from common import (
 )
 
 
+# Parse a comma-separated string into a list of values.
 def parse_csv_list(raw: str | None) -> list[str]:
     if raw is None:
         return []
     return [part.strip() for part in raw.split(",") if part.strip()]
 
 
+# Build the runtime config with resolved data and hierarchy paths.
 def build_runtime_config(config_path: Path, payload: dict[str, Any]) -> dict[str, Any]:
     runtime = dict(payload)
 
@@ -48,6 +52,7 @@ def build_runtime_config(config_path: Path, payload: dict[str, Any]) -> dict[str
     return runtime
 
 
+# Append one experiment result row to the benchmark summary CSV.
 def append_row_to_summary(summary_csv: Path, row: dict[str, Any]) -> None:
     summary_csv.parent.mkdir(parents=True, exist_ok=True)
     exists = summary_csv.exists()
@@ -59,6 +64,7 @@ def append_row_to_summary(summary_csv: Path, row: dict[str, Any]) -> None:
         writer.writerow(sanitized_row)
 
 
+# Create the initial summary row for a new experiment.
 def _make_initial_row(experiment_id: str, runtime_config_path: Path, runtime: dict[str, Any]) -> dict[str, Any]:
     return {
         "experiment_id": experiment_id,
@@ -78,11 +84,13 @@ def _make_initial_row(experiment_id: str, runtime_config_path: Path, runtime: di
     }
 
 
+# Run the anonymization process from a runtime config.
 def _run_anonymization(runtime: dict[str, Any]):
     config = AnonymizationConfig(**runtime)
     return AnonymizationManager.anonymize(config)
 
 
+# Execute one anonymization experiment and save all generated artifacts.
 def run_one_experiment(
     *,
     runtime: dict[str, Any],
@@ -196,6 +204,7 @@ def run_one_experiment(
     return details
 
 
+# Load a config file and run one experiment from it.
 def run_one_experiment_from_config(
     *,
     config_path: str | Path,
@@ -230,6 +239,7 @@ def run_one_experiment_from_config(
     )
 
 
+# Parse CLI arguments and launch one experiment.
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run one anonymization experiment with RECITALS.")
     parser.add_argument("--config", required=True, help="Path to the JSON experiment config.")

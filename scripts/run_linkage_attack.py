@@ -1,3 +1,5 @@
+# Run one linkage attack against an anonymized dataset and save attack results.
+
 from __future__ import annotations
 
 import argparse
@@ -13,21 +15,25 @@ from common import ensure_dir, load_json, save_json
 EPS = 1e-12
 
 
+# Parse a comma-separated string into a list of values.
 def parse_csv_list(raw: str | None) -> list[str]:
     if raw is None:
         return []
     return [part.strip() for part in raw.split(",") if part.strip()]
 
 
+# Build a unique name for one linkage attack run.
 def make_attack_id(anonymized_path: Path, known_qids: list[str], n_targets: int, seed: int) -> str:
     qid_part = "-".join(known_qids)
     return f"{anonymized_path.stem}__known_{qid_part}__targets_{n_targets}__seed_{seed}"
 
 
+# Load a CSV file as strings only.
 def read_csv_str(path: Path) -> pd.DataFrame:
     return pd.read_csv(path, dtype=str, keep_default_na=False)
 
 
+# Load and validate the runtime anonymization config.
 def load_runtime_config(config_path: Path) -> dict[str, Any]:
     payload = load_json(config_path)
     if "hierarchies" not in payload:
@@ -38,6 +44,7 @@ def load_runtime_config(config_path: Path) -> dict[str, Any]:
     return payload
 
 
+# Build a lookup table from one hierarchy CSV file.
 def load_hierarchy_lookup(hierarchy_path: str | Path) -> dict[str, dict[str, int]]:
     lookup: dict[str, dict[str, int]] = {}
     with Path(hierarchy_path).open("r", encoding="utf-8") as f:
@@ -51,6 +58,7 @@ def load_hierarchy_lookup(hierarchy_path: str | Path) -> dict[str, dict[str, int
     return lookup
 
 
+# Compute the compatibility score for one attribute value.
 def attribute_score(raw_value: str, anonymized_value: str, hierarchy_lookup: dict[str, dict[str, int]] | None) -> float:
     raw_value = str(raw_value)
     anonymized_value = str(anonymized_value)
@@ -73,6 +81,7 @@ def attribute_score(raw_value: str, anonymized_value: str, hierarchy_lookup: dic
     return max(0.0, 1.0 - (pos / max_pos))
 
 
+# Compute the score vector for one target value over all anonymized rows.
 def score_vector_for_target_value(
     qid: str,
     target_value: str,
@@ -91,6 +100,7 @@ def score_vector_for_target_value(
     return anonymized_values_str.map(score_cache[cache_key]).astype(float).to_numpy()
 
 
+# Append one attack result row to the global linkage summary CSV.
 def append_attack_summary(summary_csv: Path, row: dict[str, Any]) -> None:
     summary_csv.parent.mkdir(parents=True, exist_ok=True)
     exists = summary_csv.exists()
@@ -101,6 +111,7 @@ def append_attack_summary(summary_csv: Path, row: dict[str, Any]) -> None:
         writer.writerow(row)
 
 
+# Check whether candidate records reveal a unique sensitive value.
 def candidate_sensitive_inference(candidate_df: pd.DataFrame, sensitive_attr: str) -> tuple[bool | None, str | None]:
     if candidate_df.empty:
         return None, None
@@ -110,6 +121,7 @@ def candidate_sensitive_inference(candidate_df: pd.DataFrame, sensitive_attr: st
     return False, None
 
 
+# Validate all attack inputs before running the linkage attack.
 def _validate_inputs(
     *,
     runtime: dict[str, Any],
@@ -164,6 +176,7 @@ def _validate_inputs(
         )
 
 
+# Run the full linkage attack workflow and save all outputs.
 def run_linkage_attack(
     *,
     runtime: dict[str, Any],
@@ -451,6 +464,7 @@ def run_linkage_attack(
     }
 
 
+# Load all input files and run one linkage attack from file paths.
 def run_linkage_attack_from_paths(
     *,
     config_path: str | Path,
@@ -494,6 +508,7 @@ def run_linkage_attack_from_paths(
     )
 
 
+# Parse CLI arguments and launch the linkage attack.
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run a linkage attack against one anonymized dataset.")
     parser.add_argument("--config", required=True, help="Generated runtime config JSON from outputs/configs/...")

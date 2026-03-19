@@ -1,3 +1,5 @@
+# Run a full benchmark over multiple anonymization experiment configurations.
+
 from __future__ import annotations
 
 import argparse
@@ -12,12 +14,14 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
 
 
+# Parse a comma-separated string into a list of values.
 def parse_csv_list(raw: str | None) -> list[str]:
     if raw is None:
         return []
     return [part.strip() for part in raw.split(",") if part.strip()]
 
 
+# Resolve a path by searching through candidate base directories.
 def resolve_existing_path(raw_path: str, *, candidates: list[Path]) -> Path:
     path = Path(raw_path)
     if path.is_absolute():
@@ -31,6 +35,7 @@ def resolve_existing_path(raw_path: str, *, candidates: list[Path]) -> Path:
     return (candidates[0] / path).resolve()
 
 
+# Build one experiment config from the base config and benchmark parameters.
 def build_experiment_payload(base_config: dict[str, Any], qi_subset: list[str], k, l, t, suppression_limit, backend):
     payload = dict(base_config)
     payload["quasi_identifiers"] = qi_subset
@@ -47,6 +52,7 @@ def build_experiment_payload(base_config: dict[str, Any], qi_subset: list[str], 
     return payload
 
 
+# Run all anonymization experiments defined by the benchmark grid.
 def run_benchmark_grid(
     *,
     grid_path: str | Path,
@@ -127,6 +133,7 @@ def run_benchmark_grid(
     }
 
 
+# Parse CLI arguments and launch the benchmark.
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run a full anonymization benchmark grid.")
     parser.add_argument("--grid", default="configs/benchmark_grid.json", help="Path to benchmark grid JSON.")

@@ -1,3 +1,5 @@
+# Create an auxiliary attacker dataset and a full dataset with record_id for linkage attack evaluation.
+
 from __future__ import annotations
 
 import argparse
@@ -8,22 +10,26 @@ import pandas as pd
 from common import ensure_dir, load_json, save_json
 
 
+# Parse a comma-separated string into a list of values.
 def parse_csv_list(raw: str | None) -> list[str]:
     if raw is None:
         return []
     return [part.strip() for part in raw.split(",") if part.strip()]
 
 
+# Build the default output path for the full dataset with record_id.
 def default_full_output(original_path: Path) -> Path:
     return original_path.with_name(f"{original_path.stem}_with_record_id.csv")
 
 
+# Build the default output path for the auxiliary dataset.
 def default_aux_output(output_root: Path, original_path: Path, known_qids: list[str], n_rows: int) -> Path:
     qid_part = "-".join(known_qids)
     aux_dir = ensure_dir(output_root / "auxiliary")
     return aux_dir / f"{original_path.stem}__aux__known_{qid_part}__n_{n_rows}.csv"
 
 
+# Ensure the dataset contains a unique internal record identifier column.
 def ensure_record_id(df: pd.DataFrame, target_id_col: str) -> pd.DataFrame:
     df = df.copy()
     if target_id_col not in df.columns:
@@ -35,6 +41,7 @@ def ensure_record_id(df: pd.DataFrame, target_id_col: str) -> pd.DataFrame:
     return df
 
 
+# Sample a subset of rows from the dataset for the auxiliary base.
 def sample_dataframe(df: pd.DataFrame, sample_size: int | None, sample_frac: float | None, seed: int) -> pd.DataFrame:
     if sample_size is not None and sample_frac is not None:
         raise ValueError("Use either --sample-size or --sample-frac, not both.")
@@ -58,6 +65,7 @@ def sample_dataframe(df: pd.DataFrame, sample_size: int | None, sample_frac: flo
     return df.sample(n=sample_size, random_state=seed, replace=False).sort_values(by=df.columns[0]).reset_index(drop=True)
 
 
+# Create an updated config copy that points to the dataset with record_id.
 def update_config_copy(
     base_config_path: Path,
     config_output_path: Path,
@@ -78,6 +86,7 @@ def update_config_copy(
     save_json(config_output_path, payload)
 
 
+# Parse CLI arguments and generate the auxiliary datasets and metadata.
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Create an external auxiliary dataset for linkage attack evaluation."

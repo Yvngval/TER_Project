@@ -1,3 +1,5 @@
+# Run the full linkage-attack benchmark pipeline over anonymization experiments and attacker knowledge settings.
+
 from __future__ import annotations
 
 import argparse
@@ -14,12 +16,14 @@ from run_linkage_attack import load_runtime_config, read_csv_str, run_linkage_at
 from common import ensure_dir, iter_qi_subsets, load_json, save_json
 
 
+# Parse a comma-separated string into a list of values.
 def parse_csv_list(raw: str | None) -> list[str]:
     if raw is None:
         return []
     return [part.strip() for part in raw.split(",") if part.strip()]
 
 
+# Create a full dataset copy with a unique record identifier column.
 def ensure_record_id_dataset(original_csv: Path, target_id_col: str, output_csv: Path) -> Path:
     df = pd.read_csv(original_csv, dtype=str, keep_default_na=False)
     df = df.copy()
@@ -34,6 +38,7 @@ def ensure_record_id_dataset(original_csv: Path, target_id_col: str, output_csv:
     return output_csv
 
 
+# Build one auxiliary attacker dataset from the full dataset.
 def create_auxiliary_base_from_df(
     *,
     full_df: pd.DataFrame,
@@ -72,6 +77,7 @@ def create_auxiliary_base_from_df(
     return output_csv
 
 
+# Write a base config copy that points to the dataset with record_id.
 def write_runtime_base_config(base_config: dict[str, Any], full_dataset_csv: Path, target_id_col: str, output_json: Path) -> Path:
     payload = dict(base_config)
     payload["data"] = str(full_dataset_csv)
@@ -88,6 +94,7 @@ def write_runtime_base_config(base_config: dict[str, Any], full_dataset_csv: Pat
     return output_json
 
 
+# Write a benchmark grid copy that uses the runtime base config.
 def write_runtime_benchmark_grid(benchmark_grid: dict[str, Any], base_config_json: Path, output_json: Path) -> Path:
     payload = dict(benchmark_grid)
     payload["base_config"] = str(Path("configs") / base_config_json.name)
@@ -95,6 +102,7 @@ def write_runtime_benchmark_grid(benchmark_grid: dict[str, Any], base_config_jso
     return output_json
 
 
+# Normalize one benchmark summary row into a consistent format.
 def _normalize_benchmark_row(row: dict[str, str]) -> dict[str, str]:
     out = {str(k): ("" if v is None else str(v)) for k, v in row.items() if k is not None}
 
@@ -111,6 +119,7 @@ def _normalize_benchmark_row(row: dict[str, str]) -> dict[str, str]:
     return out
 
 
+# Score how complete one benchmark summary row is.
 def _row_quality(row: dict[str, str]) -> tuple[int, int]:
     score = 0
     for key in ["status", "config_path", "csv_path", "eval_csv_path", "metrics_path"]:
@@ -119,6 +128,7 @@ def _row_quality(row: dict[str, str]) -> tuple[int, int]:
     return score, len(row)
 
 
+# Read and deduplicate benchmark summary rows from the global CSV.
 def read_benchmark_rows(summary_csv: Path) -> list[dict[str, str]]:
     if not summary_csv.exists():
         return []
@@ -172,6 +182,7 @@ def read_benchmark_rows(summary_csv: Path) -> list[dict[str, str]]:
     return list(best_by_experiment.values())
 
 
+# Build a unique name for one auxiliary attacker dataset.
 def make_aux_name(known_qids: list[str], sample_size: int | None, sample_frac: float | None) -> str:
     q = "-".join(known_qids)
     if sample_size is not None:
@@ -181,10 +192,12 @@ def make_aux_name(known_qids: list[str], sample_size: int | None, sample_frac: f
     return f"aux__known_{q}__{s}"
 
 
+# Build a unique name for one linkage attack run.
 def make_attack_name(experiment_id: str, known_qids: list[str], n_targets: int, seed: int) -> str:
     return f"{experiment_id}__atk_{'-'.join(known_qids)}__targets_{n_targets}__seed_{seed}"
 
 
+# Run the full linkage benchmark workflow and save all generated outputs.
 def run_linkage_benchmark(
     *,
     grid_path: str | Path,
@@ -209,7 +222,7 @@ def run_linkage_benchmark(
     original_dataset_path = (project_root / base_config["data"]).resolve()
     target_id_col = linkage_grid.get("target_id_col", "record_id")
     sensitive_attr = linkage_grid.get("sensitive_attr")
-    n_targets = int(linkage_grid.get("n_targets", 500))
+    n_targets = int(linkage_grid.get("n_targets", 10))
     seed = int(linkage_grid.get("seed", 42))
     sample_size = linkage_grid.get("sample_size")
     sample_frac = linkage_grid.get("sample_frac")
@@ -410,7 +423,7 @@ def run_linkage_benchmark(
 
     return summary
 
-
+# Parse CLI arguments and launch the linkage benchmark.
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the full linkage-attack benchmark grid.")
     parser.add_argument("--grid", default="configs/linkage_benchmark_grid.json", help="Path to the linkage benchmark grid JSON.")

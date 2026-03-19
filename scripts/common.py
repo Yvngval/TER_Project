@@ -1,3 +1,5 @@
+# Shared utility functions for configuration, paths, metrics, and output serialization.
+
 from __future__ import annotations
 
 import itertools
@@ -8,6 +10,7 @@ from typing import Any
 from collections.abc import Mapping
 
 
+# Convert an object into a JSON-serializable value.
 def to_jsonable(obj):
     if obj is None or isinstance(obj, (str, int, float, bool)):
         return obj
@@ -40,12 +43,14 @@ def to_jsonable(obj):
     return str(obj)
 
 
+# Load a JSON file from disk.
 def load_json(path: str | Path) -> dict[str, Any]:
     path = Path(path)
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 
+# Save a Python object to a JSON file.
 def save_json(path, payload):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -53,16 +58,19 @@ def save_json(path, payload):
         json.dump(to_jsonable(payload), f, indent=2, ensure_ascii=False)
 
 
+# Create a directory if it does not already exist.
 def ensure_dir(path: str | Path) -> Path:
     path = Path(path)
     path.mkdir(parents=True, exist_ok=True)
     return path
 
 
+# Generate a timestamp string for naming outputs.
 def timestamp() -> str:
     return datetime.now().strftime("%Y%m%d_%H%M%S")
 
 
+# Resolve a path relative to a base directory.
 def resolve_path(base_dir: str | Path, value: str | Path) -> Path:
     value = Path(value)
     if value.is_absolute():
@@ -70,6 +78,7 @@ def resolve_path(base_dir: str | Path, value: str | Path) -> Path:
     return (Path(base_dir) / value).resolve()
 
 
+# Map each quasi-identifier to its hierarchy CSV file.
 def build_hierarchy_mapping(base_dir: str | Path, hierarchy_dir: str | Path, quasi_identifiers: list[str]) -> dict[str, str]:
     hierarchy_root = resolve_path(base_dir, hierarchy_dir)
     mapping: dict[str, str] = {}
@@ -81,6 +90,7 @@ def build_hierarchy_mapping(base_dir: str | Path, hierarchy_dir: str | Path, qua
     return mapping
 
 
+# Build a unique name for an anonymization experiment.
 def make_experiment_id(
     quasi_identifiers: list[str],
     k: int | None,
@@ -93,6 +103,7 @@ def make_experiment_id(
     return f"qi_{qi_part}__k_{k}__l_{l}__t_{t}__supp_{suppression_limit}__{backend}"
 
 
+# Generate all QI subsets for the requested subset sizes.
 def iter_qi_subsets(qi_pool: list[str], subset_sizes: list[int]) -> list[list[str]]:
     subsets: list[list[str]] = []
     for size in subset_sizes:
@@ -101,16 +112,18 @@ def iter_qi_subsets(qi_pool: list[str], subset_sizes: list[int]) -> list[list[st
     return subsets
 
 
+# Safely call a method and return its result or an error marker.
 def safe_call(obj: Any, method_name: str) -> Any:
     method = getattr(obj, method_name, None)
     if callable(method):
         try:
             return method()
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             return f"<error: {exc}>"
     return None
 
 
+# Collect standard metrics from an anonymization result object.
 def collect_result_metrics(result: Any) -> dict[str, Any]:
     return {
         "anonymization_time_ms": safe_call(result, "get_anonymization_time"),
@@ -128,6 +141,7 @@ def collect_result_metrics(result: Any) -> dict[str, Any]:
     }
 
 
+# Convert a row into a CSV-safe dictionary.
 def sanitize_row_for_csv(row: dict[str, Any]) -> dict[str, Any]:
     sanitized: dict[str, Any] = {}
     for key, value in row.items():
