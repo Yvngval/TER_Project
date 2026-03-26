@@ -1,0 +1,14 @@
+{
+  "benchmark_summary": "outputs/benchmark_summary.csv",
+  "original_data": "data/adult.csv",
+  "output_root": "outputs",
+  "skip_existing": false,
+
+  "_comment_metrics": [
+    "KL divergence          : D(P||Q), how much info is lost per column (distribution shift)",
+    "Total Variation Distance: 0.5 * sum|P-Q|, bounded [0,1], robust to zero counts",
+    "Wasserstein distance   : earth-mover distance for numeric / range columns",
+    "Mean / Std delta       : absolute difference in mean and std for numeric columns",
+    "Correlation Frobenius  : ||Corr(original) - Corr(anonymized)||_F, structural preservation"
+  ]
+}
