@@ -42,7 +42,7 @@ def ensure_record_id_dataset(original_csv: Path, target_id_col: str, output_csv:
 def create_auxiliary_base_from_df(
     *,
     full_df: pd.DataFrame,
-    known_qids: list[str],
+    known_attrs: list[str],
     target_id_col: str,
     output_csv: Path,
     sample_size: int | None,
@@ -66,7 +66,7 @@ def create_auxiliary_base_from_df(
             raise ValueError(f"sample_size ({sample_size}) is larger than dataset size ({len(df)}).")
         df = df.sample(n=sample_size, random_state=seed, replace=False)
 
-    keep_cols = [target_id_col] + known_qids
+    keep_cols = [target_id_col] + known_attrs
     missing = [col for col in keep_cols if col not in df.columns]
     if missing:
         raise ValueError(f"Missing columns for auxiliary base: {missing}")
@@ -183,8 +183,8 @@ def read_benchmark_rows(summary_csv: Path) -> list[dict[str, str]]:
 
 
 # Build a unique name for one auxiliary attacker dataset.
-def make_aux_name(known_qids: list[str], sample_size: int | None, sample_frac: float | None) -> str:
-    q = "-".join(known_qids)
+def make_aux_name(known_attrs: list[str], sample_size: int | None, sample_frac: float | None) -> str:
+    q = "-".join(known_attrs)
     if sample_size is not None:
         s = f"n_{sample_size}"
     else:
@@ -193,8 +193,8 @@ def make_aux_name(known_qids: list[str], sample_size: int | None, sample_frac: f
 
 
 # Build a unique name for one linkage attack run.
-def make_attack_name(experiment_id: str, known_qids: list[str], n_targets: int, seed: int) -> str:
-    return f"{experiment_id}__atk_{'-'.join(known_qids)}__targets_{n_targets}__seed_{seed}"
+def make_attack_name(experiment_id: str, known_attrs: list[str], n_targets: int, seed: int) -> str:
+    return f"{experiment_id}__atk_{'-'.join(known_attrs)}__targets_{n_targets}__seed_{seed}"
 
 
 # Run the full linkage benchmark workflow and save all generated outputs.
@@ -228,16 +228,32 @@ def run_linkage_benchmark(
     sample_frac = linkage_grid.get("sample_frac")
     stop_on_error = bool(linkage_grid.get("stop_on_error", False))
 
-    attacker_qi_pool = linkage_grid.get("attacker_qi_pool") or benchmark_grid.get("qi_pool") or base_config.get("quasi_identifiers")
-    if not attacker_qi_pool:
-        raise ValueError("No attacker QI pool found in linkage grid, anonymization grid, or base config.")
+    attacker_attr_pool = (
+        linkage_grid.get("attacker_attr_pool")
+        or linkage_grid.get("attacker_qi_pool")
+        or benchmark_grid.get("attacker_attr_pool")
+        or benchmark_grid.get("qi_pool")
+        or (
+            list(dict.fromkeys(
+                [
+                    *base_config.get("quasi_identifiers", []),
+                    *base_config.get("insensitive_attributes", []),
+                ]
+            ))
+        )
+    )
+    attacker_attr_pool = [attr for attr in attacker_attr_pool if attr not in set(base_config.get("identifiers", []))]
+    if sensitive_attr:
+        attacker_attr_pool = [attr for attr in attacker_attr_pool if attr != sensitive_attr]
+    if not attacker_attr_pool:
+        raise ValueError("No attacker attribute pool found in linkage grid, anonymization grid, or base config.")
 
-    known_qid_subsets = linkage_grid.get("known_qid_subsets")
-    if known_qid_subsets is None:
-        known_qid_sizes = linkage_grid.get("known_qid_sizes")
-        if not known_qid_sizes:
-            raise ValueError("Provide either known_qid_subsets or known_qid_sizes in linkage grid.")
-        known_qid_subsets = iter_qi_subsets(attacker_qi_pool, known_qid_sizes)
+    known_attr_subsets = linkage_grid.get("known_attr_subsets") or linkage_grid.get("known_qid_subsets")
+    if known_attr_subsets is None:
+        known_attr_sizes = linkage_grid.get("known_attr_sizes") or linkage_grid.get("known_qid_sizes")
+        if not known_attr_sizes:
+            raise ValueError("Provide either known_attr_subsets or known_attr_sizes in linkage grid.")
+        known_attr_subsets = iter_qi_subsets(attacker_attr_pool, known_attr_sizes)
 
     prepared_data_dir = ensure_dir(output_root / "prepared_data")
     prepared_configs_dir = ensure_dir(output_root / "configs")
@@ -282,17 +298,17 @@ def run_linkage_benchmark(
     aux_df_by_key: dict[tuple[str, ...], pd.DataFrame] = {}
     full_df = pd.read_csv(full_dataset_csv, dtype=str, keep_default_na=False)
     full_columns = set(full_df.columns)
-    for known_qids in known_qid_subsets:
-        missing = [qi for qi in known_qids if qi not in full_columns]
+    for known_attrs in known_attr_subsets:
+        missing = [qi for qi in known_attrs if qi not in full_columns]
         if missing:
-            raise ValueError(f"Unknown attacker QIs in original dataset: {missing}")
-        if sensitive_attr and sensitive_attr in known_qids:
-            raise ValueError(f"Sensitive attribute '{sensitive_attr}' cannot be part of attacker known_qids.")
-        aux_name = make_aux_name(known_qids, sample_size, sample_frac)
+            raise ValueError(f"Unknown attacker attributes in original dataset: {missing}")
+        if sensitive_attr and sensitive_attr in known_attrs:
+            raise ValueError(f"Sensitive attribute '{sensitive_attr}' cannot be part of attacker known_attrs.")
+        aux_name = make_aux_name(known_attrs, sample_size, sample_frac)
         aux_path = auxiliary_dir / f"{aux_name}.csv"
         create_auxiliary_base_from_df(
             full_df=full_df,
-            known_qids=known_qids,
+            known_attrs=known_attrs,
             target_id_col=target_id_col,
             output_csv=aux_path,
             sample_size=sample_size,
@@ -300,12 +316,12 @@ def run_linkage_benchmark(
             seed=seed,
         )
         aux_df = pd.read_csv(aux_path, dtype=str, keep_default_na=False)
-        aux_by_key[tuple(known_qids)] = aux_path
-        aux_df_by_key[tuple(known_qids)] = aux_df
+        aux_by_key[tuple(known_attrs)] = aux_path
+        aux_df_by_key[tuple(known_attrs)] = aux_df
         aux_manifest_rows.append(
             {
                 "aux_name": aux_name,
-                "known_qids": "|".join(known_qids),
+                "known_attrs": "|".join(known_attrs),
                 "auxiliary_path": str(aux_path),
                 "sample_size": sample_size,
                 "sample_frac": sample_frac,
@@ -322,9 +338,6 @@ def run_linkage_benchmark(
     for row in success_rows:
         experiment_id = row["experiment_id"]
         experiment_qids = [q for q in row.get("quasi_identifiers", "").split("|") if q]
-        if not experiment_qids:
-            continue
-        experiment_qid_set = set(experiment_qids)
 
         inproc_result = inproc_results_by_experiment.get(experiment_id)
         runtime = None
@@ -338,13 +351,15 @@ def run_linkage_benchmark(
         if runtime is None:
             runtime = load_runtime_config(Path(row["config_path"]))
 
-        for known_qids in known_qid_subsets:
-            if not set(known_qids).issubset(experiment_qid_set):
+        public_columns = set(public_df.columns) if public_df is not None else set(read_csv_str(Path(row["csv_path"])).columns)
+
+        for known_attrs in known_attr_subsets:
+            if not set(known_attrs).issubset(public_columns):
                 continue
 
-            aux_path = aux_by_key[tuple(known_qids)]
-            aux_df = aux_df_by_key[tuple(known_qids)]
-            attack_name = make_attack_name(experiment_id, known_qids, n_targets, seed)
+            aux_path = aux_by_key[tuple(known_attrs)]
+            aux_df = aux_df_by_key[tuple(known_attrs)]
+            attack_name = make_attack_name(experiment_id, known_attrs, n_targets, seed)
             attack_dir = output_root / "attacks" / "linkage" / attack_name
             attack_summary_path = attack_dir / "summary.json"
 
@@ -352,7 +367,7 @@ def run_linkage_benchmark(
                 {
                     "experiment_id": experiment_id,
                     "experiment_qids": "|".join(experiment_qids),
-                    "known_qids": "|".join(known_qids),
+                    "known_attrs": "|".join(known_attrs),
                     "auxiliary_path": str(aux_path),
                     "attack_name": attack_name,
                     "attack_summary_json": str(attack_summary_path),
@@ -374,7 +389,7 @@ def run_linkage_benchmark(
                 df_aux=aux_df,
                 df_public=public_df,
                 df_eval=eval_df,
-                known_qids=known_qids,
+                known_attrs=known_attrs,
                 target_id_col=target_id_col,
                 sensitive_attr=sensitive_attr,
                 n_targets=n_targets,

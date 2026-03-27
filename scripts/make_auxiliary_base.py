@@ -1,4 +1,5 @@
-# Create an auxiliary attacker dataset and a full dataset with record_id for linkage attack evaluation.
+# Create an attacker auxiliary dataset independent from the anonymization QI choice.
+# The attacker can know any published attribute except the sensitive attribute.
 
 from __future__ import annotations
 
@@ -23,10 +24,10 @@ def default_full_output(original_path: Path) -> Path:
 
 
 # Build the default output path for the auxiliary dataset.
-def default_aux_output(output_root: Path, original_path: Path, known_qids: list[str], n_rows: int) -> Path:
-    qid_part = "-".join(known_qids)
+def default_aux_output(output_root: Path, original_path: Path, known_attrs: list[str], n_rows: int) -> Path:
+    attr_part = "-".join(known_attrs)
     aux_dir = ensure_dir(output_root / "auxiliary")
-    return aux_dir / f"{original_path.stem}__aux__known_{qid_part}__n_{n_rows}.csv"
+    return aux_dir / f"{original_path.stem}__aux__known_{attr_part}__n_{n_rows}.csv"
 
 
 # Ensure the dataset contains a unique internal record identifier column.
@@ -93,9 +94,11 @@ def main() -> None:
     )
     parser.add_argument("--original", required=True, help="Path to the original CSV dataset.")
     parser.add_argument(
+        "--known-attrs",
         "--known-qids",
+        dest="known_attrs_raw",
         required=True,
-        help="Comma-separated list of quasi-identifiers known by the attacker.",
+        help="Comma-separated list of attributes known by the attacker.",
     )
     parser.add_argument(
         "--target-id-col",
@@ -149,20 +152,20 @@ def main() -> None:
 
     original_path = Path(args.original).resolve()
     output_root = ensure_dir(Path(args.output_root).resolve())
-    known_qids = parse_csv_list(args.known_qids)
-    if not known_qids:
-        raise ValueError("--known-qids cannot be empty.")
+    known_attrs = parse_csv_list(args.known_attrs_raw)
+    if not known_attrs:
+        raise ValueError("--known-attrs cannot be empty.")
 
     df_original = pd.read_csv(original_path, dtype=str, keep_default_na=False)
     df_full = ensure_record_id(df_original, args.target_id_col)
 
-    missing_qids = [qi for qi in known_qids if qi not in df_full.columns]
-    if missing_qids:
-        raise ValueError(f"Unknown known QI columns: {missing_qids}")
+    missing_attrs = [attr for attr in known_attrs if attr not in df_full.columns]
+    if missing_attrs:
+        raise ValueError(f"Unknown attacker-known attributes: {missing_attrs}")
 
-    if args.sensitive_attr and args.sensitive_attr in known_qids:
+    if args.sensitive_attr and args.sensitive_attr in known_attrs:
         raise ValueError(
-            f"The sensitive attribute '{args.sensitive_attr}' cannot be part of --known-qids."
+            f"The sensitive attribute '{args.sensitive_attr}' cannot be part of --known-attrs."
         )
 
     full_output_path = Path(args.full_output).resolve() if args.full_output else default_full_output(original_path)
@@ -170,13 +173,13 @@ def main() -> None:
     df_full.to_csv(full_output_path, index=False)
 
     df_aux = sample_dataframe(df_full, args.sample_size, args.sample_frac, args.seed)
-    aux_columns = [args.target_id_col] + known_qids
+    aux_columns = [args.target_id_col] + known_attrs
     df_aux = df_aux[aux_columns].reset_index(drop=True)
 
     aux_output_path = (
         Path(args.aux_output).resolve()
         if args.aux_output
-        else default_aux_output(output_root, original_path, known_qids, len(df_aux))
+        else default_aux_output(output_root, original_path, known_attrs, len(df_aux))
     )
     aux_output_path.parent.mkdir(parents=True, exist_ok=True)
     df_aux.to_csv(aux_output_path, index=False)
@@ -186,7 +189,8 @@ def main() -> None:
         "full_dataset_with_record_id": str(full_output_path),
         "auxiliary_path": str(aux_output_path),
         "target_id_col": args.target_id_col,
-        "known_qids": known_qids,
+        "known_attrs": known_attrs,
+        "known_qids_legacy": known_attrs,
         "n_original_rows": int(len(df_full)),
         "n_auxiliary_rows": int(len(df_aux)),
         "sample_size": int(len(df_aux)),
@@ -213,11 +217,11 @@ def main() -> None:
         )
         print(f"Updated config copy : {config_output_path}")
 
-    print(f"Full dataset        : {full_output_path}")
-    print(f"Auxiliary dataset   : {aux_output_path}")
-    print(f"Metadata            : {metadata_path}")
-    print(f"Rows in auxiliary   : {len(df_aux)} / {len(df_full)}")
-    print(f"Known attacker QIDs : {', '.join(known_qids)}")
+    print(f"Full dataset          : {full_output_path}")
+    print(f"Auxiliary dataset     : {aux_output_path}")
+    print(f"Metadata              : {metadata_path}")
+    print(f"Rows in auxiliary     : {len(df_aux)} / {len(df_full)}")
+    print(f"Known attacker attrs  : {', '.join(known_attrs)}")
 
 
 if __name__ == "__main__":

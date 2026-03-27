@@ -10,7 +10,7 @@ from typing import Any
 import pandas as pd
 
 from common import ensure_dir, iter_qi_subsets, load_json, make_experiment_id, save_json
-from make_mia_targets import ensure_record_id, split_publish_holdout, build_targets_df
+from make_mia_targets import ensure_record_id, split_publish_holdout, split_mia_candidate_pools, build_targets_df
 from run_mia_attack import run_mia_attack_from_paths
 
 
@@ -269,6 +269,14 @@ def run_mia_benchmark(
     member_col = mia_grid.get("member_col", "is_member")
     publish_size = mia_grid.get("publish_size")
     publish_frac = mia_grid.get("publish_frac")
+    attacker_out_size = mia_grid.get("attacker_out_size")
+    attacker_out_frac = mia_grid.get("attacker_out_frac")
+    attacker_in_size = mia_grid.get("attacker_in_size")
+    attacker_in_frac = mia_grid.get("attacker_in_frac")
+    use_mixed_auxiliary_pool = any(
+        value is not None
+        for value in [attacker_out_size, attacker_out_frac, attacker_in_size, attacker_in_frac]
+    )
     targets_per_class = int(mia_grid.get("targets_per_class", 500))
     seed = int(mia_grid.get("seed", 42))
     min_best_score = float(mia_grid.get("min_best_score", 0.5))
@@ -292,12 +300,36 @@ def run_mia_benchmark(
 
     original_df = pd.read_csv(original_dataset_path, dtype=str, keep_default_na=False)
     original_df = ensure_record_id(original_df, target_id_col)
-    published_df, holdout_df = split_publish_holdout(
-        original_df,
-        publish_size=publish_size,
-        publish_frac=publish_frac,
-        seed=seed,
-    )
+
+    if use_mixed_auxiliary_pool:
+        resolved_attacker_out_frac = 0.05 if attacker_out_frac is None and attacker_out_size is None else attacker_out_frac
+        resolved_attacker_in_frac = (
+            resolved_attacker_out_frac
+            if attacker_in_frac is None and attacker_in_size is None
+            else attacker_in_frac
+        )
+        published_df, holdout_df, auxiliary_in_df = split_mia_candidate_pools(
+            original_df,
+            out_size=attacker_out_size,
+            out_frac=resolved_attacker_out_frac,
+            in_size=attacker_in_size,
+            in_frac=resolved_attacker_in_frac,
+            seed=seed,
+        )
+        member_source_df = auxiliary_in_df
+        non_member_source_df = holdout_df
+        split_mode = "mixed_auxiliary_pool"
+    else:
+        published_df, holdout_df = split_publish_holdout(
+            original_df,
+            publish_size=publish_size,
+            publish_frac=publish_frac,
+            seed=seed,
+        )
+        auxiliary_in_df = None
+        member_source_df = published_df
+        non_member_source_df = holdout_df
+        split_mode = "legacy_publish_holdout"
 
     published_csv = prepared_data_dir / f"{original_dataset_path.stem}_mia_published_with_{target_id_col}.csv"
     holdout_csv = prepared_data_dir / f"{original_dataset_path.stem}_mia_holdout_with_{target_id_col}.csv"
@@ -333,8 +365,8 @@ def run_mia_benchmark(
         target_set_name = make_target_set_name(known_qids, targets_per_class, seed)
         targets_csv = targets_root / f"{target_set_name}.csv"
         targets_df = build_targets_df(
-            published_df,
-            holdout_df,
+            member_source_df,
+            non_member_source_df,
             known_qids=known_qids,
             target_id_col=target_id_col,
             member_col=member_col,
@@ -351,6 +383,11 @@ def run_mia_benchmark(
             "target_id_col": target_id_col,
             "published_csv": str(published_csv),
             "holdout_csv": str(holdout_csv),
+            "split_mode": split_mode,
+            "member_source": "auxiliary_in" if split_mode == "mixed_auxiliary_pool" else "published",
+            "non_member_source": "auxiliary_out" if split_mode == "mixed_auxiliary_pool" else "holdout",
+            "auxiliary_in_size": len(auxiliary_in_df) if auxiliary_in_df is not None else None,
+            "auxiliary_out_size": len(holdout_df),
         })
         targets_by_key[tuple(known_qids)] = targets_csv
         targets_manifest_rows.append({
@@ -421,6 +458,7 @@ def run_mia_benchmark(
     summary = {
         "grid_path": str(grid_path),
         "output_root": str(output_root),
+        "split_mode": split_mode,
         "published_csv": str(published_csv),
         "holdout_csv": str(holdout_csv),
         "benchmark_summary_csv": str(benchmark_summary_csv),
@@ -432,6 +470,10 @@ def run_mia_benchmark(
         "n_mia_runs_skipped": skipped,
         "seed": seed,
         "targets_per_class": targets_per_class,
+        "attacker_out_size": int(len(holdout_df)),
+        "attacker_in_size": int(len(auxiliary_in_df)) if auxiliary_in_df is not None else None,
+        "attacker_out_frac": resolved_attacker_out_frac if split_mode == "mixed_auxiliary_pool" else None,
+        "attacker_in_frac": resolved_attacker_in_frac if split_mode == "mixed_auxiliary_pool" else None,
         "min_best_score": min_best_score,
         "max_compatible_candidates": max_compatible_candidates,
         "max_compatible_fraction": max_compatible_fraction,

@@ -11,6 +11,9 @@ import pandas as pd
 from common import ensure_dir, load_json, save_json
 
 EPS = 1e-12
+SUPPRESSION_SCORE = 0.25
+GENERALIZED_SCORE = 0.50
+SUPPRESSION_TOKENS = {"", "*"}
 
 
 # Run one membership inference attack against an anonymized dataset and save attack results.
@@ -29,9 +32,13 @@ def make_attack_id(anonymized_path: Path, known_qids: list[str], n_targets: int,
     return f"{anonymized_path.stem}__mia_{qid_part}__targets_{n_targets}__seed_{seed}"
 
 
-# Load a CSV file as strings only.
+# Load a CSV file as strings only and normalize headers / cell values.
 def read_csv_str(path: Path) -> pd.DataFrame:
-    return pd.read_csv(path, dtype=str, keep_default_na=False)
+    df = pd.read_csv(path, dtype=str, keep_default_na=False)
+    df.columns = [str(col).strip() for col in df.columns]
+    for col in df.columns:
+        df[col] = df[col].astype(str).str.strip()
+    return df
 
 
 # Load and validate the runtime anonymization config.
@@ -45,40 +52,133 @@ def load_runtime_config(config_path: Path) -> dict[str, Any]:
     return payload
 
 
-# Build a lookup table from one hierarchy CSV file.
-def load_hierarchy_lookup(hierarchy_path: str | Path) -> dict[str, dict[str, int]]:
-    lookup: dict[str, dict[str, int]] = {}
+# Check whether one anonymized value is an explicit suppression token.
+def is_suppressed_value(value: str) -> bool:
+    value = str(value).strip()
+    if value in SUPPRESSION_TOKENS:
+        return True
+    return bool(value) and set(value) == {"*"}
+
+
+# Load all rows from one hierarchy CSV file.
+def load_hierarchy_rows(hierarchy_path: str | Path) -> list[list[str]]:
+    rows: list[list[str]] = []
     with Path(hierarchy_path).open("r", encoding="utf-8") as f:
         reader = csv.reader(f)
         for row in reader:
             cleaned = [str(cell).strip() for cell in row if str(cell).strip() != ""]
-            if not cleaned:
-                continue
-            exact = cleaned[0]
-            lookup[exact] = {value: idx for idx, value in enumerate(cleaned)}
-    return lookup
+            if cleaned:
+                rows.append(cleaned)
+    return rows
 
 
-# Compute the compatibility score for one attribute value.
-def attribute_score(raw_value: str, anonymized_value: str, hierarchy_lookup: dict[str, dict[str, int]] | None) -> float:
-    raw_value = str(raw_value)
-    anonymized_value = str(anonymized_value)
+# Infer the most specific hierarchy level compatible with the values actually visible in the anonymized CSV.
+def infer_last_visible_level(hierarchy_rows: list[list[str]], observed_values: list[str]) -> int:
+    observed = {
+        str(value).strip()
+        for value in observed_values
+        if not is_suppressed_value(value)
+    }
+    if not observed:
+        return 0
 
-    if hierarchy_lookup is None:
-        return 1.0 if raw_value == anonymized_value else 0.0
+    max_depth = max(len(row) for row in hierarchy_rows)
+    compatible_levels: list[int] = []
+    for level in range(max_depth):
+        labels = {
+            str(row[level]).strip()
+            for row in hierarchy_rows
+            if level < len(row)
+        }
+        if observed.issubset(labels):
+            compatible_levels.append(level)
 
-    path_positions = hierarchy_lookup.get(raw_value)
-    if path_positions is None:
-        return 1.0 if raw_value == anonymized_value else 0.0
+    if not compatible_levels:
+        return 0
 
-    pos = path_positions.get(anonymized_value)
-    if pos is None:
-        return 0.0
+    return min(compatible_levels)
 
-    max_pos = max(path_positions.values()) if path_positions else 0
-    if max_pos == 0:
+
+# Build the reduced attacker knowledge for one attribute.
+def build_attacker_projection_for_attr(
+    *,
+    attr: str,
+    hierarchy_path: str | Path,
+    observed_anonymized_values: pd.Series,
+) -> dict[str, Any]:
+    hierarchy_rows = load_hierarchy_rows(hierarchy_path)
+    observed_values = observed_anonymized_values.astype(str).unique().tolist()
+    visible_level = infer_last_visible_level(hierarchy_rows, observed_values)
+
+    projection: dict[str, str] = {}
+    for row in hierarchy_rows:
+        raw_value = str(row[0]).strip()
+        exposed_value = str(row[min(visible_level, len(row) - 1)]).strip()
+        projection[raw_value] = exposed_value
+
+    return {
+        "attribute": attr,
+        "hierarchy_path": str(hierarchy_path),
+        "visible_level": int(visible_level),
+        "observed_values": sorted({str(v).strip() for v in observed_values}),
+        "projection": projection,
+        "n_projected_values": int(len(projection)),
+    }
+
+
+# Build the reduced attacker knowledge for all known QIs.
+def build_attacker_knowledge(
+    *,
+    runtime: dict[str, Any],
+    known_qids: list[str],
+    df_public: pd.DataFrame,
+) -> dict[str, dict[str, Any]]:
+    hierarchies = runtime.get("hierarchies", {})
+    knowledge: dict[str, dict[str, Any]] = {}
+    for qid in known_qids:
+        hierarchy_path = hierarchies.get(qid)
+        if hierarchy_path:
+            knowledge[qid] = build_attacker_projection_for_attr(
+                attr=qid,
+                hierarchy_path=hierarchy_path,
+                observed_anonymized_values=df_public[qid].astype(str),
+            )
+        else:
+            projection = {str(v).strip(): str(v).strip() for v in df_public[qid].astype(str).unique().tolist()}
+            knowledge[qid] = {
+                "attribute": qid,
+                "hierarchy_path": None,
+                "visible_level": 0,
+                "observed_values": sorted({str(v).strip() for v in df_public[qid].astype(str).tolist()}),
+                "projection": projection,
+                "n_projected_values": int(len(projection)),
+            }
+    return knowledge
+
+
+# Compute the compatibility score for one attribute value using only reduced attacker knowledge.
+def attribute_score(raw_value: str, anonymized_value: str, attacker_attr_knowledge: dict[str, Any] | None) -> float:
+    raw_value = str(raw_value).strip()
+    anonymized_value = str(anonymized_value).strip()
+
+    if raw_value == anonymized_value:
         return 1.0
-    return max(0.0, 1.0 - (pos / max_pos))
+
+    if is_suppressed_value(anonymized_value):
+        return SUPPRESSION_SCORE
+
+    if attacker_attr_knowledge is None:
+        return 1.0 if raw_value == anonymized_value else 0.0
+
+    projection = attacker_attr_knowledge.get("projection", {})
+    exposed_value = projection.get(raw_value)
+    if exposed_value is None:
+        return 1.0 if raw_value == anonymized_value else 0.0
+
+    if anonymized_value == exposed_value:
+        return 1.0 if exposed_value == raw_value else GENERALIZED_SCORE
+
+    return 0.0
 
 
 # Compute the score vector for one target value over all anonymized rows.
@@ -86,18 +186,94 @@ def score_vector_for_target_value(
     qid: str,
     target_value: str,
     anonymized_values_str: pd.Series,
-    hierarchy_lookups: dict[str, dict[str, dict[str, int]]],
+    attacker_knowledge: dict[str, dict[str, Any]],
     score_cache: dict[tuple[str, str], dict[str, float]],
 ) -> np.ndarray:
-    cache_key = (qid, str(target_value))
+    cache_key = (qid, str(target_value).strip())
     if cache_key not in score_cache:
-        hierarchy_lookup = hierarchy_lookups.get(qid)
+        attacker_attr_knowledge = attacker_knowledge.get(qid)
         mapping = {
-            anonymized_value: attribute_score(target_value, anonymized_value, hierarchy_lookup)
+            anonymized_value: attribute_score(target_value, anonymized_value, attacker_attr_knowledge)
             for anonymized_value in anonymized_values_str.unique().tolist()
         }
         score_cache[cache_key] = mapping
     return anonymized_values_str.map(score_cache[cache_key]).astype(float).to_numpy()
+
+
+# Build an inverted index of row positions for each visible anonymized value.
+def build_row_index_by_qid_value(
+    working_df_str: pd.DataFrame,
+    known_qids: list[str],
+) -> dict[str, dict[str, np.ndarray]]:
+    row_index: dict[str, dict[str, np.ndarray]] = {}
+    for qid in known_qids:
+        positions: dict[str, list[int]] = {}
+        for idx, value in enumerate(working_df_str[qid].astype(str).tolist()):
+            positions.setdefault(str(value).strip(), []).append(idx)
+        row_index[qid] = {
+            value: np.asarray(sorted(indices), dtype=int)
+            for value, indices in positions.items()
+        }
+    return row_index
+
+
+# List visible anonymized values that remain potentially compatible with one raw target value.
+def compatible_anonymized_values_for_target_value(
+    *,
+    qid: str,
+    target_value: str,
+    attacker_knowledge: dict[str, dict[str, Any]],
+    row_index_by_qid_value: dict[str, dict[str, np.ndarray]],
+    compatible_values_cache: dict[tuple[str, str], list[str]],
+) -> list[str]:
+    cache_key = (qid, str(target_value).strip())
+    if cache_key in compatible_values_cache:
+        return compatible_values_cache[cache_key]
+
+    attacker_attr_knowledge = attacker_knowledge.get(qid)
+    compatible_values = [
+        anonymized_value
+        for anonymized_value in row_index_by_qid_value[qid].keys()
+        if attribute_score(target_value, anonymized_value, attacker_attr_knowledge) > EPS
+    ]
+    compatible_values_cache[cache_key] = compatible_values
+    return compatible_values
+
+
+# Prefilter the anonymized dataset to rows that do not contradict any known victim attribute.
+def prefilter_candidate_indices_for_target(
+    *,
+    known_qids: list[str],
+    known_values: dict[str, str],
+    attacker_knowledge: dict[str, dict[str, Any]],
+    row_index_by_qid_value: dict[str, dict[str, np.ndarray]],
+    compatible_values_cache: dict[tuple[str, str], list[str]],
+) -> np.ndarray:
+    candidate_indices: np.ndarray | None = None
+
+    for qid in known_qids:
+        compatible_values = compatible_anonymized_values_for_target_value(
+            qid=qid,
+            target_value=known_values[qid],
+            attacker_knowledge=attacker_knowledge,
+            row_index_by_qid_value=row_index_by_qid_value,
+            compatible_values_cache=compatible_values_cache,
+        )
+        if not compatible_values:
+            return np.asarray([], dtype=int)
+
+        qid_candidate_indices = np.unique(
+            np.concatenate([row_index_by_qid_value[qid][value] for value in compatible_values])
+        )
+        if candidate_indices is None:
+            candidate_indices = qid_candidate_indices
+        else:
+            candidate_indices = np.intersect1d(candidate_indices, qid_candidate_indices, assume_unique=False)
+
+        if len(candidate_indices) == 0:
+            return np.asarray([], dtype=int)
+
+    return candidate_indices if candidate_indices is not None else np.asarray([], dtype=int)
 
 
 # Infer the known QIs from the targets dataset when they are not passed explicitly.
@@ -158,9 +334,8 @@ def _validate_inputs(
     if not known_qids:
         raise ValueError("known_qids cannot be empty.")
 
-    invalid_qids = [qi for qi in known_qids if qi not in runtime["quasi_identifiers"]]
-    if invalid_qids:
-        raise ValueError(f"These known QIs are not quasi-identifiers in the runtime config: {invalid_qids}")
+    runtime_qids = set(runtime.get("quasi_identifiers", []))
+    extra_known_attrs = [qi for qi in known_qids if qi not in runtime_qids]
 
     if target_id_col not in df_targets.columns:
         raise ValueError(f"Targets dataset must contain '{target_id_col}'.")
@@ -252,23 +427,29 @@ def run_mia_attack(
         min_best_score=min_best_score,
     )
 
-    hierarchy_lookups = {qi: load_hierarchy_lookup(runtime["hierarchies"][qi]) for qi in known_qids}
+    attacker_knowledge = build_attacker_knowledge(
+        runtime=runtime,
+        known_qids=known_qids,
+        df_public=df_public,
+    )
 
     working_df = df_public.copy().reset_index(drop=True)
     working_df[target_id_col] = df_eval[target_id_col].astype(str).reset_index(drop=True)
 
     working_df_str = working_df.copy()
     for qi in known_qids:
-        working_df_str[qi] = working_df_str[qi].astype(str)
-    working_df_str[target_id_col] = working_df_str[target_id_col].astype(str)
+        working_df_str[qi] = working_df_str[qi].astype(str).str.strip()
+    working_df_str[target_id_col] = working_df_str[target_id_col].astype(str).str.strip()
 
     targets_df = df_targets.copy().reset_index(drop=True)
     for col in [target_id_col, member_col] + known_qids:
-        targets_df[col] = targets_df[col].astype(str)
+        targets_df[col] = targets_df[col].astype(str).str.strip()
 
     id_to_eval_index = {str(record_id): idx for idx, record_id in enumerate(working_df_str[target_id_col].tolist())}
 
     qid_series = {qi: working_df_str[qi] for qi in known_qids}
+    row_index_by_qid_value = build_row_index_by_qid_value(working_df_str, known_qids)
+    compatible_values_cache: dict[tuple[str, str], list[str]] = {}
     score_cache: dict[tuple[str, str], dict[str, float]] = {}
 
     per_target_rows: list[dict[str, Any]] = []
@@ -278,30 +459,36 @@ def run_mia_attack(
     n_rows = len(working_df_str)
 
     for _, target in targets_df.iterrows():
-        target_id = str(target[target_id_col])
-        truth_member = int(str(target[member_col]))
-        known_values = {qi: str(target[qi]) for qi in known_qids}
+        target_id = str(target[target_id_col]).strip()
+        truth_member = int(str(target[member_col]).strip())
+        known_values = {qi: str(target[qi]).strip() for qi in known_qids}
 
-        total_score = np.zeros(n_rows, dtype=float)
-        compatible_count = np.zeros(n_rows, dtype=int)
-        exact_count = np.zeros(n_rows, dtype=int)
+        candidate_indices = prefilter_candidate_indices_for_target(
+            known_qids=known_qids,
+            known_values=known_values,
+            attacker_knowledge=attacker_knowledge,
+            row_index_by_qid_value=row_index_by_qid_value,
+            compatible_values_cache=compatible_values_cache,
+        )
 
-        for qi in known_qids:
-            qi_scores = score_vector_for_target_value(
-                qid=qi,
-                target_value=known_values[qi],
-                anonymized_values_str=qid_series[qi],
-                hierarchy_lookups=hierarchy_lookups,
-                score_cache=score_cache,
-            )
-            total_score += qi_scores
-            compatible_count += (qi_scores > EPS).astype(int)
-            exact_count += (qi_scores >= 1.0 - EPS).astype(int)
-
-        normalized_score = total_score / len(known_qids)
-        full_compatible_mask = compatible_count == len(known_qids)
-        compatible_candidate_count = int(full_compatible_mask.sum())
+        compatible_candidate_count = int(len(candidate_indices))
         compatible_candidate_fraction = (compatible_candidate_count / n_rows) if n_rows else 0.0
+
+        normalized_score = np.asarray([], dtype=float)
+        if compatible_candidate_count > 0:
+            filtered_total_score = np.zeros(compatible_candidate_count, dtype=float)
+            for qi in known_qids:
+                filtered_qi_series = qid_series[qi].iloc[candidate_indices]
+                qi_scores = score_vector_for_target_value(
+                    qid=qi,
+                    target_value=known_values[qi],
+                    anonymized_values_str=filtered_qi_series,
+                    attacker_knowledge=attacker_knowledge,
+                    score_cache=score_cache,
+                )
+                filtered_total_score += qi_scores
+            normalized_score = filtered_total_score / len(known_qids)
+
         best_score = float(np.max(normalized_score)) if len(normalized_score) else 0.0
         best_candidate_count = int(np.isclose(normalized_score, best_score, atol=EPS).sum()) if len(normalized_score) else 0
         target_present_in_anonymized = target_id in id_to_eval_index
@@ -319,8 +506,12 @@ def run_mia_attack(
         true_record_full_compatible = None
         if target_present_in_anonymized:
             true_idx = id_to_eval_index[target_id]
-            true_record_best_score = float(normalized_score[true_idx])
-            true_record_full_compatible = bool(full_compatible_mask[true_idx])
+            true_record_full_compatible = bool(np.any(candidate_indices == true_idx))
+            if true_record_full_compatible:
+                candidate_pos = int(np.where(candidate_indices == true_idx)[0][0])
+                true_record_best_score = float(normalized_score[candidate_pos])
+            else:
+                true_record_best_score = 0.0
 
         row = {
             "target_id": target_id,
@@ -364,6 +555,8 @@ def run_mia_attack(
         "min_best_score": min_best_score,
         "max_compatible_candidates": max_compatible_candidates,
         "max_compatible_fraction": max_compatible_fraction,
+        "attacker_knowledge": attacker_knowledge,
+        "candidate_prefilter_mode": "remove_clearly_contradictory_rows",
         **metrics,
         "member_avg_compatible_candidate_count": float(targets_results_df.loc[member_mask, "compatible_candidate_count"].mean()) if member_mask.any() else None,
         "non_member_avg_compatible_candidate_count": float(targets_results_df.loc[non_member_mask, "compatible_candidate_count"].mean()) if non_member_mask.any() else None,
@@ -406,6 +599,7 @@ def run_mia_attack(
         "non_member_true_negative_rate": summary["non_member_true_negative_rate"],
         "summary_json": str(summary_path),
         "targets_csv": str(targets_path_out),
+        "candidate_prefilter_mode": "remove_clearly_contradictory_rows",
     }
     append_attack_summary(attacks_root / "mia_summary.csv", summary_row)
 

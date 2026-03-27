@@ -1,0 +1,31 @@
+{
+  "data": "data/adult.csv",
+  "hierarchy_dir": "hierarchies",
+  "identifiers": [],
+  "quasi_identifiers": [
+    "age",
+    "sex",
+    "race",
+    "marital-status",
+    "native-country"
+  ],
+  "sensitive_attributes": [
+    "income"
+  ],
+  "insensitive_attributes": [
+    "workclass",
+    "fnlwgt",
+    "education",
+    "education-num",
+    "occupation",
+    "relationship",
+    "capital-gain",
+    "capital-loss",
+    "hours-per-week"
+  ],
+  "k": 5,
+  "l": 2,
+  "t": null,
+  "suppression_limit": 10,
+  "backend": "arx"
+}
