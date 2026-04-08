@@ -1,0 +1,15 @@
+?,Unknown,Unknown,*
+Adm-clerical,Office-and-sales,Non-manual,*
+Armed-Forces,Military,Manual-or-service,*
+Craft-repair,Manual-production,Manual-or-service,*
+Exec-managerial,Professional-managerial,Non-manual,*
+Farming-fishing,Manual-support,Manual-or-service,*
+Handlers-cleaners,Manual-support,Manual-or-service,*
+Machine-op-inspct,Manual-production,Manual-or-service,*
+Other-service,Service,Manual-or-service,*
+Priv-house-serv,Service,Manual-or-service,*
+Prof-specialty,Professional-managerial,Non-manual,*
+Protective-serv,Service,Manual-or-service,*
+Sales,Office-and-sales,Non-manual,*
+Tech-support,Professional-managerial,Non-manual,*
+Transport-moving,Manual-production,Manual-or-service,*

@@ -1,0 +1,19 @@
+site_name: Documentation TER
+theme:
+  name: material
+
+nav:
+  - Accueil: index.md
+  - Vue générale du projet: vue_generale.md
+  - Anonymisation: anonymisation.md
+  - Linkage attack: linkage_attack.md
+  - MIA: mia.md
+  - Structure des scripts: structure_scripts.md
+  - Formats des fichiers: formats_fichiers.md
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

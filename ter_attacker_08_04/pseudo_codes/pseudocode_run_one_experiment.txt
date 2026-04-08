@@ -1,0 +1,39 @@
+Pseudo-code: 
+Pour linkage:
+	Dataset original 
+		créer un index (record ID)
+		dataset indexé anonymisé
+		création du sub-set cible indéxé( % customisable à faire) (échantillonnage horizontal)
+		prendre le sub-set et enlever certain attribut du sub-set (échantillonnage vertical)
+		prendre mininmum 2 QI pour le vertical (attacker knowledge assumption)
+		Faire le match entre variable généralisé dans le dataset anonymisé et dataset cible.
+		L’attaquant va filtrer le dataset anonymisé ( pour chaque cible il va créer un subset, enleve que ce qui créer une contradiction direct avec la cible)
+		Essayer de match : diffenrent possibilité : 
+			- 1 er cas : Si on a attacker knowledge meme QI que anonymisation. Alors classe equivalence definit par l’algo, on fais nbr sensitive attribut / nbr senstive attr diff.
+			- 2ème cas :  Si attr pas généralisé, alors on regarde le nombre de personne qui a le meme attrb dans la classe d’equivalence et ensuite on fais  nbr sensitive attribut / nbr senstive attr diff. Si une valeur alors match = 100% sinon si plusieurs valeurs = nbr sensitive attribut / nbr senstive.
+		Donner un score à chaque match (score va être pondéré par le nombre de sensitive attrb (x sensitive attr * nbr occurence / total) avec total = subset filtré)
+		Missing step  : faire des recherches sur les algorithme de record Linkage.
+		Définir des seuil pour dire si la valeur est satisfaite ou pas.
+		Verifier si on a match ou miss la cible grâce à l’index.
+		Faire la meme chose pour toute les personne et avoir un pourcentage pour les x models anonymat et y attackers et assumption ( Utilisé pour tout ce qui est metrics).
+		
+
+
+
+
+
+Pour MIA :
+	Da
+
+
+Attacker knowledge : Sous ensemble du dataset
+Faire la distinction entre les QI fais lors de l’anonymisation et fais ceux qu’on a.
+Avoir un initial baseline pour que ça soit moins exhaustive.
+Librarie qui fais du record linckage lien : 
+Envoyer les recherche pour les metrics et de savoir pourquoi on a choisi ça que ça
+Non-sensitive atrribut peut etre dans knowledge assumption
+MOI : defensive et Louis : attaquant.
+Lire la papier gameTherorique.
+Metrics de privacy/utility.
+Regarder les limits.
+Créer un drive.

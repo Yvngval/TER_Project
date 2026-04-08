@@ -1,0 +1,14 @@
+{
+  "anonymization_grid": "configs/benchmark_grid.json",
+  "base_config": "configs/base_config.json",
+  "publish_frac": 0.5,
+  "targets_per_class": 500,
+  "seed": 42,
+  "target_id_col": "record_id",
+  "member_col": "is_member",
+  "attacker_qi_pool": ["age", "sex", "race", "marital-status", "native-country"],
+  "known_qid_sizes": [2, 3, 4],
+  "min_best_score": 0.5,
+  "max_compatible_candidates": 100,
+  "max_compatible_fraction": 0.01
+}

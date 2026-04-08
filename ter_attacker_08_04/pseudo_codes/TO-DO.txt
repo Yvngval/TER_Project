@@ -1,0 +1,6 @@
+Attacker :
+- Implémenter privJedAI
+
+- Modifier MIA
+
+- Rechercher une méthode de scoring

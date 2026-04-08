@@ -1,0 +1,4 @@
+record_id, age, sex   , race , marital-status    , native-country
+    14160,  27, Female, White, Divorced          , United-States
+    27048,  45, Female, White, Married-civ-spouse, United-States
+    28868,  29, Male  , Black, Married-civ-spouse, United-States

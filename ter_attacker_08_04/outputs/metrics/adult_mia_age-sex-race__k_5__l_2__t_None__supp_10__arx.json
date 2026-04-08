@@ -1,0 +1,25 @@
+{
+  "anonymization_time_ms": 63,
+  "transformations": {
+    "native-country": 1,
+    "sex": 0,
+    "age": 1
+  },
+  "number_of_equivalence_classes": 139,
+  "average_equivalence_class_size": 216.9208633093525,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 2557,
+  "number_of_suppressed_records": 781,
+  "discernibility_metric": null,
+  "ambiguity_metric": 0.9731980858256096,
+  "average_class_size_metric": 0.9935721947556134,
+  "granularity_metric": "<error: ARXResult.get_granularity_metric() missing 1 required positional argument: 'attribute'>",
+  "non_uniform_entropy_metric": "<error: ARXResult.get_non_uniform_entropy_metric() missing 1 required positional argument: 'attribute'>",
+  "experiment_id": "adult_mia_age-sex-race__k_5__l_2__t_None__supp_10__arx",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "outputs\\anonymized\\adult_mia_age-sex-race__k_5__l_2__t_None__supp_10__arx.csv",
+  "eval_csv_path": "outputs\\anonymized_eval\\adult_mia_age-sex-race__k_5__l_2__t_None__supp_10__arx.csv"
+}

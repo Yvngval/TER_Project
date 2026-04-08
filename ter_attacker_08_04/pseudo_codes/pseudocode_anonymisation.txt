@@ -1,0 +1,93 @@
+Dataset original
+On a un fichier config qui donne :
+	emplacement du dataset original
+	quels attributs sont QI
+	quels attributs sont sensibles
+	emplacement des hiérarchies
+	les contraintes d'anonymisation à appliquer : k, l, t, suppression_limit, backend
+
+On lance run_one_experiment.py :
+	il lit les arguments de ligne de commande
+	l'emplacement du fichier config
+	l'emplacement de sortie
+	sauvegarder le dataset anonymisé public
+	sauvegarder le dataset anonymisé d'évaluation (avec record_id)
+	les colonnes à supprimer du dataset anonymisé public (comme record_id)
+	
+	Le script charge la config JSON
+		load_json(...) de common.py permet de :
+			ouvrir le fichier JSON
+			le lire
+			le transformer en dictionnaire Python
+	La config de l'expérience est maintenant dans la mémoire
+
+	Le script construit la config runtime
+		transforme le contenu de la config en config runtime
+			résout le chemin du dataset original : si le chemin est relatif, il le transforme en chemin absolu
+		construit le mapping des hiérarchies
+			build_hierarchy_mapping(..) de common.py permet de :
+				créer un dictionnaire qui affecte à chaque QI, le chemin vers son fichier hiérarchie. Pour chaque QI, elle vérifie qu'il existe bien une hiérarchie CSV correspondante.
+		
+
+		enlève hierarchy_dir car on a plus besoin
+
+	Le script fabrique un identifiant d'expérience
+		Si on ne donne pas de nom explicitement à l'expérience, le script appelle make_experiment_id de common.py :
+		construit un nom du style : "qi_age-sex-race__k_5__l_2__t_None__supp_10__arx"
+
+	Le script prépare les dossiers de sortie :
+		Grâce à ensure_dir de common.py, il crée :
+			outputs/metrics
+			outputs/configs
+			outputs/anonymized
+			outputs/anonymized_eval
+			outputs/error
+
+	Le script sauvegarde la config runtime
+		save_json(..) de common.py écrit dans outputs/config/..json la config runtime finale
+
+
+	Le script déclenche l'anonymisation avec _run_anonymization(runtime)
+		Il crée l'objet config du moteur : il transforme le dictionnaire Python runtime en objet de config attendu par la librairie (tout est emballé dans un objet formel)
+
+		Il appelle la librairie externe pour faire l'anonymisation
+			elle lit le dataset original non anonymisé
+			elle applique les hiérarchies sur les quasi-identifiants
+			elle cherche une transformation qui respecte les contraintes demandées
+			elle supprime éventuellement certaines lignes si nécessaire selon suppression_limit
+			elle retourne un résultat d’anonymisation
+
+
+	run_one_experiment(..) récupère le résultat
+		le résultat anonymisé est récupéré sous forme de DataFrame, on a en mémoire un DataFrame pandas anonymisé
+	run_one_experiment(...) peut écrire deux versions
+		anonymized_eval
+			les valeurs sont anonymisées mais on encore record_id
+		anonymized public
+			il supprime uniquement les colonnes listées dans public_drop_columns (comme record_id)
+
+	Le script calcule ensuite les métriques d’anonymisation
+		il appelle collect_result_metrics(result) de common.py
+			cette fonction interroge l’objet result avec des méthodes comme :
+				get_anonymization_time
+				get_transformations
+				get_number_of_equivalence_classes
+				get_average_equivalence_class_size
+				get_min_equivalence_class_size
+				get_max_equivalence_class_size
+				get_number_of_suppressed_records
+	Le script sauvegarde les métriques
+		run_one_experiment(..) écrit les métriques dans outputs/metrics/...json avec save_json(..)
+
+	Le script ajoute un résumé dans le fichier summary
+		run_one_experiment(..) appelle append_row_to_summary(..) qui écrit une ligne dans outputs/benchmark_summary.csv
+
+
+
+
+
+
+
+
+
+

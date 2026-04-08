@@ -1,0 +1,26 @@
+{
+  "original_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\data\\adult.csv",
+  "full_dataset_with_record_id": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\data\\adult_with_record_id.csv",
+  "auxiliary_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\auxiliary\\adult_aux_privjedai_demo.csv",
+  "target_id_col": "record_id",
+  "known_attrs": [
+    "age",
+    "sex",
+    "race",
+    "marital-status",
+    "native-country"
+  ],
+  "known_qids_legacy": [
+    "age",
+    "sex",
+    "race",
+    "marital-status",
+    "native-country"
+  ],
+  "n_original_rows": 32561,
+  "n_auxiliary_rows": 500,
+  "sample_size": 500,
+  "sample_frac": 0.01535579374097847,
+  "seed": 42,
+  "sensitive_attr": "income"
+}

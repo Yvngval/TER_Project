@@ -1,0 +1,4 @@
+record_id,sex,marital-status,occupation,education,relationship,race,age,native-country
+14160,Female,Divorced,Adm-clerical,Some-college,Not-in-family,White,27,United-States
+27048,Female,Married-civ-spouse,Exec-managerial,HS-grad,Wife,White,45,United-States
+28868,Male,Married-civ-spouse,Exec-managerial,Bachelors,Husband,Black,29,United-States

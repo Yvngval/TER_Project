@@ -1,0 +1,32 @@
+{
+  "data": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\data\\adult_with_record_id.csv",
+  "hierarchy_dir": "hierarchies",
+  "identifiers": [],
+  "quasi_identifiers": [
+    "age",
+    "sex",
+    "race",
+    "marital-status",
+    "native-country"
+  ],
+  "sensitive_attributes": [
+    "income"
+  ],
+  "insensitive_attributes": [
+    "workclass",
+    "fnlwgt",
+    "education",
+    "education-num",
+    "occupation",
+    "relationship",
+    "capital-gain",
+    "capital-loss",
+    "hours-per-week",
+    "record_id"
+  ],
+  "k": 5,
+  "l": 2,
+  "t": null,
+  "suppression_limit": 0.1,
+  "backend": "arx"
+}

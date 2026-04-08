@@ -1,0 +1,19 @@
+Dataset original
+	Créer un index (record_id)
+	Découper le dataset indexé:
+		5% d'un côté et 95% de l'autre
+			5% : les individus qui seront considérés OUT
+			95% : les individus IN
+	Création du subset cible :
+		50% d'invidus IN et 50% d'individus OUT
+			Pour l'instant on prend n individus IN des 95% et OUT des 5% (arbitrairement) mais on pourra changer pour prendre l'ensemble des 5% OUT et 5% tirés aléatoirement parmi les 95% IN (on aura un subset cible équivalent à 10% du dataset original indexé) : échantillonnage horizontal
+			On ajoute un attribut is_member dans ce subset pour ensuite pouvoir évaluer la réussite (1 si membre du dataset anonymisé, 0 sinon)
+			Et pour le dataset cible on garde un certains nombre d'attributs qui sont ni sensistive attribute ni direct indentifier : échantillonnage vertical
+	Anonymiser le dataset des 95% IN
+	Pour chaque cible, l'attaquant filtre le dataset anonymisé, il garde que les lignes qui ne contradisent pas directement une information sur la cible
+	L'attaquant regarde si il existe au moins une ligne compatible:
+		Si 0 ligne compatible : Il prédit la cible OUT avec une certitude maximale
+		Si x lignes compatibles : Il prédit IN si x/(nb de lignes dans le dataset anonymisé) <= 1% du dataset anonymisé, sinon OUT
+	Répéter l'attaque sur toutes les cibles
+	Comparer les résultats des prédictions avec la vérité terrain
+		taux de vrais positifs, faux positifs, vrais négatifs, faux négatifs

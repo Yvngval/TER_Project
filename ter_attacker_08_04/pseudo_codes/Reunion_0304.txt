@@ -1,0 +1,59 @@
+PrivJedAI :
+- Fonctionne mais semble moins précis que ce qu'on a déjà
+	Par exemple si la cible a comme pays "United-States" et que c'est généralisé en "North-America",
+		Alors un candidat qui a "North-America" (dans le dataset ano) obtiendra un score de 0 car morphologiquement "United-States" et "North-America" sont totalement différents, alors que "North-America" contient "United-States"
+		Et un candidat qui a "South-America" obtiendra le meme score alors qu'il contredit carrément "United-States"
+- Permet de contrer des données bruitées ?
+
+
+MIA :
+- L'entropie permet, dans notre cas, de voir si les scores (par rapport à la somme des scores) sont plus ou moins dispersés entre les candidats 
+- Patch : on peut maintenant choisir le % d'individus OUT du dataset original et donc le % du dataset original présent dans la base de connaissance de l'attaquant (ex : si on choisi 5% OUT alors l'attaquant aura 10% du dataset original)
+
+Score en fonction des QI, certains QI sont plus puissants que d'autres ? (ex : age > sex)
+Score par rapport à la répartition de l'attribut dans ma base de connaissance attacker ? (Si j'ai 70% d'individus avec comme pays "United States", je peux déduire que cette valeur pour native-country est banal dans le dataset ano ?)
+Liens entre plusieurs QI peut etre utilisé ? (ex : race / native-country)
+
+
+Recherche sur Fellegi-Sunter
+On attribue une probabilité à chaque attribut que connait l'attaquant
+	Une probabilité de match et une probabilité de non-match
+	Match weight (m)
+	Non-match weight (u)
+	(u et m ne sont pas l'inverse l'un de l'autre)
+
+	m = P(accord | vrai match) : Proba d'obtenir la meme valeur que la cible si c'est le vrai match
+	u = P(accord | faux match) : Proba d'obtenir la meme valeur que la cible si c'est un faux match
+
+Exemple pour le non-match weight :
+	Si on a un attribut "mois de naissance" et une personne qui est né en Mars, la probabilité que quelqu'un d'autre dans le dataset soit né en Mars est de 1/12 -> non-match weight
+
+On a 2 formule :
+	Si c'est un match entre les 2 attributs alors : log(m/u)
+	Si c'est un non-match : log((1-m)/(1-u))
+
+	On ajoute ensuite le résultat au score du candidat
+
+Limites :
+	Cette version de Fellegi-Sunter est binaire : accord / desaccord
+	Alors que nous on a plus : accord / compatible (généralisé) / supprimé (*) / desaccord
+
+	Il faut connaitre m et u coté attaquant, dur à estimer
+	Permet d'avoir des scores plus précis mais pas non plus de casser une classe d'équivalence
+
+	Ne prend pas en compte la rareté :
+		un accord sur une valeur très rare est plus informatif
+		un accord sur une valeur fréquente l’est moins
+
+
+
+
+
+
+
+
+
+
+
+
+

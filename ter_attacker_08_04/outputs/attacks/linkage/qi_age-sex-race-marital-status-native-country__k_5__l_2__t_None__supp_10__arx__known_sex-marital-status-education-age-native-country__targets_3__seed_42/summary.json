@@ -1,0 +1,49 @@
+{
+  "attack_id": "qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx__known_sex-marital-status-education-age-native-country__targets_3__seed_42",
+  "config_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\configs\\qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx.json",
+  "auxiliary_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\auxiliary\\adult__aux__known_sex-marital-status-occupation-workclass-education-relationship-race-age-native-country__n_3.csv",
+  "anonymized_public_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\anonymized\\qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx.csv",
+  "anonymized_eval_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\anonymized_eval\\qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx.csv",
+  "known_attrs": [
+    "sex",
+    "marital-status",
+    "education",
+    "age",
+    "native-country"
+  ],
+  "known_qids_legacy": [
+    "sex",
+    "marital-status",
+    "education",
+    "age",
+    "native-country"
+  ],
+  "target_id_col": "record_id",
+  "sensitive_attr": "income",
+  "n_targets": 3,
+  "seed": 42,
+  "n_anonymized_rows": 32561,
+  "attacker_knowledge_json": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\attacks\\linkage\\qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx__known_sex-marital-status-education-age-native-country__targets_3__seed_42\\attacker_knowledge.json",
+  "attacker_visible_levels": {
+    "sex": 0,
+    "marital-status": 1,
+    "education": 0,
+    "age": 2,
+    "native-country": 2
+  },
+  "target_survival_rate": 1.0,
+  "full_compatibility_rate": 1.0,
+  "true_record_in_compatible_rate": 0.0,
+  "true_record_in_best_rate": 1.0,
+  "unique_exact_reidentification_rate": 0.0,
+  "avg_compatible_candidate_count": 636.0,
+  "median_compatible_candidate_count": 701.0,
+  "max_compatible_candidate_count": 905,
+  "avg_best_candidate_count": 133.666667,
+  "median_best_candidate_count": 139.0,
+  "max_best_candidate_count": 210,
+  "compatible_sensitive_disclosure_rate": 0.0,
+  "best_sensitive_disclosure_rate": 0.333333,
+  "targets_csv": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\attacks\\linkage\\qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx__known_sex-marital-status-education-age-native-country__targets_3__seed_42\\targets.csv",
+  "best_candidates_csv": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\attacks\\linkage\\qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx__known_sex-marital-status-education-age-native-country__targets_3__seed_42\\best_candidates.csv"
+}

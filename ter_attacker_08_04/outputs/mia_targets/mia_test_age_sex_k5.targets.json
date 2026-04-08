@@ -1,0 +1,23 @@
+{
+  "original_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\data\\adult.csv",
+  "published_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\prepared_data\\mia_test_age_sex_k5.published.csv",
+  "out_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\prepared_data\\mia_test_age_sex_k5.out.csv",
+  "holdout_output_legacy": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\prepared_data\\mia_test_age_sex_k5.out.csv",
+  "attacker_base_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\prepared_data\\mia_test_age_sex_k5.attacker_base.csv",
+  "targets_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\mia_targets\\mia_test_age_sex_k5.targets.csv",
+  "known_qids": [
+    "age",
+    "sex"
+  ],
+  "targets_per_class": 200,
+  "seed": 42,
+  "target_id_col": "record_id",
+  "member_col": "is_member",
+  "split_mode": "mixed_auxiliary_pool",
+  "published_size": 30933,
+  "attacker_out_size": 1628,
+  "attacker_in_size": 1628,
+  "attacker_base_size": 3256,
+  "out_frac": 0.05,
+  "in_frac": 0.0499984644206259
+}

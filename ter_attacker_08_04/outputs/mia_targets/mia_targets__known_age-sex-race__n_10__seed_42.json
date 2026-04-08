@@ -1,0 +1,21 @@
+{
+  "original_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\data\\adult.csv",
+  "published_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\prepared_data\\adult_published_with_record_id.csv",
+  "holdout_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\prepared_data\\adult_holdout_with_record_id.csv",
+  "targets_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\mia_targets\\mia_targets__known_age-sex-race__n_10__seed_42.csv",
+  "known_qids": [
+    "age",
+    "sex",
+    "race"
+  ],
+  "targets_per_class": 10,
+  "seed": 42,
+  "target_id_col": "record_id",
+  "member_col": "is_member",
+  "split_mode": "mixed_auxiliary_pool",
+  "published_size": 30933,
+  "auxiliary_out_size": 1628,
+  "auxiliary_in_size": 1628,
+  "out_frac": 0.05,
+  "in_frac": 0.05
+}

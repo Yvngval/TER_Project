@@ -1,0 +1,34 @@
+{
+  "original_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\data\\adult.csv",
+  "full_dataset_with_record_id": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\data\\adult_with_record_id.csv",
+  "auxiliary_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_27_03\\outputs\\auxiliary\\adult__aux__known_sex-marital-status-occupation-workclass-education-relationship-race-age-native-country__n_3.csv",
+  "target_id_col": "record_id",
+  "known_attrs": [
+    "sex",
+    "marital-status",
+    "occupation",
+    "workclass",
+    "education",
+    "relationship",
+    "race",
+    "age",
+    "native-country"
+  ],
+  "known_qids_legacy": [
+    "sex",
+    "marital-status",
+    "occupation",
+    "workclass",
+    "education",
+    "relationship",
+    "race",
+    "age",
+    "native-country"
+  ],
+  "n_original_rows": 32561,
+  "n_auxiliary_rows": 3,
+  "sample_size": 3,
+  "sample_frac": 9.213476244587083e-05,
+  "seed": 42,
+  "sensitive_attr": "income"
+}

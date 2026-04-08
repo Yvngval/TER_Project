@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "ARXAnonymizer.java", line 212, in org.deidentifier.arx.ARXAnonymizer.anonymize
+Exception: Java Exception
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Louis\TER\TER_v2\ter_benchmark_starter_branch_27_03\scripts\run_one_experiment.py", line 133, in run_one_experiment
+    result = _run_anonymization(runtime)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Louis\TER\TER_v2\ter_benchmark_starter_branch_27_03\scripts\run_one_experiment.py", line 90, in _run_anonymization
+    return AnonymizationManager.anonymize(config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Louis\TER\TER_v2\RECITALS-anonymization-manager\src\anonymization_manager\core.py", line 38, in anonymize
+    return AnonymizedData(ARXAnonymizer.anonymize(config))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Louis\TER\TER_v2\RECITALS-anonymization-manager\src\anonymization_manager\adapters\arx\arx.py", line 518, in anonymize
+    result = ARXAnonymizer._anonymize(data, configuration)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Louis\TER\TER_v2\RECITALS-anonymization-manager\src\anonymization_manager\adapters\arx\arx.py", line 485, in _anonymize
+    return anonymizer.anonymize(data, configuration)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+java.lang.java.lang.IllegalArgumentException: java.lang.IllegalArgumentException: Insensitive attribute 'record_id' is not contained in the dataset
