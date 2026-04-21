@@ -28,6 +28,13 @@
   "suppression_limits": [
     10
   ],
+  "utility_measures": [
+    "loss","precision","height"
+  ],
+  "utility_aggregates": [
+    "arithmetic_mean",
+    "geometric_mean","sum","maximum","rank"
+  ],
   "backend": "arx",
   "save_anonymized_csv": true,
   "stop_on_error": false

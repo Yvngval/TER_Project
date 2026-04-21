@@ -36,7 +36,7 @@ def resolve_existing_path(raw_path: str, *, candidates: list[Path]) -> Path:
 
 
 # Build one experiment config from the base config and benchmark parameters.
-def build_experiment_payload(base_config: dict[str, Any], qi_subset: list[str], k, l, t, suppression_limit, backend):
+def build_experiment_payload(base_config: dict[str, Any], qi_subset: list[str], k, l, t, suppression_limit, backend, utility_measure="loss", utility_aggregate=None):
     payload = dict(base_config)
     payload["quasi_identifiers"] = qi_subset
 
@@ -48,6 +48,8 @@ def build_experiment_payload(base_config: dict[str, Any], qi_subset: list[str], 
     payload["l"] = l
     payload["t"] = t
     payload["suppression_limit"] = suppression_limit
+    payload["utility_measure"] = utility_measure
+    payload["utility_aggregate"] = utility_aggregate
     payload["backend"] = backend
     return payload
 
@@ -78,6 +80,8 @@ def run_benchmark_grid(
     generated_configs_dir = ensure_dir(output_root / "generated_configs")
     stop_on_error = bool(grid.get("stop_on_error", False))
     save_anonymized_csv = bool(grid.get("save_anonymized_csv", True))
+    utility_measures = grid.get("utility_measures", ["loss"])
+    utility_aggregates = grid.get("utility_aggregates", [None])
 
     count = 0
     failures = 0
@@ -88,38 +92,46 @@ def run_benchmark_grid(
             for l in grid["l_values"]:
                 for t in grid["t_values"]:
                     for suppression_limit in grid["suppression_limits"]:
-                        backend = grid["backend"]
-                        payload = build_experiment_payload(
-                            base_config=base_config,
-                            qi_subset=qi_subset,
-                            k=k,
-                            l=l,
-                            t=t,
-                            suppression_limit=suppression_limit,
-                            backend=backend,
-                        )
-                        experiment_id = make_experiment_id(qi_subset, k, l, t, suppression_limit, backend)
-                        config_path = generated_configs_dir / f"{experiment_id}.json"
-                        save_json(config_path, payload)
+                        for utility_measure in utility_measures:
+                            for utility_aggregate in utility_aggregates:
+                                backend = grid["backend"]
+                                payload = build_experiment_payload(
+                                    base_config=base_config,
+                                    qi_subset=qi_subset,
+                                    k=k,
+                                    l=l,
+                                    t=t,
+                                    suppression_limit=suppression_limit,
+                                    backend=backend,
+                                    utility_measure=utility_measure,
+                                    utility_aggregate=utility_aggregate,
+                                )
+                                experiment_id = make_experiment_id(
+                                    qi_subset, k, l, t, suppression_limit, backend,
+                                    utility_measure=utility_measure,
+                                    utility_aggregate=utility_aggregate,
+                                )
+                                config_path = generated_configs_dir / f"{experiment_id}.json"
+                                save_json(config_path, payload)
 
-                        print("=" * 100)
-                        print(f"Running: {experiment_id}")
+                                print("=" * 100)
+                                print(f"Running: {experiment_id}")
 
-                        result = run_one_experiment_from_config(
-                            config_path=config_path,
-                            output_root=output_root,
-                            save_anonymized_csv=save_anonymized_csv,
-                            save_anonymized_eval_csv=save_anonymized_eval_csv,
-                            public_drop_columns=public_drop_columns,
-                            append_summary=True,
-                        )
-                        count += 1
-                        results.append(result)
+                                result = run_one_experiment_from_config(
+                                    config_path=config_path,
+                                    output_root=output_root,
+                                    save_anonymized_csv=save_anonymized_csv,
+                                    save_anonymized_eval_csv=save_anonymized_eval_csv,
+                                    public_drop_columns=public_drop_columns,
+                                    append_summary=True,
+                                )
+                                count += 1
+                                results.append(result)
 
-                        if result["row"].get("status") != "success":
-                            failures += 1
-                            if stop_on_error:
-                                raise SystemExit(1)
+                                if result["row"].get("status") != "success":
+                                    failures += 1
+                                    if stop_on_error:
+                                        raise SystemExit(1)
 
     print("=" * 100)
     print(f"Benchmark finished. Total experiments launched: {count}")

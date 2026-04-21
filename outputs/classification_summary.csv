@@ -1,0 +1,2 @@
+experiment_id,model,quasi_identifiers,k,l,t,suppression_limit,backend,n_suppressed,suppression_rate,baseline_accuracy,input_accuracy,output_accuracy,relative_accuracy,brier_skill_score,input_roc_auc_avg,output_roc_auc_avg
+qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx__agg_arithmetic_mean,naive_bayes,age|sex|race|marital-status|native-country,5,2,,10,arx,0,0.0,0.69703019,0.69951783,0.69953456,1.00672425,-0.00496199,0.81370403,0.8229119

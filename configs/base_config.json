@@ -10,10 +10,10 @@
     "native-country"
   ],
   "sensitive_attributes": [
-    "income"
+    "workclass"
   ],
   "insensitive_attributes": [
-    "workclass",
+    "income",
     "fnlwgt",
     "education",
     "education-num",
@@ -27,5 +27,7 @@
   "l": 2,
   "t": null,
   "suppression_limit": 10,
+  "utility_measure": "loss",
+  "utility_aggregate": "arithmetic_mean",
   "backend": "arx"
 }

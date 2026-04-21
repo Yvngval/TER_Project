@@ -1,0 +1,59 @@
+{
+  "n_folds": 10,
+  "random_state": 42,
+  "target": "workclass",
+  "active_models": ["logistic_regression", "naive_bayes"],
+  "feature_cols": [
+    "age",
+    "fnlwgt",
+    "education",
+    "education-num",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "capital-gain",
+    "capital-loss",
+    "hours-per-week",
+    "native-country",
+    "income"
+  ],
+  "classifiers": {
+    "logistic_regression": {
+      "enabled": true,
+      "params": {
+        "C": 100000,
+        "penalty": "elasticnet",
+        "l1_ratio": 0.5,
+        "solver": "saga",
+        "max_iter": 2000
+      }
+    },
+    "naive_bayes": {
+      "enabled": true,
+      "model": "MULTINOMIAL",
+      "preprocessing": {
+        "n_bins": 10
+      },
+      "params": {
+        "alpha": 1.0
+      }
+    },
+    "random_forest": {
+      "enabled": true,
+      "params": {
+        "n_estimators": 500,
+        "max_features": "sqrt",
+        "min_samples_leaf": 5,
+        "max_leaf_nodes": 100,
+        "bootstrap": true,
+        "max_samples": 1.0,
+        "criterion": "gini"
+      }
+    },
+    "zero_r": {
+      "enabled": true
+    }
+  }
+}

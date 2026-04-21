@@ -4,10 +4,20 @@ from __future__ import annotations
 
 import itertools
 import json
+import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 from collections.abc import Mapping
+
+logger = logging.getLogger(__name__)
+
+
+# Parse a comma-separated CLI list into a clean Python list.
+def parse_csv_list(raw: str | None) -> list[str]:
+    if raw is None:
+        return []
+    return [part.strip() for part in raw.split(",") if part.strip()]
 
 
 # Convert an object into a JSON-serializable value.
@@ -98,9 +108,16 @@ def make_experiment_id(
     t: float | None,
     suppression_limit: int | None,
     backend: str | None,
+    utility_measure: str | None = None,
+    utility_aggregate: str | None = None,
 ) -> str:
     qi_part = "-".join(quasi_identifiers)
-    return f"qi_{qi_part}__k_{k}__l_{l}__t_{t}__supp_{suppression_limit}__{backend}"
+    base = f"qi_{qi_part}__k_{k}__l_{l}__t_{t}__supp_{suppression_limit}__{backend}"
+    if utility_measure and utility_measure != "loss":
+        base += f"__m_{utility_measure}"
+    if utility_aggregate:
+        base += f"__agg_{utility_aggregate}"
+    return base
 
 
 # Generate all QI subsets for the requested subset sizes.
@@ -112,20 +129,38 @@ def iter_qi_subsets(qi_pool: list[str], subset_sizes: list[int]) -> list[list[st
     return subsets
 
 
-# Safely call a method and return its result or an error marker.
-def safe_call(obj: Any, method_name: str) -> Any:
+# Safely call a method and return its result, or None on any failure.
+def safe_call(obj: Any, method_name: str, *args: Any) -> Any:
     method = getattr(obj, method_name, None)
     if callable(method):
         try:
-            return method()
+            return method(*args)
         except Exception as exc:
-            return f"<error: {exc}>"
+            logger.warning("safe_call(%r) failed: %s", method_name, exc)
+            return None
     return None
 
 
-# Collect standard metrics from an anonymization result object.
-def collect_result_metrics(result: Any) -> dict[str, Any]:
+# Collect a per-attribute metric for each quasi-identifier.
+def _collect_per_attribute_metric(
+    result: Any, method_name: str, quasi_identifiers: list[str],
+) -> dict[str, Any]:
     return {
+        qi: safe_call(result, method_name, qi)
+        for qi in quasi_identifiers
+    }
+
+
+# Collect standard metrics from an anonymization result object.
+def collect_result_metrics(
+    result: Any, quasi_identifiers: list[str] | None = None,
+) -> dict[str, Any]:
+    quasi_identifiers = quasi_identifiers or []
+
+    metrics: dict[str, Any] = {
+        # Optimization scores from the globally optimal ARX node
+        "optimization_score_min": safe_call(result, "get_optimization_score_min"),
+        "optimization_score_max": safe_call(result, "get_optimization_score_max"),
         "anonymization_time_ms": safe_call(result, "get_anonymization_time"),
         "transformations": safe_call(result, "get_transformations"),
         "number_of_equivalence_classes": safe_call(result, "get_number_of_equivalence_classes"),
@@ -133,12 +168,21 @@ def collect_result_metrics(result: Any) -> dict[str, Any]:
         "min_equivalence_class_size": safe_call(result, "get_min_equivalence_class_size"),
         "max_equivalence_class_size": safe_call(result, "get_max_equivalence_class_size"),
         "number_of_suppressed_records": safe_call(result, "get_number_of_suppressed_records"),
+        # Global metrics
         "discernibility_metric": safe_call(result, "get_discernibility_metric"),
         "ambiguity_metric": safe_call(result, "get_ambiguity_metric"),
         "average_class_size_metric": safe_call(result, "get_average_class_size_metric"),
-        "granularity_metric": safe_call(result, "get_granularity_metric"),
-        "non_uniform_entropy_metric": safe_call(result, "get_non_uniform_entropy_metric"),
+        "ssesst_metric": safe_call(result, "get_ssesst_metric"),
+        "record_level_squared_error_metric": safe_call(result, "get_record_level_squared_error_metric"),
+        # Per-attribute metrics
+        "granularity_metric": _collect_per_attribute_metric(result, "get_granularity_metric", quasi_identifiers),
+        "non_uniform_entropy_metric": _collect_per_attribute_metric(result, "get_non_uniform_entropy_metric", quasi_identifiers),
+        "generalization_intensity_metric": _collect_per_attribute_metric(result, "get_generalization_intensity_metric", quasi_identifiers),
+        "attribute_level_squared_error_metric": _collect_per_attribute_metric(result, "get_attribute_level_squared_error_metric", quasi_identifiers),
+        "missings_metric": _collect_per_attribute_metric(result, "get_missings_metric", quasi_identifiers),
     }
+
+    return metrics
 
 
 # Convert a row into a CSV-safe dictionary.

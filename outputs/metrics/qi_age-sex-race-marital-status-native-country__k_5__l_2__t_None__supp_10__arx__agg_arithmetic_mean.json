@@ -1,0 +1,73 @@
+{
+  "optimization_score_min": 0.06536578952,
+  "optimization_score_max": 0.06536578952,
+  "anonymization_time_ms": 72,
+  "transformations": {
+    "race": 0,
+    "native-country": 1,
+    "sex": 0,
+    "marital-status": 0,
+    "age": 2
+  },
+  "number_of_equivalence_classes": 313,
+  "average_equivalence_class_size": 100.21725239616613,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 3301,
+  "number_of_suppressed_records": 1193,
+  "discernibility_metric": 0.927471907704094,
+  "ambiguity_metric": 0.9632705058639401,
+  "average_class_size_metric": 0.9971778557155044,
+  "ssesst_metric": 0.2672138319765597,
+  "record_level_squared_error_metric": 0.44793939085504764,
+  "granularity_metric": {
+    "age": 0.8477566891544577,
+    "sex": 0.9633610761340254,
+    "race": 0.9633610761341742,
+    "marital-status": 0.9633610761340379,
+    "native-country": 0.935331134583367
+  },
+  "non_uniform_entropy_metric": {
+    "age": 0.41700557538972405,
+    "sex": 0.9601362825138978,
+    "race": 0.9059961337801237,
+    "marital-status": 0.9491888611915271,
+    "native-country": 0.6870908847836847
+  },
+  "generalization_intensity_metric": {
+    "age": 0.4816805380670127,
+    "sex": 0.9633610761340253,
+    "race": 0.9633610761340253,
+    "marital-status": 0.9633610761340253,
+    "native-country": 0.6422407174225904
+  },
+  "attribute_level_squared_error_metric": {
+    "age": 0.9479290585502528,
+    "sex": 0.9633610761340253,
+    "race": 0.9705008032585734,
+    "marital-status": 0.9601588803556104,
+    "native-country": 0.12023979524542439
+  },
+  "missings_metric": {
+    "age": 0.03663892386597467,
+    "sex": 0.03663892386597467,
+    "race": 0.03663892386597467,
+    "marital-status": 0.03663892386597467,
+    "native-country": 0.03663892386597467
+  },
+  "experiment_id": "qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx__agg_arithmetic_mean",
+  "status": "success",
+  "public_drop_columns": [],
+  "public_csv_path": "outputs/anonymized/qi_age-sex-race-marital-status-native-country__k_5__l_2__t_None__supp_10__arx__agg_arithmetic_mean.csv",
+  "eval_csv_path": "",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "age",
+    "sex",
+    "race",
+    "marital-status",
+    "native-country"
+  ],
+  "n_rows_before_full_suppression_drop": 32561,
+  "n_rows_dropped_full_suppression": 1193,
+  "n_rows_after_full_suppression_drop": 31368
+}

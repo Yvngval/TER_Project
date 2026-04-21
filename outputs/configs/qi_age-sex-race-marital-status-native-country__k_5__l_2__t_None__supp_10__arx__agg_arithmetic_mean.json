@@ -1,0 +1,39 @@
+{
+  "data": "/Users/yvngval93/Documents/Projet_TER/TER_Project/data/adult.csv",
+  "identifiers": [],
+  "quasi_identifiers": [
+    "age",
+    "sex",
+    "race",
+    "marital-status",
+    "native-country"
+  ],
+  "sensitive_attributes": [
+    "workclass"
+  ],
+  "insensitive_attributes": [
+    "income",
+    "fnlwgt",
+    "education",
+    "education-num",
+    "occupation",
+    "relationship",
+    "capital-gain",
+    "capital-loss",
+    "hours-per-week"
+  ],
+  "k": 5,
+  "l": 2,
+  "t": null,
+  "suppression_limit": 10,
+  "utility_measure": "loss",
+  "utility_aggregate": "arithmetic_mean",
+  "backend": "arx",
+  "hierarchies": {
+    "age": "/Users/yvngval93/Documents/Projet_TER/TER_Project/hierarchies/age.csv",
+    "sex": "/Users/yvngval93/Documents/Projet_TER/TER_Project/hierarchies/sex.csv",
+    "race": "/Users/yvngval93/Documents/Projet_TER/TER_Project/hierarchies/race.csv",
+    "marital-status": "/Users/yvngval93/Documents/Projet_TER/TER_Project/hierarchies/marital-status.csv",
+    "native-country": "/Users/yvngval93/Documents/Projet_TER/TER_Project/hierarchies/native-country.csv"
+  }
+}
