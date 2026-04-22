@@ -1,0 +1,67 @@
+site_name: TER — Data Anonymization & Utility
+site_url: https://yvngval.github.io/TER_Project_docs/
+repo_url: https://github.com/Yvngval/TER_Project_docs
+repo_name: Yvngval/TER_Project_docs
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - toc.integrate
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
+plugins:
+  - search:
+      lang: en
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Overview: index.md
+  - Anonymization:
+    - anonymisation/index.md
+    - Quality Models: anonymisation/mesures_utilite.md
+    - Aggregate Functions: anonymisation/fonctions_agregats.md
+  - ARX Utility Metrics: metriques/index.md
+  - Classification: classification/index.md
+  - Script Structure: structure_scripts/index.md
+  - File Formats: formats_fichiers/index.md
