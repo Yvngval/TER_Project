@@ -1,0 +1,1212 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://yvngval.github.io/TER_Project_docs/structure_scripts/">
+      
+      
+        <link rel="prev" href="../classification/">
+      
+      
+        <link rel="next" href="../formats_fichiers/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Script Structure - TER — Data Anonymization & Utility</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#script-structure" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TER — Data Anonymization &amp; Utility" class="md-header__button md-logo" aria-label="TER — Data Anonymization & Utility" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TER — Data Anonymization & Utility
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Script Structure
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Yvngval/TER_Project_docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Yvngval/TER_Project_docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../anonymisation/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Anonymization
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../metriques/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ARX Utility Metrics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../classification/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Classification
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Script Structure
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../formats_fichiers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  File Formats
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TER — Data Anonymization &amp; Utility" class="md-nav__button md-logo" aria-label="TER — Data Anonymization & Utility" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TER — Data Anonymization & Utility
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Yvngval/TER_Project_docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Yvngval/TER_Project_docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../anonymisation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anonymization
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anonymization
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anonymisation/mesures_utilite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quality Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anonymisation/fonctions_agregats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aggregate Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metriques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ARX Utility Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script Structure
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General organization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configsbase_configjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        configs/base_config.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configsbenchmark_gridjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        configs/benchmark_grid.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configsclassification_configjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        configs/classification_config.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anonymization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anonymization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anonymization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run_one_experimentpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_one_experiment.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run_benchmarkpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_benchmark.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utility-evaluation-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utility evaluation — Classification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Utility evaluation — Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classification_modelspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        classification_models.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compute_classification_metricspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compute_classification_metrics.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run_classification_benchmarkpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_classification_benchmark.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reporting-and-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting and visualization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reporting and visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate_anonymization_reportpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        generate_anonymization_report.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plot_classification_resultspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_classification_results.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared utilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Shared utilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#commonpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        common.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patch_recitals_arxpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        patch_recitals_arx.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clean_outputspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clean_outputs.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution order
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../formats_fichiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="script-structure">Script Structure<a class="headerlink" href="#script-structure" title="Permanent link">&para;</a></h1>
+<p>This page describes the role of each script and configuration file in the project and how they relate to each other.</p>
+<hr />
+<h2 id="general-organization">General organization<a class="headerlink" href="#general-organization" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[Configuration files] --&gt; B[Anonymization]
+    B --&gt; C[Utility evaluation]
+    C --&gt; D[Classification]
+    B --&gt; E[Reporting]
+    D --&gt; E</code></pre>
+<hr />
+<h2 id="configuration-files">Configuration files<a class="headerlink" href="#configuration-files" title="Permanent link">&para;</a></h2>
+<h3 id="configsbase_configjson"><code>configs/base_config.json</code><a class="headerlink" href="#configsbase_configjson" title="Permanent link">&para;</a></h3>
+<p>Defines the base anonymization setup shared across all experiments: dataset path, attribute roles, default privacy parameters, and backend.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;data/adult.csv&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;hierarchy_dir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hierarchies&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;quasi_identifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;sex&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;race&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;marital-status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;native-country&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;sensitive_attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;insensitive_attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;workclass&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;fnlwgt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;education&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;k&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;l&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;t&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;suppression_limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;utility_measure&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;loss&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;utility_aggregate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arithmetic_mean&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;backend&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arx&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="configsbenchmark_gridjson"><code>configs/benchmark_grid.json</code><a class="headerlink" href="#configsbenchmark_gridjson" title="Permanent link">&para;</a></h3>
+<p>Defines the parameter grid used by <code>run_benchmark.py</code> to generate all experiment combinations. Each combination of <code>qi_subset_sizes</code>, <code>k_values</code>, <code>l_values</code>, <code>utility_measures</code>, and <code>utility_aggregates</code> produces one independent experiment.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;base_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;configs/base_config.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;qi_pool&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;sex&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;race&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;marital-status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;native-country&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;qi_subset_sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;k_values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;l_values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;t_values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kc">null</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;suppression_limits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">10</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;utility_measures&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;precision&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;height&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;utility_aggregates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;arithmetic_mean&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;geometric_mean&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;sum&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;maximum&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rank&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;backend&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arx&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;save_anonymized_csv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;stop_on_error&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="configsclassification_configjson"><code>configs/classification_config.json</code><a class="headerlink" href="#configsclassification_configjson" title="Permanent link">&para;</a></h3>
+<p>Configuration for the classification utility benchmark. Specifies the cross-validation setup, the target attribute, the active models, and — for each classifier — its hyperparameters. All values are fully configurable.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;n_folds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;random_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;income&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;active_models&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;naive_bayes&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;feature_cols&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;sex&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;race&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;marital-status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;native-country&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;classifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;logistic_regression&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;C&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100000</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;naive_bayes&quot;</span><span class="p">:</span><span class="w">         </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MULTINOMIAL&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;preprocessing&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;n_bins&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;alpha&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;random_forest&quot;</span><span class="p">:</span><span class="w">       </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;n_estimators&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;zero_r&quot;</span><span class="p">:</span><span class="w">              </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>active_models</code> field controls which classifiers are actually run. It can be set to <code>"all"</code> or to a list of specific model names.</p>
+<hr />
+<h2 id="anonymization">Anonymization<a class="headerlink" href="#anonymization" title="Permanent link">&para;</a></h2>
+<h3 id="run_one_experimentpy"><code>run_one_experiment.py</code><a class="headerlink" href="#run_one_experimentpy" title="Permanent link">&para;</a></h3>
+<p>Core script that runs a single anonymization experiment end-to-end. It loads a configuration, calls RECITALS/ARX, collects all ARX result metrics, saves the anonymized CSV, and appends a row to the benchmark summary.</p>
+<p>This is the most important script in the pipeline — all other evaluation scripts depend on its outputs.</p>
+<ul>
+<li><strong>Input</strong>: one experiment config JSON</li>
+<li><strong>Output</strong>: <code>outputs/anonymized/{id}.csv</code>, <code>outputs/metrics/{id}.json</code>, row in <code>benchmark_summary.csv</code></li>
+</ul>
+<hr />
+<h3 id="run_benchmarkpy"><code>run_benchmark.py</code><a class="headerlink" href="#run_benchmarkpy" title="Permanent link">&para;</a></h3>
+<p>Orchestrates the full benchmark grid. It reads <code>benchmark_grid.json</code>, generates all parameter combinations (QI subsets × k values × l values × utility measures × aggregate functions), builds a config for each, and calls <code>run_one_experiment.py</code> for each one.</p>
+<ul>
+<li><strong>Input</strong>: <code>configs/benchmark_grid.json</code>, <code>configs/base_config.json</code></li>
+<li><strong>Output</strong>: one experiment per combination in <code>outputs/</code></li>
+</ul>
+<hr />
+<h2 id="utility-evaluation-classification">Utility evaluation — Classification<a class="headerlink" href="#utility-evaluation-classification" title="Permanent link">&para;</a></h2>
+<h3 id="classification_modelspy"><code>classification_models.py</code><a class="headerlink" href="#classification_modelspy" title="Permanent link">&para;</a></h3>
+<p>Defines the four classifier pipelines (ZeroR, Logistic Regression, Naive Bayes, Random Forest) as factories — each call produces a fresh pipeline to avoid state leakage across cross-validation folds. Handles preprocessing of generalized and suppressed values.</p>
+<hr />
+<h3 id="compute_classification_metricspy"><code>compute_classification_metrics.py</code><a class="headerlink" href="#compute_classification_metricspy" title="Permanent link">&para;</a></h3>
+<p>Computes all classification metrics (accuracy, relative accuracy, AUC, Brier score, Brier skill score, sensitivity, specificity) from the globally concatenated out-of-fold predictions. Mirrors ARX's metric computation strategy.</p>
+<hr />
+<h3 id="run_classification_benchmarkpy"><code>run_classification_benchmark.py</code><a class="headerlink" href="#run_classification_benchmarkpy" title="Permanent link">&para;</a></h3>
+<p>Runs the classification utility benchmark over all successful experiments. For each experiment, it:</p>
+<ol>
+<li>Loads the original and anonymized datasets (row-aligned)</li>
+<li>Splits into 10 stratified folds on the original</li>
+<li>Per fold: trains on original → predicts on original, trains on anonymized → predicts on anonymized</li>
+<li>
+<p>Concatenates OOF predictions globally and computes metrics</p>
+</li>
+<li>
+<p><strong>Input</strong>: <code>outputs/benchmark_summary.csv</code>, original + anonymized CSVs</p>
+</li>
+<li><strong>Output</strong>: <code>outputs/classification/{id}_classification.json</code>, <code>outputs/classification_summary.csv</code></li>
+</ol>
+<hr />
+<h2 id="reporting-and-visualization">Reporting and visualization<a class="headerlink" href="#reporting-and-visualization" title="Permanent link">&para;</a></h2>
+<h3 id="generate_anonymization_reportpy"><code>generate_anonymization_report.py</code><a class="headerlink" href="#generate_anonymization_reportpy" title="Permanent link">&para;</a></h3>
+<p>Generates a self-contained HTML report summarizing the anonymization results across all experiments. Includes summary tables and per-attribute statistics.</p>
+<ul>
+<li><strong>Input</strong>: <code>outputs/benchmark_summary.csv</code></li>
+<li><strong>Output</strong>: HTML report file</li>
+</ul>
+<hr />
+<h3 id="plot_classification_resultspy"><code>plot_classification_results.py</code><a class="headerlink" href="#plot_classification_resultspy" title="Permanent link">&para;</a></h3>
+<p>Generates PNG visualizations for a given classification result. Produces side-by-side input/output comparisons with summary metric tables, per-class statistics, and ROC curves (baseline / input / output).</p>
+<ul>
+<li><strong>Input</strong>: <code>outputs/classification/{id}_classification.json</code></li>
+<li><strong>Output</strong>: PNG files</li>
+</ul>
+<hr />
+<h2 id="shared-utilities">Shared utilities<a class="headerlink" href="#shared-utilities" title="Permanent link">&para;</a></h2>
+<h3 id="commonpy"><code>common.py</code><a class="headerlink" href="#commonpy" title="Permanent link">&para;</a></h3>
+<p>Shared utility module used by all other scripts. Provides:</p>
+<ul>
+<li><code>load_json()</code> / <code>save_json()</code> — JSON I/O</li>
+<li><code>ensure_dir()</code> — directory creation</li>
+<li><code>make_experiment_id()</code> — unique experiment naming</li>
+<li><code>iter_qi_subsets()</code> — generate all QI combinations</li>
+<li><code>build_hierarchy_mapping()</code> — map QI names to hierarchy CSV paths</li>
+<li><code>collect_result_metrics()</code> — extract ARX metrics from a result object</li>
+<li><code>sanitize_row_for_csv()</code> — flatten nested objects for CSV export</li>
+</ul>
+<hr />
+<h3 id="patch_recitals_arxpy"><code>patch_recitals_arx.py</code><a class="headerlink" href="#patch_recitals_arxpy" title="Permanent link">&para;</a></h3>
+<p>One-time patch applied to the RECITALS ARX adapter. Converts the <code>suppression_limit</code> from a percentage (e.g. <code>10</code> for 10%) to the decimal format expected by ARX (<code>0.1</code>).</p>
+<hr />
+<h3 id="clean_outputspy"><code>clean_outputs.py</code><a class="headerlink" href="#clean_outputspy" title="Permanent link">&para;</a></h3>
+<p>Deletes all generated output files to allow a clean restart of the benchmark. Clears <code>outputs/anonymized/</code>, <code>outputs/metrics/</code>, <code>outputs/classification/</code>, <code>benchmark_summary.csv</code>, and related files.</p>
+<hr />
+<h2 id="execution-order">Execution order<a class="headerlink" href="#execution-order" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart LR
+    A[run_benchmark.py] --&gt; B[run_classification_benchmark.py]
+    A --&gt; C[plot_classification_results.py]
+    A --&gt; D[generate_anonymization_report.py]</code></pre>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Script</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Run anonymization benchmark</td>
+<td><code>python scripts/run_benchmark.py --grid configs/benchmark_grid.json</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Run classification evaluation</td>
+<td><code>python scripts/run_classification_benchmark.py</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Generate plots</td>
+<td><code>python scripts/plot_classification_results.py --json outputs/classification/{id}_classification.json</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Generate HTML report</td>
+<td><code>python scripts/generate_anonymization_report.py</code></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

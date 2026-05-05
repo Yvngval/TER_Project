@@ -1,0 +1,1129 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://yvngval.github.io/TER_Project_docs/metriques/">
+      
+      
+        <link rel="prev" href="../anonymisation/fonctions_agregats/">
+      
+      
+        <link rel="next" href="../classification/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>ARX Utility Metrics - TER — Data Anonymization & Utility</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#arx-utility-metrics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TER — Data Anonymization &amp; Utility" class="md-header__button md-logo" aria-label="TER — Data Anonymization & Utility" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TER — Data Anonymization & Utility
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ARX Utility Metrics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Yvngval/TER_Project_docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Yvngval/TER_Project_docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../anonymisation/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Anonymization
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ARX Utility Metrics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../classification/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Classification
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../structure_scripts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Script Structure
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../formats_fichiers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  File Formats
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TER — Data Anonymization &amp; Utility" class="md-nav__button md-logo" aria-label="TER — Data Anonymization & Utility" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TER — Data Anonymization & Utility
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Yvngval/TER_Project_docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Yvngval/TER_Project_docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../anonymisation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anonymization
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anonymization
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anonymisation/mesures_utilite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quality Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anonymisation/fonctions_agregats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aggregate Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ARX Utility Metrics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ARX Utility Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Role
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalence-class-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equivalence class metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#per-attribute-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-attribute metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Per-attribute metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#granularity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Granularity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-uniform-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-uniform Entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generalization-intensity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generalization Intensity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attribute-level-squared-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attribute-level Squared Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-structural-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global structural metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Global structural metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#discernibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discernibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ambiguity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ambiguity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssesst-sum-of-squared-errors-for-sensitive-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSESST — Sum of Squared Errors for Sensitive attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#record-level-squared-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Record-level Squared Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimization-scores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimization scores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary table
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structure_scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../formats_fichiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="arx-utility-metrics">ARX Utility Metrics<a class="headerlink" href="#arx-utility-metrics" title="Permanent link">&para;</a></h1>
+<p>After each anonymization experiment, ARX — through the RECITALS interface — exposes a set of analysis metrics that characterize the structure and quality of the anonymized dataset. These metrics are retrieved from the <code>ARXResult</code> object returned by RECITALS.</p>
+<hr />
+<h2 id="role">Role<a class="headerlink" href="#role" title="Permanent link">&para;</a></h2>
+<p>While <a href="../anonymisation/mesures_utilite/">quality models</a> guide the optimizer <em>during</em> anonymization, the ARX utility metrics are read <em>after</em> anonymization to objectively characterize the result: how large are the equivalence classes, how much information was lost per attribute, how many records were suppressed.</p>
+<pre class="mermaid"><code>flowchart LR
+    A[Anonymization\nARX optimizer] --&gt; B[ARXResult\nRECITALS]
+    B --&gt; C[Equivalence class metrics]
+    B --&gt; D[Per-attribute metrics]
+    B --&gt; E[Global structural metrics]
+    B --&gt; F[Optimization scores]</code></pre>
+<hr />
+<h2 id="equivalence-class-metrics">Equivalence class metrics<a class="headerlink" href="#equivalence-class-metrics" title="Permanent link">&para;</a></h2>
+<p>Equivalence classes are the groups of records that become indistinguishable from each other on the quasi-identifiers after anonymization.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Number of equivalence classes</strong></td>
+<td>Total count of distinct groups in the anonymized dataset</td>
+</tr>
+<tr>
+<td><strong>Average equivalence class size</strong></td>
+<td>Mean number of records per group</td>
+</tr>
+<tr>
+<td><strong>Minimum equivalence class size</strong></td>
+<td>Smallest group (ideally ≥ k)</td>
+</tr>
+<tr>
+<td><strong>Maximum equivalence class size</strong></td>
+<td>Largest group (large values indicate over-generalization)</td>
+</tr>
+<tr>
+<td><strong>Number of suppressed records</strong></td>
+<td>Records removed because no valid anonymization was found</td>
+</tr>
+</tbody>
+</table>
+<p>A well-anonymized dataset has equivalence classes whose sizes are close to each other (balanced groups) and whose minimum is at least k.</p>
+<hr />
+<h2 id="per-attribute-metrics">Per-attribute metrics<a class="headerlink" href="#per-attribute-metrics" title="Permanent link">&para;</a></h2>
+<p>These metrics are computed independently for each quasi-identifier and expose the degree and nature of generalization applied to that attribute.</p>
+<h3 id="granularity">Granularity<a class="headerlink" href="#granularity" title="Permanent link">&para;</a></h3>
+<p>Measures the proportion of information preserved for a given attribute after generalization. A value of <strong>1</strong> means no generalization was applied; a value of <strong>0</strong> means the attribute was fully suppressed.</p>
+<div class="arithmatex">\[\text{granularity}(a) = \frac{\text{preserved information}}{\text{total information in hierarchy}}\]</div>
+<h3 id="non-uniform-entropy">Non-uniform Entropy<a class="headerlink" href="#non-uniform-entropy" title="Permanent link">&para;</a></h3>
+<p>Measures the entropy of an attribute's distribution in the anonymized dataset, weighted by the actual frequencies in the original data. Unlike uniform entropy, it accounts for the fact that some values are more common than others.</p>
+<p>A higher value indicates greater uncertainty about the original value — i.e., more information loss for that attribute.</p>
+<h3 id="generalization-intensity">Generalization Intensity<a class="headerlink" href="#generalization-intensity" title="Permanent link">&para;</a></h3>
+<p>Measures how deeply values were pushed into the generalization hierarchy for a given attribute. It is expressed as a ratio of the generalization level applied to the maximum height of the hierarchy.</p>
+<div class="arithmatex">\[\text{intensity}(a) = \frac{\text{applied generalization level}}{\text{max hierarchy height}}\]</div>
+<ul>
+<li><strong>0</strong>: no generalization (original values kept).</li>
+<li><strong>1</strong>: full generalization (values suppressed to <code>*</code>).</li>
+</ul>
+<h3 id="attribute-level-squared-error">Attribute-level Squared Error<a class="headerlink" href="#attribute-level-squared-error" title="Permanent link">&para;</a></h3>
+<p>Measures the squared error between original and generalized values for a given attribute, at the attribute level. It quantifies how far the generalized value is from the original, on average.</p>
+<hr />
+<h2 id="global-structural-metrics">Global structural metrics<a class="headerlink" href="#global-structural-metrics" title="Permanent link">&para;</a></h2>
+<h3 id="discernibility">Discernibility<a class="headerlink" href="#discernibility" title="Permanent link">&para;</a></h3>
+<p>Penalizes large equivalence classes by computing the sum of the squares of all class sizes.</p>
+<div class="arithmatex">\[\text{discernibility} = \sum_{G \in \mathcal{G}} |G|^2\]</div>
+<p>A lower value is better: it indicates that records are spread across many small, precise groups rather than a few large, vague ones.</p>
+<h3 id="ambiguity">Ambiguity<a class="headerlink" href="#ambiguity" title="Permanent link">&para;</a></h3>
+<p>Measures the total ambiguity across all records — i.e., the number of original records that each anonymized record could correspond to, summed across the dataset.</p>
+<h3 id="ssesst-sum-of-squared-errors-for-sensitive-attributes">SSESST — Sum of Squared Errors for Sensitive attributes<a class="headerlink" href="#ssesst-sum-of-squared-errors-for-sensitive-attributes" title="Permanent link">&para;</a></h3>
+<p>Measures the total squared error introduced on sensitive attributes (here <code>income</code>) by the anonymization process. A value of <strong>0</strong> means the sensitive attribute was never altered.</p>
+<h3 id="record-level-squared-error">Record-level Squared Error<a class="headerlink" href="#record-level-squared-error" title="Permanent link">&para;</a></h3>
+<p>Measures the squared error aggregated at the record level across all attributes. It quantifies the average distortion per record introduced by generalization.</p>
+<hr />
+<h2 id="optimization-scores">Optimization scores<a class="headerlink" href="#optimization-scores" title="Permanent link">&para;</a></h2>
+<p>ARX reports the value of the objective function (the chosen <a href="../anonymisation/mesures_utilite/">quality model</a>) for the transformation it selected.</p>
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Minimum optimization score</strong></td>
+<td>Best (lowest) information loss found across the search</td>
+</tr>
+<tr>
+<td><strong>Maximum optimization score</strong></td>
+<td>Worst (highest) information loss found across the search</td>
+</tr>
+</tbody>
+</table>
+<p>For multi-attribute quality models (e.g. <code>loss</code> with <code>arithmetic_mean</code>), these scores may be a scalar or a vector depending on the chosen <a href="../anonymisation/fonctions_agregats/">aggregate function</a>.</p>
+<hr />
+<h2 id="summary-table">Summary table<a class="headerlink" href="#summary-table" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Scope</th>
+<th>Provided by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number of equivalence classes</td>
+<td>Global</td>
+<td><code>get_number_of_equivalence_classes()</code></td>
+</tr>
+<tr>
+<td>Average equivalence class size</td>
+<td>Global</td>
+<td><code>get_average_equivalence_class_size()</code></td>
+</tr>
+<tr>
+<td>Min / Max equivalence class size</td>
+<td>Global</td>
+<td><code>get_min/max_equivalence_class_size()</code></td>
+</tr>
+<tr>
+<td>Number of suppressed records</td>
+<td>Global</td>
+<td><code>get_number_of_suppressed_records()</code></td>
+</tr>
+<tr>
+<td>Granularity</td>
+<td>Per attribute</td>
+<td><code>get_granularity_metric(attribute)</code></td>
+</tr>
+<tr>
+<td>Non-uniform entropy</td>
+<td>Per attribute</td>
+<td><code>get_non_uniform_entropy_metric(attribute)</code></td>
+</tr>
+<tr>
+<td>Generalization intensity</td>
+<td>Per attribute</td>
+<td><code>get_generalization_intensity_metric(attribute)</code></td>
+</tr>
+<tr>
+<td>Attribute-level squared error</td>
+<td>Per attribute</td>
+<td><code>get_attribute_level_squared_error_metric(attribute)</code></td>
+</tr>
+<tr>
+<td>Discernibility</td>
+<td>Global</td>
+<td><code>get_discernability_metric()</code></td>
+</tr>
+<tr>
+<td>Ambiguity</td>
+<td>Global</td>
+<td><code>get_ambiguity_metric()</code></td>
+</tr>
+<tr>
+<td>SSESST</td>
+<td>Global</td>
+<td><code>get_ssesst_metric()</code></td>
+</tr>
+<tr>
+<td>Record-level squared error</td>
+<td>Global</td>
+<td><code>get_record_level_squared_error_metric()</code></td>
+</tr>
+<tr>
+<td>Min / Max optimization score</td>
+<td>Global</td>
+<td><code>get_optimization_score_min/max()</code></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

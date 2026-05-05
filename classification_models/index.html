@@ -1,0 +1,1146 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://yvngval.github.io/TER_Project_docs/classification_models/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>classification_models — Guide d'intégration - TER — Data Anonymization & Utility</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#classification_models-guide-dintegration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TER — Data Anonymization &amp; Utility" class="md-header__button md-logo" aria-label="TER — Data Anonymization & Utility" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TER — Data Anonymization & Utility
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              classification_models — Guide d'intégration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Yvngval/TER_Project_docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Yvngval/TER_Project_docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../anonymisation/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Anonymization
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../metriques/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ARX Utility Metrics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../classification/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Classification
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../structure_scripts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Script Structure
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../formats_fichiers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  File Formats
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TER — Data Anonymization &amp; Utility" class="md-nav__button md-logo" aria-label="TER — Data Anonymization & Utility" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TER — Data Anonymization & Utility
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Yvngval/TER_Project_docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Yvngval/TER_Project_docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../anonymisation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anonymization
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anonymization
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anonymisation/mesures_utilite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quality Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anonymisation/fonctions_agregats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aggregate Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metriques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ARX Utility Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structure_scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../formats_fichiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="classification_models-guide-dintegration">classification_models — Guide d'intégration<a class="headerlink" href="#classification_models-guide-dintegration" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Fichier source :</strong> <code>scripts/classification_models.py</code><br />
+<strong>Rôle :</strong> Construit des pipelines scikit-learn qui reproduisent le comportement des classifieurs ARX, afin de mesurer l'utilité d'un jeu de données anonymisé par sa précision de classification.</p>
+</blockquote>
+<hr />
+<h2 id="table-des-matieres">Table des matières<a class="headerlink" href="#table-des-matieres" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-vue-densemble">Vue d'ensemble</a></li>
+<li><a href="#2-dépendances">Dépendances</a></li>
+<li><a href="#3-format-des-données-attendu">Format des données attendu</a></li>
+<li><a href="#4-configuration--classification_configjson">Configuration — <code>classification_config.json</code></a></li>
+<li><a href="#5-api-publique">API publique</a></li>
+<li><a href="#6-pipelines-de-prétraitement-par-modèle">Pipelines de prétraitement par modèle</a></li>
+<li><a href="#7-exemple-dintégration-minimal">Exemple d'intégration minimal</a></li>
+<li><a href="#8-valeurs-supprimées-et-généralisées">Valeurs supprimées et généralisées</a></li>
+<li><a href="#9-correspondance-arx--scikit-learn">Correspondance ARX ↔ scikit-learn</a></li>
+<li><a href="#10-points-dattention-pour-lintégration">Points d'attention pour l'intégration</a></li>
+</ol>
+<hr />
+<h2 id="1-vue-densemble">1. Vue d'ensemble<a class="headerlink" href="#1-vue-densemble" title="Permanent link">&para;</a></h2>
+<p>Le module expose une <strong>fabrique de modèles</strong> (<code>get_model_builders</code>) qui retourne un dictionnaire de callables. Chaque callable, appelé sans argument, produit un <strong>pipeline sklearn frais</strong> prêt à être entraîné sur un fold de validation croisée.</p>
+<p>Les quatre classifieurs disponibles :</p>
+<table>
+<thead>
+<tr>
+<th>Clé dans le registre</th>
+<th>Classe sklearn</th>
+<th>Équivalent ARX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zero_r</code></td>
+<td><code>DummyClassifier("prior")</code></td>
+<td>ZeroR (baseline)</td>
+</tr>
+<tr>
+<td><code>logistic_regression</code></td>
+<td><code>LogisticRegression</code></td>
+<td>Mahout <code>OnlineLogisticRegression</code></td>
+</tr>
+<tr>
+<td><code>naive_bayes</code></td>
+<td><code>MultinomialNB</code>/<code>BernoulliNB</code></td>
+<td>SMILE <code>NaiveBayes</code></td>
+</tr>
+<tr>
+<td><code>random_forest</code></td>
+<td><code>RandomForestClassifier</code></td>
+<td>SMILE <code>RandomForest</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-dependances">2. Dépendances<a class="headerlink" href="#2-dependances" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>scikit-learn &gt;= 1.3
+numpy &gt;= 1.24
+</code></pre></div>
+<p>Aucune autre dépendance externe. Le module n'importe pas pandas — les DataFrames passés en entrée sont acceptés mais convertis en tableaux numpy en interne.</p>
+<hr />
+<h2 id="3-format-des-donnees-attendu">3. Format des données attendu<a class="headerlink" href="#3-format-des-donnees-attendu" title="Permanent link">&para;</a></h2>
+<h3 id="colonnes">Colonnes<a class="headerlink" href="#colonnes" title="Permanent link">&para;</a></h3>
+<p>Les <strong>14 colonnes de features</strong> du dataset Adult (dans n'importe quel ordre) :</p>
+<div class="highlight"><pre><span></span><code>age, workclass, fnlwgt, education, education-num,
+marital-status, occupation, relationship, race, sex,
+capital-gain, capital-loss, hours-per-week, native-country
+</code></pre></div>
+<p>La colonne cible (<code>income</code> par défaut, ou celle spécifiée dans <code>classification_config.json</code>) doit être fournie séparément comme vecteur <code>y</code>.</p>
+<h3 id="types-de-valeurs-acceptees">Types de valeurs acceptées<a class="headerlink" href="#types-de-valeurs-acceptees" title="Permanent link">&para;</a></h3>
+<p>Les colonnes peuvent contenir des valeurs :</p>
+<table>
+<thead>
+<tr>
+<th>Type de valeur</th>
+<th>Exemple</th>
+<th>Traitement appliqué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Numérique exact</td>
+<td><code>"37"</code>, <code>37</code></td>
+<td>Converti en <code>float</code></td>
+</tr>
+<tr>
+<td>Intervalle généralisé</td>
+<td><code>"30-39"</code></td>
+<td>Remplacé par le midpoint → <code>34.5</code></td>
+</tr>
+<tr>
+<td>Supprimé</td>
+<td><code>"*"</code></td>
+<td>Traité comme valeur inconnue, puis imputé</td>
+</tr>
+<tr>
+<td>Inconnu</td>
+<td><code>"?"</code>, <code>""</code></td>
+<td>Traité comme valeur inconnue, puis imputé</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Les colonnes numériques concernées par la conversion midpoint sont :<br />
+<code>age</code>, <code>fnlwgt</code>, <code>education-num</code>, <code>capital-gain</code>, <code>capital-loss</code>, <code>hours-per-week</code></p>
+</blockquote>
+<hr />
+<h2 id="4-configuration-classification_configjson">4. Configuration — <code>classification_config.json</code><a class="headerlink" href="#4-configuration-classification_configjson" title="Permanent link">&para;</a></h2>
+<p>Chemin attendu : <code>configs/classification_config.json</code></p>
+<h3 id="structure-complete">Structure complète<a class="headerlink" href="#structure-complete" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;n_folds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;random_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;income&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;active_models&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;feature_cols&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;workclass&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;fnlwgt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;classifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;logistic_regression&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;C&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100000</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;penalty&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;elasticnet&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;l1_ratio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;solver&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;saga&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;max_iter&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2000</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;naive_bayes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MULTINOMIAL&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;preprocessing&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;n_bins&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;bin_strategy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uniform&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;alpha&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;random_forest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;n_estimators&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;max_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sqrt&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;min_samples_leaf&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;max_leaf_nodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;bootstrap&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;max_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;criterion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gini&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;zero_r&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="champ-active_models">Champ <code>active_models</code><a class="headerlink" href="#champ-active_models" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Valeur</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"all"</code></td>
+<td>Active les 4 classifieurs (défaut)</td>
+</tr>
+<tr>
+<td><code>"naive_bayes"</code></td>
+<td>Active uniquement Naive Bayes</td>
+</tr>
+<tr>
+<td><code>["zero_r", "random_forest"]</code></td>
+<td>Active les modèles listés</td>
+</tr>
+</tbody>
+</table>
+<h3 id="priorite-des-hyperparametres">Priorité des hyperparamètres<a class="headerlink" href="#priorite-des-hyperparametres" title="Permanent link">&para;</a></h3>
+<p>Les paramètres du config <strong>surchargent</strong> les défauts internes. Si une clé est absente du config, la valeur par défaut est utilisée :</p>
+<div class="highlight"><pre><span></span><code>params_effectifs = {**DEFAULT_*_PARAMS, **config[&quot;classifiers&quot;][nom][&quot;params&quot;]}
+</code></pre></div>
+<hr />
+<h2 id="5-api-publique">5. API publique<a class="headerlink" href="#5-api-publique" title="Permanent link">&para;</a></h2>
+<h3 id="split_num_catfeature_cols"><code>split_num_cat(feature_cols)</code><a class="headerlink" href="#split_num_catfeature_cols" title="Permanent link">&para;</a></h3>
+<p>Divise une liste de colonnes en colonnes numériques et catégorielles.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">classification_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">split_num_cat</span>
+
+<span class="n">num_cols</span><span class="p">,</span> <span class="n">cat_cols</span> <span class="o">=</span> <span class="n">split_num_cat</span><span class="p">(</span><span class="n">feature_cols</span><span class="p">)</span>
+<span class="c1"># num_cols → [&quot;age&quot;, &quot;fnlwgt&quot;, &quot;education-num&quot;, ...]</span>
+<span class="c1"># cat_cols → [&quot;workclass&quot;, &quot;education&quot;, &quot;marital-status&quot;, ...]</span>
+</code></pre></div>
+<hr />
+<h3 id="get_model_buildersnum_cols-cat_cols-config-random_state42"><code>get_model_builders(num_cols, cat_cols, config, random_state=42)</code><a class="headerlink" href="#get_model_buildersnum_cols-cat_cols-config-random_state42" title="Permanent link">&para;</a></h3>
+<p>Point d'entrée principal. Retourne un dictionnaire <code>{nom → factory}</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">classification_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model_builders</span><span class="p">,</span> <span class="n">split_num_cat</span>
+
+<span class="n">num_cols</span><span class="p">,</span> <span class="n">cat_cols</span> <span class="o">=</span> <span class="n">split_num_cat</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;feature_cols&quot;</span><span class="p">])</span>
+<span class="n">builders</span> <span class="o">=</span> <span class="n">get_model_builders</span><span class="p">(</span><span class="n">num_cols</span><span class="p">,</span> <span class="n">cat_cols</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+<span class="c1"># builders est de la forme :</span>
+<span class="c1"># {</span>
+<span class="c1">#   &quot;zero_r&quot;:              &lt;function&gt;,</span>
+<span class="c1">#   &quot;logistic_regression&quot;: &lt;function&gt;,</span>
+<span class="c1">#   &quot;naive_bayes&quot;:         &lt;function&gt;,</span>
+<span class="c1">#   &quot;random_forest&quot;:       &lt;function&gt;,</span>
+<span class="c1"># }</span>
+
+<span class="c1"># Créer un pipeline frais pour un fold :</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">builders</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]()</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Important :</strong> appeler <code>builders["random_forest"]()</code> à chaque fold pour obtenir une instance fraîche — ne jamais réutiliser un pipeline déjà entraîné.</p>
+</blockquote>
+<hr />
+<h3 id="build_zero_r-build_logistic_regression-build_naive_bayes-build_random_forest"><code>build_zero_r()</code> / <code>build_logistic_regression(...)</code> / <code>build_naive_bayes(...)</code> / <code>build_random_forest(...)</code><a class="headerlink" href="#build_zero_r-build_logistic_regression-build_naive_bayes-build_random_forest" title="Permanent link">&para;</a></h3>
+<p>Ces fonctions sont utilisables directement si vous avez besoin de construire un modèle spécifique sans passer par le registre.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">classification_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_naive_bayes</span><span class="p">,</span> <span class="n">split_num_cat</span>
+
+<span class="n">num_cols</span><span class="p">,</span> <span class="n">cat_cols</span> <span class="o">=</span> <span class="n">split_num_cat</span><span class="p">(</span><span class="n">feature_cols</span><span class="p">)</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">build_naive_bayes</span><span class="p">(</span>
+    <span class="n">num_cols</span><span class="o">=</span><span class="n">num_cols</span><span class="p">,</span>
+    <span class="n">cat_cols</span><span class="o">=</span><span class="n">cat_cols</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;MULTINOMIAL&quot;</span><span class="p">,</span>
+    <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+    <span class="n">n_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">bin_strategy</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="6-pipelines-de-pretraitement-par-modele">6. Pipelines de prétraitement par modèle<a class="headerlink" href="#6-pipelines-de-pretraitement-par-modele" title="Permanent link">&para;</a></h2>
+<h3 id="zeror">ZeroR<a class="headerlink" href="#zeror" title="Permanent link">&para;</a></h3>
+<p>Aucun prétraitement. Le <code>DummyClassifier</code> prédit directement les fréquences de classe du fold d'entraînement.</p>
+<hr />
+<h3 id="logistic-regression">Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Colonnes numériques :
+  valeur brute → midpoint (ex. &quot;30-39&quot; → 34.5) → imputation (moyenne) → StandardScaler
+
+Colonnes catégorielles :
+  valeur brute → OrdinalEncoder (&quot;*&quot; → -1) → imputation (mode) → OneHotEncoder
+</code></pre></div>
+<p><strong>Pourquoi StandardScaler ?</strong> La descente de gradient (<code>solver="saga"</code>) converge beaucoup plus rapidement avec des features normalisées.</p>
+<hr />
+<h3 id="naive-bayes">Naive Bayes<a class="headerlink" href="#naive-bayes" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Colonnes numériques :
+  valeur brute → midpoint → imputation (moyenne) → KBinsDiscretizer (10 bins, one-hot-dense)
+
+Colonnes catégorielles :
+  valeur brute → OrdinalEncoder (&quot;*&quot; → -1) → imputation (mode) → OneHotEncoder
+</code></pre></div>
+<p><strong>Pourquoi discrétiser les numériques ?</strong> <code>MultinomialNB</code> requiert des features entières non-négatives. La discrétisation en bins one-hot satisfait cette contrainte tout en restant fidèle au comportement ARX/SMILE.</p>
+<hr />
+<h3 id="random-forest">Random Forest<a class="headerlink" href="#random-forest" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Colonnes numériques :
+  valeur brute → midpoint → imputation (moyenne)   ← pas de scaling
+
+Colonnes catégorielles :
+  valeur brute → OrdinalEncoder (&quot;*&quot; → -1) → imputation (mode)   ← pas de one-hot
+</code></pre></div>
+<p><strong>Pourquoi pas de scaling ni de one-hot ?</strong> Les arbres de décision splitent sur des seuils et sont invariants à l'échelle. L'encodage ordinal suffit ; le one-hot augmenterait inutilement la dimensionnalité.</p>
+<hr />
+<h2 id="7-exemple-dintegration-minimal">7. Exemple d'intégration minimal<a class="headerlink" href="#7-exemple-dintegration-minimal" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">StratifiedKFold</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">classification_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model_builders</span><span class="p">,</span> <span class="n">split_num_cat</span>
+
+<span class="c1"># --- 1. Charger config et données ---</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;configs/classification_config.json&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;outputs/anonymized.csv&quot;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>                       <span class="c1"># ex. &quot;income&quot;</span>
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;feature_cols&quot;</span><span class="p">]</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+
+<span class="c1"># --- 2. Construire le registre de modèles ---</span>
+<span class="n">num_cols</span><span class="p">,</span> <span class="n">cat_cols</span> <span class="o">=</span> <span class="n">split_num_cat</span><span class="p">(</span><span class="n">feature_cols</span><span class="p">)</span>
+<span class="n">builders</span> <span class="o">=</span> <span class="n">get_model_builders</span><span class="p">(</span><span class="n">num_cols</span><span class="p">,</span> <span class="n">cat_cols</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># --- 3. Validation croisée ---</span>
+<span class="n">cv</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;n_folds&quot;</span><span class="p">],</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                     <span class="n">random_state</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;random_state&quot;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">factory</span> <span class="ow">in</span> <span class="n">builders</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">all_preds</span><span class="p">,</span> <span class="n">all_true</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">train_idx</span><span class="p">,</span> <span class="n">test_idx</span> <span class="ow">in</span> <span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">pipe</span> <span class="o">=</span> <span class="n">factory</span><span class="p">()</span>                        <span class="c1"># pipeline frais à chaque fold</span>
+        <span class="n">pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">])</span>
+        <span class="n">all_preds</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pipe</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]))</span>
+        <span class="n">all_true</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">])</span>
+
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">all_true</span><span class="p">,</span> <span class="n">all_preds</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">: accuracy = </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="8-valeurs-supprimees-et-generalisees">8. Valeurs supprimées et généralisées<a class="headerlink" href="#8-valeurs-supprimees-et-generalisees" title="Permanent link">&para;</a></h2>
+<p>ARX produit des CSV dont certaines cellules contiennent des valeurs généralisées ou supprimées. Le module les gère automatiquement :</p>
+<table>
+<thead>
+<tr>
+<th>Valeur dans le CSV</th>
+<th>Colonne numérique</th>
+<th>Colonne catégorielle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"30-39"</code></td>
+<td>Midpoint → <code>34.5</code></td>
+<td>Traité comme catégorie <code>"30-39"</code></td>
+</tr>
+<tr>
+<td><code>"*"</code></td>
+<td>→ <code>NaN</code> → imputation (moyenne)</td>
+<td>→ code <code>-1</code> → imputation (mode)</td>
+</tr>
+<tr>
+<td><code>"?"</code></td>
+<td>→ <code>NaN</code> → imputation (moyenne)</td>
+<td>→ code <code>-1</code> → imputation (mode)</td>
+</tr>
+<tr>
+<td><code>""</code></td>
+<td>→ <code>NaN</code> → imputation (moyenne)</td>
+<td>→ code <code>-1</code> → imputation (mode)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>L'imputation est <strong>apprise sur le fold d'entraînement uniquement</strong> et appliquée au fold de test — aucune fuite de données.</p>
+</blockquote>
+<hr />
+<h2 id="9-correspondance-arx-scikit-learn">9. Correspondance ARX ↔ scikit-learn<a class="headerlink" href="#9-correspondance-arx-scikit-learn" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Paramètre ARX</th>
+<th>Valeur scikit-learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LR : pas de régularisation forte</td>
+<td><code>C=100_000</code> (régularisation quasi-nulle)</td>
+</tr>
+<tr>
+<td>LR : ElasticNet</td>
+<td><code>penalty="elasticnet"</code>, <code>l1_ratio=0.5</code></td>
+</tr>
+<tr>
+<td>NB : Laplace smoothing</td>
+<td><code>alpha=1.0</code></td>
+</tr>
+<tr>
+<td>NB : discrétisation numérique</td>
+<td><code>KBinsDiscretizer(n_bins=10, strategy="uniform")</code></td>
+</tr>
+<tr>
+<td>RF : <code>sqrt</code> features</td>
+<td><code>max_features="sqrt"</code></td>
+</tr>
+<tr>
+<td>RF : bootstrap complet</td>
+<td><code>bootstrap=True</code>, <code>max_samples=1.0</code></td>
+</tr>
+<tr>
+<td>RF : 500 arbres</td>
+<td><code>n_estimators=500</code></td>
+</tr>
+<tr>
+<td>RF : Gini</td>
+<td><code>criterion="gini"</code></td>
+</tr>
+<tr>
+<td>CV : accumulation globale</td>
+<td>OOF concatenation (non-moyenne par fold)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-points-dattention-pour-lintegration">10. Points d'attention pour l'intégration<a class="headerlink" href="#10-points-dattention-pour-lintegration" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Ne pas réutiliser un pipeline entre folds.</strong> Appeler <code>factory()</code> à chaque fold pour garantir un état propre.</p>
+</li>
+<li>
+<p><strong>Les colonnes doivent être présentes dans le DataFrame.</strong> Si une colonne de <code>feature_cols</code> est absente du CSV anonymisé, <code>ColumnTransformer</code> lèvera une <code>ValueError</code>.</p>
+</li>
+<li>
+<p><strong>Le champ <code>target</code> du config est la colonne à prédire</strong>, pas nécessairement <code>"income"</code>. Vérifier que cette colonne existe dans le CSV et qu'elle n'est pas dans <code>feature_cols</code>.</p>
+</li>
+<li>
+<p><strong><code>active_models</code> dans le config</strong> contrôle quels modèles sont inclus dans le registre retourné par <code>get_model_builders</code>. Si vous ne voulez faire tourner qu'un modèle, mettez <code>"active_models": "naive_bayes"</code> plutôt que de filtrer en dehors.</p>
+</li>
+<li>
+<p><strong>Parallélisme :</strong> <code>RandomForestClassifier</code> est construit avec <code>n_jobs=-1</code> (tous les cœurs disponibles). Si vous parallélisez vous-même la boucle de CV avec <code>joblib</code>, préférez <code>n_jobs=1</code> dans le config pour éviter une sursouscription CPU.</p>
+</li>
+<li>
+<p><strong>Reproductibilité :</strong> le <code>random_state</code> du config est transmis à <code>RandomForestClassifier</code> et au <code>StratifiedKFold</code>. Pour reproduire exactement les résultats, utiliser les mêmes valeurs que dans le config de référence (<code>random_state: 42</code>).</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
