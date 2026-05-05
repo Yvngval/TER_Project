@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MIA - baseline - baseline_no_anonymization - A1_demographic</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --panel-2: #f6f8fa;
+    --line: #d0d7de;
+    --text: #1f2328;
+    --muted: #57606a;
+    --accent: #0969da;
+    --accent-soft: rgba(9, 105, 218, 0.08);
+    --good: #1a7f37;
+    --good-soft: rgba(26, 127, 55, 0.12);
+    --warn: #9a6700;
+    --warn-soft: rgba(154, 103, 0, 0.12);
+    --danger: #cf222e;
+    --danger-soft: rgba(207, 34, 46, 0.12);
+    --radius: 18px;
+    --shadow: 0 4px 14px rgba(31, 35, 40, 0.06);
+    --font: Inter, system-ui, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--text);
+    background:
+      radial-gradient(circle at top right, rgba(9, 105, 218, 0.05), transparent 24%),
+      #ffffff;
+    line-height: 1.65;
+  }
+  header {
+    padding: 52px 28px 36px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(135deg, rgba(9, 105, 218, 0.06), rgba(9, 105, 218, 0) 45%);
+  }
+  .wrap { max-width: 1220px; margin: 0 auto; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid rgba(9, 105, 218, 0.22);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 18px 0 12px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+  .lead { max-width: 920px; color: var(--muted); font-size: 1rem; }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; gap: 18px; flex-wrap: wrap; padding: 14px 28px; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; }
+  nav a:hover { color: var(--accent); }
+  main { padding: 28px; }
+  section { margin: 0 0 22px; }
+  .card {
+    background-color: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+  }
+  .section-title { margin: 0 0 16px; font-size: 1.55rem; letter-spacing: -0.02em; }
+  .section-subtitle { margin: -4px 0 18px; color: var(--muted); font-size: .96rem; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .metric {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 16px 14px;
+  }
+  .metric .k {
+    color: var(--muted);
+    font-size: .76rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .metric .v {
+    margin-top: 6px;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .good { color: var(--good); }
+  .warn { color: var(--warn); }
+  .danger { color: var(--danger); }
+  .accent { color: var(--accent); }
+  .two { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+  .callout {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 16px 16px 0;
+    padding: 14px 16px;
+    color: var(--text);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+  }
+  th, td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  th {
+    color: var(--accent);
+    font-size: .75rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    background: rgba(9, 105, 218, 0.06);
+  }
+  code {
+    font-family: var(--mono);
+    font-size: .82rem;
+    color: var(--accent);
+    background: rgba(9, 105, 218, 0.08);
+    padding: 2px 6px;
+    border-radius: 8px;
+  }
+  .small { color: var(--muted); font-size: .88rem; }
+  .chart-card {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .chart-wrap { position: relative; height: 340px; }
+  .cm {
+    display: grid;
+    grid-template-columns: 110px 1fr 1fr;
+    gap: 10px;
+    align-items: stretch;
+    font-size: .92rem;
+  }
+  .cm .label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .cm .cell {
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    padding: 16px;
+    min-height: 98px;
+    background: var(--panel-2);
+  }
+  .cm .cell strong {
+    display: block;
+    font-size: 1.6rem;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .cell.tp { background: rgba(26, 127, 55, 0.10); }
+  .cell.tn { background: rgba(9, 105, 218, 0.10); }
+  .cell.fp { background: rgba(207, 34, 46, 0.10); }
+  .cell.fn { background: rgba(154, 103, 0, 0.10); }
+  ul.clean { margin: 8px 0 0 18px; padding: 0; }
+  @media (max-width: 980px) { .two { grid-template-columns: 1fr; } }
+  @media print {
+    nav { display: none; }
+    body { background: white; color: black; }
+    .card, .metric, table, .chart-card { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">TER</div>
+    <h1>MIA - baseline - baseline_no_anonymization - A1_demographic</h1>
+    <p class="lead">Report automatically generated from a membership inference attack <code>summary.json</code> and the <code>targets.csv</code> file. It summarizes the attack configuration, its performance, the IN vs OUT comparison and complexity counters.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#summary">Summary</a>
+    <a href="#protocol">Configuration</a>
+    
+    <a href="#mia">MIA</a>
+    <a href="#stages">Stage 1 / Stage 2</a>
+    
+    <a href="#distribution">IN vs OUT analysis</a>
+    <a href="#complexity">Complexity</a>
+    
+    <a href="#details">Raw details</a>
+  </div>
+</nav>
+
+<main class="wrap">
+<section id="summary" class="card">
+  <h2 class="section-title">1. Executive summary</h2>
+  <div class="grid"><div class='metric'><div class='k'>MIA targets</div><div class='v '>1,000</div></div><div class='metric'><div class='k'>IN</div><div class='v '>500</div></div><div class='metric'><div class='k'>OUT</div><div class='v '>500</div></div><div class='metric'><div class='k'>Accuracy</div><div class='v warn'>50.20%</div></div><div class='metric'><div class='k'>Precision</div><div class='v '>50.10%</div></div><div class='metric'><div class='k'>Member recall</div><div class='v '>100.00%</div></div><div class='metric'><div class='k'>Non-member TNR</div><div class='v '>0.40%</div></div><div class='metric'><div class='k'>F1-score</div><div class='v accent'>66.76%</div></div></div>
+  <div class="two" style="margin-top:16px;">
+    <div class="callout"><strong>Synthesis:</strong> The overall MIA accuracy is <strong>50.20%</strong>. Member detection achieves a precision of <strong>50.10%</strong> and a recall of <strong>100.00%</strong>. The KS test on the compatible candidate fraction yields <strong>p = 0.719</strong>. Using only the <code>compatible_candidate_fraction</code> variable, the best observed accuracy is <strong>50.80%</strong> with a threshold around <strong>0.46%</strong>.</div>
+    <div class="callout"><strong>Files used:</strong><br><table><thead><tr><th>File</th><th>Path</th></tr></thead><tbody><tr><td>summary.json</td><td><code>attacks\mia\baseline__baseline_no_anonymization__A1_demographic\summary.json</code></td></tr><tr><td>targets.csv</td><td><code>attacks\mia\baseline__baseline_no_anonymization__A1_demographic\targets.csv</code></td></tr><tr><td>config.json</td><td><code>C:\Users\Louis\TER\TER_v2\ter_benchmark_starter_branch_24_04\outputs\campaigns\attack_benchmark_v1\releases\baseline_no_anonymization\runtime_config.json</code></td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section id="protocol" class="card">
+  <h2 class="section-title">2. Configuration</h2>
+  <table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><td>Attack ID</td><td><code>baseline__baseline_no_anonymization__A1_demographic</code></td></tr><tr><td>Attacker's known QIDs</td><td>age, sex, race</td></tr><tr><td>Stage 1 QIDs</td><td>—</td></tr><tr><td>Stage 2 QIDs</td><td>age, sex, race</td></tr><tr><td>Targets</td><td>1,000</td></tr><tr><td>Members / non-members</td><td>500 / 500</td></tr><tr><td>Max compatible fraction threshold</td><td>9.00%</td></tr><tr><td>PrivJedAI fuzzy</td><td>false</td></tr><tr><td>Seed</td><td>42</td></tr><tr><td>Anonymization QIs</td><td>—</td></tr><tr><td>k / l / t</td><td><code>k=1</code> · <code>l=</code> · <code>t=</code></td></tr><tr><td>Suppression limit</td><td><code>0.0</code></td></tr><tr><td>Transformations</td><td>—</td></tr></tbody></table>
+</section>
+
+
+
+<section id="mia" class="card">
+  <h2 class="section-title">4. Membership inference attack analysis</h2>
+  <div class="grid">
+    <div class="metric"><div class="k">TP</div><div class="v good">500</div></div>
+    <div class="metric"><div class="k">TN</div><div class="v accent">2</div></div>
+    <div class="metric"><div class="k">FP</div><div class="v danger">498</div></div>
+    <div class="metric"><div class="k">FN</div><div class="v warn">0</div></div>
+  </div>
+
+  <div class="two" style="margin-top:16px;">
+    <div>
+      <h3 style="margin-top:0">Confusion matrix</h3>
+      <div class="cm">
+        <div></div>
+        <div class="label">Predicted IN</div>
+        <div class="label">Predicted OUT</div>
+        <div class="label">Actual IN</div>
+        <div class="cell tp"><strong>500</strong>TP · correctly detected members</div>
+        <div class="cell fn"><strong>0</strong>FN · missed members</div>
+        <div class="label">Actual OUT</div>
+        <div class="cell fp"><strong>498</strong>FP · false members</div>
+        <div class="cell tn"><strong>2</strong>TN · correctly rejected non-members</div>
+      </div>
+    </div>
+    <div>
+      <table><thead><tr><th>Indicator</th><th>Value</th></tr></thead><tbody><tr><td>Accuracy</td><td>50.20%</td></tr><tr><td>Precision</td><td>50.10%</td></tr><tr><td>Member recall</td><td>100.00%</td></tr><tr><td>Non-member TNR</td><td>0.40%</td></tr><tr><td>F1-score</td><td>66.76%</td></tr><tr><td>Predicted IN / OUT</td><td>998 / 2</td></tr><tr><td>Avg. compatible count (IN)</td><td>279.37</td></tr><tr><td>Avg. compatible count (OUT)</td><td>273.80</td></tr><tr><td>Avg. compatible fraction (IN)</td><td>0.90%</td></tr><tr><td>Avg. compatible fraction (OUT)</td><td>0.89%</td></tr></tbody></table>
+    </div>
+  </div>
+</section>
+
+
+<section id="stages" class="card">
+  <h2 class="section-title">5. Stage 1 / Stage 2 equivalence class analysis</h2>
+  <p class="section-subtitle">Two-phase candidate reduction performed by the attack: stage 1 filters the anonymized table on generalized QIDs, then stage 2 refines the resulting equivalence class on clear-text attributes (with optional privJedAI fuzzy matching).</p>
+  <div class="grid">
+    <div class="metric"><div class="k">Stage 1 avg size (IN)</div><div class="v">30933.00</div></div>
+    <div class="metric"><div class="k">Stage 1 avg size (OUT)</div><div class="v">30933.00</div></div>
+    <div class="metric"><div class="k">Stage 2 avg size (IN)</div><div class="v">279.37</div></div>
+    <div class="metric"><div class="k">Stage 2 avg size (OUT)</div><div class="v">273.80</div></div>
+    <div class="metric"><div class="k">True record in stage 1 class (IN)</div><div class="v">0 / 500</div></div>
+    <div class="metric"><div class="k">Prefilter mode</div><div class="v" style="font-size:0.95rem">stage1_generalized_qids_then_stage2_cleartext_refinement</div></div>
+  </div>
+  <div class="two" style="margin-top:16px;">
+    <div>
+      <h3 style="margin-top:0">Attributes per stage</h3>
+      <table><thead><tr><th>Stage</th><th>Attributes used</th><th>#</th></tr></thead><tbody><tr><td>Stage 1 (generalized QIDs)</td><td>—</td><td>0</td></tr><tr><td>Stage 2 (clear-text refinement)</td><td>age, sex, race</td><td>3</td></tr></tbody></table>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Per-group size and reduction</h3>
+      <table><thead><tr><th>Group</th><th>Stage 1 avg size</th><th>Stage 1 median size</th><th>Stage 2 avg size</th><th>Stage 2 median size</th><th>Avg. absolute reduction</th><th>Avg. reduction rate</th></tr></thead><tbody><tr><td>IN (members)</td><td>30933.00</td><td>30933.00</td><td>279.37</td><td>271.00</td><td>30653.63</td><td>99.10%</td></tr><tr><td>OUT (non-members)</td><td>30933.00</td><td>30933.00</td><td>273.80</td><td>233.00</td><td>30659.20</td><td>99.11%</td></tr></tbody></table>
+      <div class="callout" style="margin-top:14px;">
+        A larger stage 1 class means the attacker starts with more noise; a smaller stage 2 class after refinement means the clear-text attributes were highly discriminative. Systematically larger stage 2 classes for the OUT group (than for the IN group) indicate that non-members are harder to match, which directly drives the MIA signal.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="distribution" class="card">
+  <h2 class="section-title">7. IN vs OUT analysis</h2>
+  <div class="grid">
+    <div class="metric"><div class="k">KS p-value</div><div class="v good">0.719</div></div>
+    <div class="metric"><div class="k">Best accuracy (fraction only)</div><div class="v warn">50.80%</div></div>
+    <div class="metric"><div class="k">Best threshold</div><div class="v">0.46%</div></div>
+    <div class="metric"><div class="k">Threshold used in the attack</div><div class="v">9.00%</div></div>
+  </div>
+  <div class="two" style="margin-top:16px;">
+    <div class="chart-card">
+      <h3 style="margin-top:0">Distribution of compatible candidate fraction</h3>
+      <div class="chart-wrap"><canvas id="histChart"></canvas></div>
+    </div>
+    <div>
+      <table><thead><tr><th>Group</th><th>Avg. compatible count</th><th>Median compatible count</th><th>Avg. compatible fraction</th><th>Median compatible fraction</th></tr></thead><tbody><tr><td>IN</td><td>279.37</td><td>271.00</td><td>0.90%</td><td>0.88%</td></tr><tr><td>OUT</td><td>273.80</td><td>233.00</td><td>0.89%</td><td>0.75%</td></tr></tbody></table>
+      <div class="callout" style="margin-top:14px;">
+        This section considers only the <code>compatible_candidate_fraction</code> variable. The more IN and OUT distributions overlap, the harder it is for the MIA to distinguish members from non-members.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="complexity" class="card">
+  <h2 class="section-title">8. Complexity counters</h2>
+  <div class="grid">
+    <div class="metric"><div class="k">Estimated operations</div><div class="v">278,490,799</div></div>
+    <div class="metric"><div class="k">Operations per target</div><div class="v">278490.80</div></div>
+    <div class="metric"><div class="k">Membership decisions</div><div class="v">1,000</div></div>
+  </div>
+  <div style="margin-top:16px"><table><thead><tr><th>Counter</th><th>Value</th></tr></thead><tbody><tr><td><code>row_index_row_visits</code></td><td>92,799</td></tr><tr><td><code>targets_evaluated</code></td><td>1,000</td></tr><tr><td><code>candidate_row_refs_loaded</code></td><td>0</td></tr><tr><td><code>refinement_candidate_row_visits</code></td><td>92,799,000</td></tr><tr><td><code>refinement_exact_tests</code></td><td>92,799,000</td></tr><tr><td><code>refinement_fuzzy_tests</code></td><td>0</td></tr><tr><td><code>refinement_mask_cells</code></td><td>92,799,000</td></tr><tr><td><code>membership_decisions</code></td><td>1,000</td></tr><tr><td><code>estimated_total_operations</code></td><td>278,490,799</td></tr></tbody></table></div>
+</section>
+
+
+
+<section id="details" class="card">
+  <h2 class="section-title">10. Raw details of summary.json</h2>
+  <p class="section-subtitle">This section displays the main fields of the attack summary, without detailed interpretation.</p>
+  <table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td><code>attack_id</code></td><td>baseline__baseline_no_anonymization__A1_demographic</td></tr><tr><td><code>known_qids</code></td><td>age, sex, race</td></tr><tr><td><code>qid_filter_qids</code></td><td>—</td></tr><tr><td><code>refine_qids</code></td><td>age, sex, race</td></tr><tr><td><code>unknown_visibility_qids</code></td><td>—</td></tr><tr><td><code>target_id_col</code></td><td>record_id</td></tr><tr><td><code>member_col</code></td><td>is_member</td></tr><tr><td><code>n_targets</code></td><td>1,000</td></tr><tr><td><code>n_members</code></td><td>500</td></tr><tr><td><code>n_non_members</code></td><td>500</td></tr><tr><td><code>seed</code></td><td>42</td></tr><tr><td><code>max_compatible_fraction</code></td><td>9.00%</td></tr><tr><td><code>use_privjedai_fuzzy</code></td><td>false</td></tr><tr><td><code>candidate_prefilter_mode</code></td><td>stage1_generalized_qids_then_stage2_cleartext_refinement</td></tr><tr><td><code>schema_matching_enabled</code></td><td>false</td></tr><tr><td><code>schema_matcher_name</code></td><td></td></tr><tr><td><code>schema_matcher_min_score</code></td><td></td></tr><tr><td><code>schema_matching_results_json</code></td><td></td></tr><tr><td><code>schema_matching_pairs_csv</code></td><td></td></tr><tr><td><code>tp</code></td><td>500</td></tr><tr><td><code>tn</code></td><td>2</td></tr><tr><td><code>fp</code></td><td>498</td></tr><tr><td><code>fn</code></td><td>0</td></tr><tr><td><code>accuracy</code></td><td>50.20%</td></tr><tr><td><code>precision</code></td><td>50.10%</td></tr><tr><td><code>recall</code></td><td>100.00%</td></tr><tr><td><code>f1</code></td><td>66.76%</td></tr><tr><td><code>member_recall</code></td><td>100.00%</td></tr><tr><td><code>member_false_negative_rate</code></td><td>0.00%</td></tr><tr><td><code>non_member_true_negative_rate</code></td><td>0.40%</td></tr><tr><td><code>non_member_false_positive_rate</code></td><td>99.60%</td></tr><tr><td><code>member_avg_stage1_equivalence_class_size</code></td><td>30,933</td></tr><tr><td><code>non_member_avg_stage1_equivalence_class_size</code></td><td>30,933</td></tr><tr><td><code>member_avg_compatible_candidate_count</code></td><td>279.37</td></tr><tr><td><code>non_member_avg_compatible_candidate_count</code></td><td>273.80</td></tr><tr><td><code>member_avg_equivalence_class_reduction</code></td><td>30653.63</td></tr><tr><td><code>non_member_avg_equivalence_class_reduction</code></td><td>30659.20</td></tr></tbody></table>
+  <p class="small" style="margin-top:14px;">Report generated on 2026-05-05 11:16:30</p>
+</section>
+</main>
+
+<script>
+const textColor = '#57606a';
+const gridColor = 'rgba(31, 35, 40, 0.08)';
+
+
+new Chart(document.getElementById('histChart'), {
+  type: 'bar',
+  data: {
+    labels: ["0.0–0.1", "0.1–0.2", "0.2–0.3", "0.3–0.4", "0.4–0.5", "0.5–0.6", "0.6–0.7", "0.7–0.8", "0.8–0.9", "0.9–1.0", "1.0–1.1", "1.1–1.2", "1.2–1.2", "1.2–1.3", "1.3–1.4", "1.4–1.5", "1.5–1.6", "1.6–1.7"],
+    datasets: [
+      {
+        label: 'IN',
+        data: [42, 37, 13, 14, 21, 20, 45, 42, 6, 36, 26, 9, 13, 15, 37, 42, 39, 43],
+        backgroundColor: 'rgba(122,162,255,0.58)',
+        borderColor: 'rgba(122,162,255,0.95)',
+        borderWidth: 1
+      },
+      {
+        label: 'OUT',
+        data: [48, 35, 14, 8, 17, 37, 39, 55, 3, 28, 14, 11, 14, 22, 40, 33, 48, 34],
+        backgroundColor: 'rgba(255,123,123,0.46)',
+        borderColor: 'rgba(255,123,123,0.95)',
+        borderWidth: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: textColor } } },
+    scales: {
+      x: {
+        title: { display: true, text: 'Compatible candidate fraction (%)', color: textColor, font: { size: 12 } },
+        ticks: { color: textColor, maxRotation: 0, autoSkip: true, maxTicksLimit: 8, font: { size: 11 } },
+        grid: { display: false }
+      },
+      y: {
+        title: { display: true, text: 'Number of targets', color: textColor, font: { size: 12 } },
+        ticks: { color: textColor, font: { size: 11 } },
+        grid: { color: gridColor }
+      }
+    }
+  }
+});
+
+
+
+</script>
+</body>
+</html>

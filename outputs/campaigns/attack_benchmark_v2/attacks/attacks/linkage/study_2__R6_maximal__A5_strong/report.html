@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Linkage - study_2 - R6_maximal - A5_strong</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --panel-2: #f6f8fa;
+    --line: #d0d7de;
+    --text: #1f2328;
+    --muted: #57606a;
+    --accent: #0969da;
+    --accent-soft: rgba(9, 105, 218, 0.08);
+    --good: #1a7f37;
+    --good-soft: rgba(26, 127, 55, 0.12);
+    --warn: #9a6700;
+    --warn-soft: rgba(154, 103, 0, 0.12);
+    --danger: #cf222e;
+    --danger-soft: rgba(207, 34, 46, 0.12);
+    --radius: 18px;
+    --shadow: 0 4px 14px rgba(31, 35, 40, 0.06);
+    --font: Inter, system-ui, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--text);
+    background:
+      radial-gradient(circle at top right, rgba(9, 105, 218, 0.05), transparent 24%),
+      #ffffff;
+    line-height: 1.65;
+  }
+  header {
+    padding: 52px 28px 36px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(135deg, rgba(9, 105, 218, 0.06), rgba(9, 105, 218, 0) 45%);
+  }
+  .wrap { max-width: 1220px; margin: 0 auto; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid rgba(9, 105, 218, 0.22);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 18px 0 12px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+  .lead { max-width: 920px; color: var(--muted); font-size: 1rem; }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; gap: 18px; flex-wrap: wrap; padding: 14px 28px; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; }
+  nav a:hover { color: var(--accent); }
+  main { padding: 28px; }
+  section { margin: 0 0 22px; }
+  .card {
+    background-color: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+  }
+  .section-title { margin: 0 0 16px; font-size: 1.55rem; letter-spacing: -0.02em; }
+  .section-subtitle { margin: -4px 0 18px; color: var(--muted); font-size: .96rem; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .metric {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 16px 14px;
+  }
+  .metric .k {
+    color: var(--muted);
+    font-size: .76rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .metric .v {
+    margin-top: 6px;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .good { color: var(--good); }
+  .warn { color: var(--warn); }
+  .danger { color: var(--danger); }
+  .accent { color: var(--accent); }
+  .two { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+  .callout {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 16px 16px 0;
+    padding: 14px 16px;
+    color: var(--text);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+  }
+  th, td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  th {
+    color: var(--accent);
+    font-size: .75rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    background: rgba(9, 105, 218, 0.06);
+  }
+  code {
+    font-family: var(--mono);
+    font-size: .82rem;
+    color: var(--accent);
+    background: rgba(9, 105, 218, 0.08);
+    padding: 2px 6px;
+    border-radius: 8px;
+  }
+  .small { color: var(--muted); font-size: .88rem; }
+  .chart-card {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .chart-wrap { position: relative; height: 320px; }
+  .kv { display: grid; grid-template-columns: 210px 1fr; gap: 10px 16px; }
+  .kv div:nth-child(odd) { color: var(--muted); }
+  ul.clean { margin: 8px 0 0 18px; padding: 0; }
+  @media (max-width: 980px) { .two { grid-template-columns: 1fr; } }
+  @media print {
+    nav { display: none; }
+    body { background: white; color: black; }
+    .card, .metric, table, .chart-card { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">TER</div>
+    <h1>Linkage - study_2 - R6_maximal - A5_strong</h1>
+    <p class="lead">Report automatically generated from a linkage attack <code>summary.json</code> and the <code>targets.csv</code> file.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#summary">Summary</a>
+    <a href="#protocol">Configuration</a>
+    
+    <a href="#stages">Stage 1 / Stage 2</a>
+    
+    <a href="#sensitive">Sensitive attribute</a>
+    <a href="#distribution">Distribution</a>
+    <a href="#complexity">Complexity</a>
+    
+    <a href="#details">Raw details</a>
+  </div>
+</nav>
+
+<main class="wrap">
+<section id="summary" class="card">
+  <h2 class="section-title">1. Executive summary</h2>
+  <div class="grid"><div class='metric'><div class='k'>Targets attacked</div><div class='v '>500</div></div><div class='metric'><div class='k'>Unique exact re-identification</div><div class='v good'>99.20%</div></div><div class='metric'><div class='k'>Exact unique targets</div><div class='v good'>496</div></div><div class='metric'><div class='k'>Avg. class size</div><div class='v '>1.01</div></div><div class='metric'><div class='k'>Certain sensitive inference</div><div class='v warn'>99.80%</div></div><div class='metric'><div class='k'>Certain targets</div><div class='v warn'>499</div></div><div class='metric'><div class='k'>Avg. true value prob.</div><div class='v accent'>99.90%</div></div><div class='metric'><div class='k'>Avg. reduction</div><div class='v accent'>99.50%</div></div></div>
+  <div class="two" style="margin-top:16px;">
+    <div class="callout"><strong>Synthesis:</strong> The unique exact re-identification rate is <strong>99.20%</strong> (496 targets). The average size of final equivalence classes is <strong>1.01</strong>. The average probability of the true sensitive value is <strong>99.90%</strong>. The most frequently predicted sensitive value is <code>&lt;=50K</code> across 373 targets. The average class reduction between QI filtering and the final class is <strong>99.50%</strong>.</div>
+    <div class="callout"><strong>Files used:</strong><br><table><thead><tr><th>File</th><th>Path</th></tr></thead><tbody><tr><td>summary.json</td><td><code>attacks\linkage\study_2__R6_maximal__A5_strong\summary.json</code></td></tr><tr><td>targets.csv</td><td><code>attacks\linkage\study_2__R6_maximal__A5_strong\targets.csv</code></td></tr><tr><td>config.json</td><td><code>C:\Users\Louis\TER\TER_v2\ter_benchmark_starter_branch_24_04\outputs\campaigns\attack_benchmark_v2\releases\R6_maximal\runtime_config.json</code></td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section id="protocol" class="card">
+  <h2 class="section-title">2. Configuration</h2>
+  <table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><td>Attack ID</td><td><code>study_2__R6_maximal__A5_strong</code></td></tr><tr><td>Known attributes</td><td>age, workclass, education, marital-status, occupation, race, sex, native-country, capital-gain, capital-loss, education-num, fnlwgt, hours-per-week, relationship</td></tr><tr><td>QIs for filtering</td><td>age, workclass, education, marital-status, occupation, race, native-country</td></tr><tr><td>Refinement attributes</td><td>sex, capital-gain, capital-loss, education-num, fnlwgt, hours-per-week, relationship</td></tr><tr><td>Sensitive attribute</td><td><code>income</code></td></tr><tr><td>PrivJedAI fuzzy</td><td>false</td></tr><tr><td>Seed</td><td>42</td></tr><tr><td>Targets</td><td>500</td></tr><tr><td>Anonymized rows</td><td>27,962</td></tr><tr><td>Anonymization QIs</td><td>age, workclass, education, marital-status, occupation, race, sex, native-country</td></tr><tr><td>k / l / t</td><td><code>k=5</code> · <code>l=2</code> · <code>t=</code></td></tr><tr><td>Suppression limit</td><td><code>0.1</code></td></tr><tr><td>Transformations</td><td>—</td></tr></tbody></table>
+</section>
+
+
+
+<section id="stages" class="card">
+  <h2 class="section-title">4. Stage 1 / Stage 2 equivalence class analysis</h2>
+  <p class="section-subtitle">Two-phase candidate reduction performed by the attack: stage 1 filters the anonymized table on generalized QIDs, then stage 2 refines the resulting equivalence class on clear-text attributes (with optional privJedAI fuzzy matching).</p>
+  <div class="grid">
+    <div class="metric"><div class="k">Stage 1 avg size</div><div class="v">1229.49</div></div>
+    <div class="metric"><div class="k">Stage 2 avg size</div><div class="v accent">1.01</div></div>
+    <div class="metric"><div class="k">Avg reduction rate</div><div class="v">99.50%</div></div>
+    <div class="metric"><div class="k">Distinct stage 1 groups</div><div class="v">394</div></div>
+  </div>
+  <div class="two" style="margin-top:16px;">
+    <div>
+      <h3 style="margin-top:0">Attributes per stage</h3>
+      <table><thead><tr><th>Stage</th><th>Attributes used</th><th>#</th></tr></thead><tbody><tr><td>Stage 1 (generalized QIDs)</td><td>age, workclass, education, marital-status, occupation, race, native-country</td><td>7</td></tr><tr><td>Stage 2 (clear-text refinement)</td><td>sex, capital-gain, capital-loss, education-num, fnlwgt, hours-per-week, relationship</td><td>7</td></tr><tr><td>Skipped refinement attributes</td><td>—</td><td>0</td></tr></tbody></table>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Size and containment per stage</h3>
+      <table><thead><tr><th>Stage</th><th>Avg size</th><th>Median size</th><th>Max size</th></tr></thead><tbody><tr><td>Stage 1</td><td>1229.49</td><td>928.00</td><td>3,038</td></tr><tr><td>Stage 2 (final)</td><td>1.01</td><td>1.00</td><td>2</td></tr></tbody></table>
+      <div class="callout" style="margin-top:14px;">
+        Stage 1 yields the initial generalized equivalence class on anonymized QIDs. Stage 2 further narrows this class using attributes that the attacker knows in clear text. The reduction rate measures how much stage 2 shrinks the class and is a direct proxy for how discriminating the refinement attributes are.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="sensitive" class="card">
+  <h2 class="section-title">6. Performance per sensitive attribute value</h2>
+  <table><thead><tr><th>True value of income</th><th>Number of targets</th><th>Share of targets</th><th>Correct predictions</th><th>Correct prediction rate</th><th>Avg. true sensitive prob.</th><th>Median true sensitive prob.</th><th>Certainty rate</th></tr></thead><tbody><tr><td><code>&lt;=50K</code></td><td>372</td><td>74.40%</td><td>372 / 372</td><td>100.00%</td><td>100.00%</td><td>100.00%</td><td>100.00%</td></tr><tr><td><code>&gt;50K</code></td><td>128</td><td>25.60%</td><td>127 / 128</td><td>99.22%</td><td>99.61%</td><td>100.00%</td><td>99.22%</td></tr></tbody></table>
+</section>
+
+
+<section id="distribution" class="card">
+  <h2 class="section-title">7. Distribution</h2>
+  <div class="two">
+      <div class="chart-card">
+        <h3 style="margin-top:0">Distribution of final class sizes</h3>
+        <div class="chart-wrap"><canvas id="eqChart"></canvas></div>
+      </div>
+</div>
+</section>
+
+
+<section id="complexity" class="card">
+  <h2 class="section-title">8. Complexity counters</h2>
+  <div class="grid">
+    <div class="metric"><div class="k">Estimated operations</div><div class="v">274,861,402</div></div>
+    <div class="metric"><div class="k">Operations per target</div><div class="v">549722.80</div></div>
+    <div class="metric"><div class="k">Anonymized rows</div><div class="v">27,962</div></div>
+  </div>
+  <div style="margin-top:16px"><table><thead><tr><th>Counter</th><th>Value</th></tr></thead><tbody><tr><td><code>value_index_row_visits</code></td><td>195,734</td></tr><tr><td><code>targets_evaluated</code></td><td>500</td></tr><tr><td><code>array_cells_initialized</code></td><td>45,912,344</td></tr><tr><td><code>attribute_positive_mask_cells</code></td><td>77,119,196</td></tr><tr><td><code>matching_row_visits</code></td><td>49,972,673</td></tr><tr><td><code>mask_and_cells</code></td><td>77,119,196</td></tr><tr><td><code>final_mask_reads</code></td><td>11,017,028</td></tr><tr><td><code>equivalence_class_candidate_rows_output</code></td><td>614,744</td></tr><tr><td><code>refinement_candidate_row_visits</code></td><td>4,303,208</td></tr><tr><td><code>refinement_exact_tests</code></td><td>4,303,208</td></tr><tr><td><code>refinement_fuzzy_tests</code></td><td>0</td></tr><tr><td><code>refinement_mask_cells</code></td><td>4,303,208</td></tr><tr><td><code>reduced_equivalence_class_candidate_rows_output</code></td><td>504</td></tr><tr><td><code>estimated_total_operations</code></td><td>274,861,402</td></tr></tbody></table></div>
+</section>
+
+
+
+<section id="details" class="card">
+  <h2 class="section-title">10. Raw details of summary.json</h2>
+  <p class="section-subtitle">This section displays the main fields of the attack summary, without detailed interpretation.</p>
+  <table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td><code>attack_id</code></td><td>study_2__R6_maximal__A5_strong</td></tr><tr><td><code>known_attrs</code></td><td>age, workclass, education, marital-status, occupation, race, sex, native-country, capital-gain, capital-loss, education-num, fnlwgt, hours-per-week, relationship</td></tr><tr><td><code>qid_filter_attrs</code></td><td>age, workclass, education, marital-status, occupation, race, native-country</td></tr><tr><td><code>stage1_filter_attrs</code></td><td>age, workclass, education, marital-status, occupation, race, native-country</td></tr><tr><td><code>refine_attrs</code></td><td>sex, capital-gain, capital-loss, education-num, fnlwgt, hours-per-week, relationship</td></tr><tr><td><code>stage2_refine_attrs</code></td><td>sex, capital-gain, capital-loss, education-num, fnlwgt, hours-per-week, relationship</td></tr><tr><td><code>skipped_refine_attrs</code></td><td>—</td></tr><tr><td><code>target_id_col</code></td><td>record_id</td></tr><tr><td><code>sensitive_attr</code></td><td>income</td></tr><tr><td><code>n_targets</code></td><td>500</td></tr><tr><td><code>seed</code></td><td>42</td></tr><tr><td><code>n_anonymized_rows</code></td><td>27,962</td></tr><tr><td><code>use_privjedai_fuzzy</code></td><td>false</td></tr><tr><td><code>n_distinct_stage1_groups</code></td><td>394</td></tr><tr><td><code>unique_reidentification_rate</code></td><td>99.20%</td></tr><tr><td><code>avg_qid_equivalence_class_size</code></td><td>1229.49</td></tr><tr><td><code>avg_stage1_equivalence_class_size</code></td><td>1229.49</td></tr><tr><td><code>median_qid_equivalence_class_size</code></td><td>928</td></tr><tr><td><code>median_stage1_equivalence_class_size</code></td><td>928</td></tr><tr><td><code>avg_equivalence_class_size</code></td><td>1.01</td></tr><tr><td><code>median_equivalence_class_size</code></td><td>1</td></tr><tr><td><code>max_equivalence_class_size</code></td><td>2</td></tr><tr><td><code>avg_reduction_rate</code></td><td>99.50%</td></tr><tr><td><code>certainty_sensitive_inference_rate</code></td><td>99.80%</td></tr><tr><td><code>avg_true_sensitive_probability</code></td><td>99.90%</td></tr><tr><td><code>median_true_sensitive_probability</code></td><td>100.00%</td></tr><tr><td><code>avg_top_sensitive_probability</code></td><td>99.90%</td></tr><tr><td><code>schema_matching_enabled</code></td><td>false</td></tr><tr><td><code>schema_matcher_name</code></td><td></td></tr><tr><td><code>schema_matcher_min_score</code></td><td></td></tr><tr><td><code>schema_matching_results_json</code></td><td></td></tr><tr><td><code>schema_matching_pairs_csv</code></td><td></td></tr></tbody></table>
+  <p class="small" style="margin-top:14px;">Report generated on 2026-05-05 11:48:17</p>
+</section>
+</main>
+
+<script>
+const textColor = '#57606a';
+const gridColor = 'rgba(31, 35, 40, 0.08)';
+function baseChartOptions(yTitle) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: textColor, maxRotation: 0, autoSkip: true, maxTicksLimit: 8, font: { size: 11 } }, grid: { display: false } },
+      y: { title: { display: true, text: yTitle, color: textColor, font: { size: 12 } }, ticks: { color: textColor, font: { size: 11 } }, grid: { color: gridColor } }
+    }
+  };
+}
+new Chart(document.getElementById('eqChart'), {type:'bar', data:{labels:["1.00–1.08", "1.08–1.17", "1.17–1.25", "1.25–1.33", "1.33–1.42", "1.42–1.50", "1.50–1.58", "1.58–1.67", "1.67–1.75", "1.75–1.83", "1.83–1.92", "1.92–2.00"], datasets:[{label:'Class size', data:[496, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4]}]}, options:baseChartOptions('Number of targets')});
+
+
+</script>
+</body>
+</html>

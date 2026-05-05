@@ -1,0 +1,76 @@
+# pyproject.toml
+
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "privJedAI"
+version = "0.0.3"
+description = "An open-source library that builds powerful end-to-end PPRL workflows."
+readme = "README.md"
+authors = [
+    { name = "Lefteris Stetsikas", email = "lstetsikas3@gmail.com" },
+    { name = "George Papadakis", email = "gpapadis84@gmail.com" },
+    { name = "Dimitris Karapiperis", email = "karapiperis121@gmail.com"},
+    { name = "Manolis Koubarakis", email = "koubarak@di.uoa.gr"}
+]
+license = {text = "Apache Software License 2.0"}
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Unix",
+    "Operating System :: iOS",
+    "Topic :: Database",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+keywords = ["pprl", "privacy-preserving", "deduplication", "entity-resolution", "link-discovery"]
+requires-python = ">=3.10"
+dependencies = [
+    "bitarray",
+    "faiss-cpu",
+    "matplotlib",
+    "Metafone",
+    "numexpr",
+    "numpy",
+    "openfhe",
+    "ordered_set",
+    "pandas",
+    "scipy",
+    "seaborn",
+    "tqdm",
+    "ray",
+    "ipywidgets",
+    "numba"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pip-tools",
+    "pytest",
+    "pylint"
+]
+gpu = [
+    "cudf==0.6.1.post1",
+    "cugraph==0.6.1.post1",
+    "cupy==14.0.1",
+    "rmm==0.0.1"
+]
+
+[project.urls]
+"Homepage" = "http://privjedai.rtfd.io"
+"Documentation" = "http://privjedai.rtfd.io"
+"Bug Tracker" = "https://github.com/AI-team-UoA/privJedAI/issues"
+"Source code" = "https://github.com/AI-team-UoA/privJedAI/tree/main/pyjedai"

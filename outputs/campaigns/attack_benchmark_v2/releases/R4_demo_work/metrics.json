@@ -1,0 +1,75 @@
+{
+  "optimization_score_min": 0.13939793832474723,
+  "optimization_score_max": 0.13939793832474723,
+  "anonymization_time_ms": 159,
+  "transformations": {
+    "occupation": 1,
+    "workclass": 1,
+    "race": 2,
+    "sex": 0,
+    "age": 2
+  },
+  "number_of_equivalence_classes": 248,
+  "average_equivalence_class_size": 116.17338709677419,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 1516,
+  "number_of_suppressed_records": 2122,
+  "discernibility_metric": 0.9184739826662875,
+  "ambiguity_metric": 0.9309290680761393,
+  "average_class_size_metric": 0.9964007015427256,
+  "ssesst_metric": 0.4955181015564192,
+  "record_level_squared_error_metric": 0.6340908578716002,
+  "granularity_metric": {
+    "age": 0.8158515537165516,
+    "sex": 0.9314001228461513,
+    "race": 0.8395807066886212,
+    "occupation": 0.8247548849819305,
+    "workclass": 0.8872118772830511
+  },
+  "non_uniform_entropy_metric": {
+    "age": 0.4109102457020315,
+    "sex": 0.926114806731768,
+    "race": 0.671460476352842,
+    "occupation": 0.629814262275967,
+    "workclass": 0.7543894555017387
+  },
+  "generalization_intensity_metric": {
+    "age": 0.46570006142307563,
+    "sex": 0.9314001228461514,
+    "race": 0.8497828640394854,
+    "occupation": 0.6209334152306751,
+    "workclass": 0.6209334152306751
+  },
+  "attribute_level_squared_error_metric": {
+    "age": 0.8836840842314023,
+    "sex": 0.9314001228461514,
+    "race": 0.9020452552962457,
+    "occupation": 0.3774194047561843,
+    "workclass": 0.7633583289487249
+  },
+  "missings_metric": {
+    "age": 0.06859987715384863,
+    "sex": 0.06859987715384863,
+    "race": 0.06859987715384863,
+    "occupation": 0.06859987715384863,
+    "workclass": 0.06859987715384863
+  },
+  "experiment_id": "R4_demo_work",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\R4_demo_work\\anonymized\\R4_demo_work.csv",
+  "eval_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\R4_demo_work\\anonymized_eval\\R4_demo_work.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "age",
+    "sex",
+    "race",
+    "occupation",
+    "workclass"
+  ],
+  "n_rows_before_full_suppression_drop": 30933,
+  "n_rows_dropped_full_suppression": 2122,
+  "n_rows_after_full_suppression_drop": 28811
+}

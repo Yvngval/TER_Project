@@ -9,6 +9,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 from collections.abc import Mapping
+import hashlib
 
 logger = logging.getLogger(__name__)
 
@@ -112,12 +113,12 @@ def make_experiment_id(
     utility_aggregate: str | None = None,
 ) -> str:
     qi_part = "-".join(quasi_identifiers)
-    base = f"qi_{qi_part}__k_{k}__l_{l}__t_{t}__supp_{suppression_limit}__{backend}"
-    if utility_measure and utility_measure != "loss":
-        base += f"__m_{utility_measure}"
-    if utility_aggregate:
-        base += f"__agg_{utility_aggregate}"
-    return base
+    payload = (
+        f"qi={qi_part}|k={k}|l={l}|t={t}|supp={suppression_limit}"
+        f"|backend={backend}|m={utility_measure or ''}|agg={utility_aggregate or ''}"
+    )
+    digest = hashlib.md5(payload.encode("utf-8")).hexdigest()[:8]
+    return f"exp_{digest}"
 
 
 # Generate all QI subsets for the requested subset sizes.

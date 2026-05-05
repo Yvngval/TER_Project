@@ -1,0 +1,10 @@
+{
+  "base_config": "configs/adult_demo_with_record_id.json",
+  "qi_pool": ["age","sex","race","education","marital-status","occupation","workclass","native-country"],
+  "qi_subset_sizes": [4, 6],
+  "k_values": [2, 5],
+  "l_values": [null, 2],
+  "t_values": [null],
+  "suppression_limits": [10],
+  "backend": "arx"
+}

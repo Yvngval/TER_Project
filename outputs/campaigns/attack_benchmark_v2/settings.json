@@ -1,0 +1,13 @@
+{
+  "base_config_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\configs\\adult_demo_with_record_id.json",
+  "full_dataset_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\data\\adult_with_record_id.csv",
+  "output_root": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs",
+  "campaign_name": "attack_benchmark_v2",
+  "seed": 42,
+  "attacker_frac": 0.1,
+  "linkage_aux_frac": 0.05,
+  "linkage_n_targets": 500,
+  "mia_targets_per_class": 500,
+  "force_rebuild": false,
+  "only_studies": null
+}

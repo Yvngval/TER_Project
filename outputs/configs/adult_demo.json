@@ -1,0 +1,37 @@
+{
+  "data": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\prepared_data\\adult_demo_3.published.csv",
+  "identifiers": [],
+  "quasi_identifiers": [
+    "native-country",
+    "sex",
+    "race",
+    "age"
+  ],
+  "sensitive_attributes": [
+    "income"
+  ],
+  "insensitive_attributes": [
+    "fnlwgt",
+    "education-num",
+    "capital-gain",
+    "capital-loss",
+    "relationship",
+    "hours-per-week",
+    "marital-status",
+    "workclass",
+    "education",
+    "occupation",
+    "record_id"
+  ],
+  "k": 5,
+  "l": 2,
+  "t": null,
+  "suppression_limit": 0.1,
+  "backend": "arx",
+  "hierarchies": {
+    "native-country": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\native-country.csv",
+    "sex": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\sex.csv",
+    "race": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\race.csv",
+    "age": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\age.csv"
+  }
+}

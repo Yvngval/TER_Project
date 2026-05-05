@@ -1,0 +1,96 @@
+{
+  "optimization_score_min": 0.30964941486190667,
+  "optimization_score_max": 0.30964941486190667,
+  "anonymization_time_ms": 3675,
+  "transformations": {
+    "education": 2,
+    "occupation": 2,
+    "workclass": 1,
+    "native-country": 1,
+    "race": 2,
+    "sex": 0,
+    "marital-status": 1,
+    "age": 4
+  },
+  "number_of_equivalence_classes": 229,
+  "average_equivalence_class_size": 128.99563318777294,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 2784,
+  "number_of_suppressed_records": 3021,
+  "discernibility_metric": 0.8818145283860682,
+  "ambiguity_metric": 0.9071650138413817,
+  "average_class_size_metric": 0.996088634132629,
+  "ssesst_metric": 0.0,
+  "record_level_squared_error_metric": 0.2508678384000702,
+  "granularity_metric": {
+    "native-country": 0.8819798636853932,
+    "sex": 0.907220294217008,
+    "race": 0.8370827063050243,
+    "marital-status": 0.775267958600852,
+    "workclass": 0.8642355885874617,
+    "education": 0.49217161635084916,
+    "occupation": 0.5478947206778708,
+    "age": 0.0
+  },
+  "non_uniform_entropy_metric": {
+    "native-country": 0.5552618225560537,
+    "sex": 0.9051653247983209,
+    "race": 0.6351474779368971,
+    "marital-status": 0.776235928193737,
+    "workclass": 0.7210161153558815,
+    "education": 0.3099292403749294,
+    "occupation": 0.3172355214681122,
+    "age": 0.0
+  },
+  "generalization_intensity_metric": {
+    "native-country": 0.6048135294778728,
+    "sex": 0.9072202942170081,
+    "race": 0.8448757716286343,
+    "marital-status": 0.700664394009195,
+    "workclass": 0.6048135294778728,
+    "education": 0.3024067647388522,
+    "occupation": 0.3157867796851883,
+    "age": 0.0
+  },
+  "attribute_level_squared_error_metric": {
+    "native-country": 0.10863448173104018,
+    "sex": 0.9072202942170081,
+    "race": 0.904100202817519,
+    "marital-status": 0.5781732845857133,
+    "workclass": 0.7258158985715502,
+    "education": 0.39424927147793987,
+    "occupation": 0.19875925615171441,
+    "age": 0.0
+  },
+  "missings_metric": {
+    "native-country": 0.09277970578299188,
+    "sex": 0.09277970578299188,
+    "race": 0.09277970578299188,
+    "marital-status": 0.09277970578299188,
+    "workclass": 0.09277970578299188,
+    "education": 0.09277970578299188,
+    "occupation": 0.09277970578299188,
+    "age": 1.0
+  },
+  "experiment_id": "qi_native-country-sex-race-marital-status-workclass-education-occupation-age__k_5__l_2__t_None__supp_0.1__arx",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "outputs\\anonymized\\qi_native-country-sex-race-marital-status-workclass-education-occupation-age__k_5__l_2__t_None__supp_0.1__arx.csv",
+  "eval_csv_path": "outputs\\anonymized_eval\\qi_native-country-sex-race-marital-status-workclass-education-occupation-age__k_5__l_2__t_None__supp_0.1__arx.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "native-country",
+    "sex",
+    "race",
+    "marital-status",
+    "workclass",
+    "education",
+    "occupation",
+    "age"
+  ],
+  "n_rows_before_full_suppression_drop": 32561,
+  "n_rows_dropped_full_suppression": 3021,
+  "n_rows_after_full_suppression_drop": 29540
+}

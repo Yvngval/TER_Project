@@ -1,0 +1,96 @@
+{
+  "attack_id": "adult_demo_3_linkage_fuzzy",
+  "config_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\configs\\adult_demo_3.json",
+  "auxiliary_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\auxiliary\\adult_demo_3.aux.csv",
+  "anonymized_public_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\anonymized\\adult_demo_3.csv",
+  "anonymized_eval_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\anonymized_eval\\adult_demo_3.csv",
+  "known_attrs": [
+    "native-country",
+    "sex",
+    "race",
+    "age"
+  ],
+  "qid_filter_attrs": [
+    "native-country",
+    "age"
+  ],
+  "stage1_filter_attrs": [
+    "native-country",
+    "age"
+  ],
+  "refine_attrs": [
+    "sex",
+    "race"
+  ],
+  "stage2_refine_attrs": [
+    "sex",
+    "race"
+  ],
+  "skipped_refine_attrs": [],
+  "target_id_col": "record_id",
+  "sensitive_attr": "income",
+  "n_targets": 200,
+  "n_targets_requested": "200",
+  "seed": 42,
+  "n_anonymized_rows": 29966,
+  "attacker_knowledge_json": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\attacks\\linkage\\adult_demo_3_linkage_fuzzy\\attacker_knowledge.json",
+  "prefilter_debug_dir": null,
+  "attacker_visible_levels": {
+    "native-country": 1,
+    "sex": 0,
+    "race": 0,
+    "age": 2
+  },
+  "attacker_raw_visible_levels": {
+    "native-country": 1,
+    "sex": 0,
+    "race": 0,
+    "age": 2
+  },
+  "use_privjedai_fuzzy": true,
+  "n_distinct_stage1_groups": 19,
+  "operation_counter": {
+    "value_index_row_visits": 59932,
+    "targets_evaluated": 200,
+    "array_cells_initialized": 5492240,
+    "attribute_positive_mask_cells": 1138708,
+    "matching_row_visits": 302483,
+    "mask_and_cells": 1138708,
+    "final_mask_reads": 569354,
+    "equivalence_class_candidate_rows_output": 1071608,
+    "refinement_candidate_row_visits": 2143216,
+    "refinement_exact_tests": 2143216,
+    "refinement_fuzzy_tests": 702359,
+    "refinement_mask_cells": 2143216,
+    "reduced_equivalence_class_candidate_rows_output": 492412,
+    "estimated_total_operations": 17397704
+  },
+  "unique_reidentification_rate": 0.0,
+  "avg_qid_equivalence_class_size": 5358.04,
+  "avg_stage1_equivalence_class_size": 5358.04,
+  "median_qid_equivalence_class_size": 6143.0,
+  "median_stage1_equivalence_class_size": 6143.0,
+  "avg_equivalence_class_size": 2462.06,
+  "median_equivalence_class_size": 2514.0,
+  "avg_reduction_rate": 0.527864,
+  "max_equivalence_class_size": 4629,
+  "certainty_sensitive_inference_rate": 0.0,
+  "avg_true_sensitive_probability": 0.683292,
+  "median_true_sensitive_probability": 0.663426,
+  "avg_top_sensitive_probability": 0.730711,
+  "targets_csv": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\attacks\\linkage\\adult_demo_3_linkage_fuzzy\\targets.csv",
+  "equivalence_class_candidates_csv": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\attacks\\linkage\\adult_demo_3_linkage_fuzzy\\equivalence_class_candidates.csv",
+  "schema_matching_enabled": false,
+  "schema_matcher_name": null,
+  "schema_matcher_min_score": null,
+  "schema_matching_results_json": null,
+  "schema_matching_pairs_csv": null,
+  "privjedai_fuzzy_threshold": 0.9,
+  "privjedai_fuzzy_metric": "dice",
+  "privjedai_bloom_size": 1024,
+  "privjedai_bloom_num_hashes": 15,
+  "privjedai_bloom_qgrams": 4,
+  "privjedai_bloom_hashing_type": "salted_qgrams",
+  "targets_with_any_privjedai_fuzzy_candidate_rate": 0.0,
+  "targets_with_true_record_kept_by_privjedai_fuzzy_rate": 0.0
+}

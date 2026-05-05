@@ -1,0 +1,63 @@
+{
+  "experiment_id": "adult_demo",
+  "status": "success",
+  "quasi_identifiers": [
+    "native-country",
+    "sex",
+    "race",
+    "age"
+  ],
+  "k": "5",
+  "l": "2",
+  "t": "",
+  "suppression_limit": "0.1",
+  "backend": "arx",
+  "metrics": {
+    "n_records_orig": 32561,
+    "n_records_anon": 29966,
+    "suppression_rate": 0.079697,
+    "per_column": {
+      "native-country": {
+        "kl_divergence": 32.67948048443881,
+        "total_variation_distance": 1.0
+      },
+      "sex": {
+        "kl_divergence": 0.00015426523861462524,
+        "total_variation_distance": 0.008228934450598302
+      },
+      "race": {
+        "kl_divergence": 0.004769517090894941,
+        "total_variation_distance": 0.01597943594901242
+      },
+      "age": {
+        "kl_divergence": 19.65385981903551,
+        "total_variation_distance": 0.6531126193912964,
+        "wasserstein_distance": 2.58215844847475,
+        "wasserstein_distance_normalized": 0.18930470792164586,
+        "mean_orig": 38.58164675532078,
+        "mean_anon": 38.745478208636456,
+        "mean_delta": 0.16383145331567306,
+        "mean_delta_relative": 0.004246357195551253,
+        "std_orig": 13.640432553581341,
+        "std_anon": 13.720397209730017,
+        "std_delta": 0.07996465614867532,
+        "std_delta_relative": 0.005862325540965365
+      },
+      "income": {
+        "kl_divergence": 0.00010293926789742454,
+        "total_variation_distance": 0.006170353119282948
+      }
+    },
+    "correlation_delta": {
+      "frobenius_norm": 0.2735369426537135,
+      "frobenius_norm_normalized": 0.009437921166656614,
+      "n_columns": 15
+    },
+    "mean_tvd_qi": 0.4193302474477268,
+    "mean_tvd_sensitive": 0.006170353119282948,
+    "mean_tvd_all": 0.336698268582038,
+    "mean_kl_qi": 13.084566021450957,
+    "mean_wasserstein_qi": 2.58215844847475,
+    "mean_wasserstein_all": 2.58215844847475
+  }
+}

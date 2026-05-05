@@ -1,0 +1,76 @@
+{
+  "enabled": true,
+  "matcher": "jaccard",
+  "min_score": 0.0,
+  "obfuscated_columns": [
+    "sex",
+    "race",
+    "native-country"
+  ],
+  "anon_unknown_cols": [
+    "col_0",
+    "col_1",
+    "col_2"
+  ],
+  "kb_candidate_cols": [
+    "native-country",
+    "sex",
+    "race",
+    "age"
+  ],
+  "truth": {
+    "col_0": "sex",
+    "col_1": "race",
+    "col_2": "native-country"
+  },
+  "recovered": {
+    "col_0": {
+      "predicted_column": "sex",
+      "score": 1.0
+    },
+    "col_1": {
+      "predicted_column": "race",
+      "score": 1.0
+    }
+  },
+  "metrics": {
+    "n_obfuscated": 3,
+    "n_mapped": 2,
+    "n_correct": 2,
+    "coverage": 0.6666666666666666,
+    "accuracy_on_mapped": 1.0,
+    "recall": 0.6666666666666666
+  },
+  "pairs": [
+    {
+      "anon_column": "col_0",
+      "true_column": "sex",
+      "predicted_column": "sex",
+      "score": 1.0,
+      "is_mapped": true,
+      "is_correct": true,
+      "matcher": "jaccard",
+      "min_score": 0.0
+    },
+    {
+      "anon_column": "col_1",
+      "true_column": "race",
+      "predicted_column": "race",
+      "score": 1.0,
+      "is_mapped": true,
+      "is_correct": true,
+      "matcher": "jaccard",
+      "min_score": 0.0
+    },
+    {
+      "anon_column": "col_2",
+      "true_column": "native-country",
+      "predicted_column": null,
+      "score": null,
+      "is_mapped": false,
+      "is_correct": false,
+      "matcher": "jaccard",
+      "min_score": 0.0
+    }
+  ]
+}

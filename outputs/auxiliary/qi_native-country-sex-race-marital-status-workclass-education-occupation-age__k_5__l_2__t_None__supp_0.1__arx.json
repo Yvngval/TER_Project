@@ -1,0 +1,25 @@
+{
+  "full_dataset_with_record_id": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\data\\adult_with_record_id.csv",
+  "auxiliary_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\auxiliary\\qi_native-country-sex-race-marital-status-workclass-education-occupation-age__k_5__l_2__t_None__supp_0.1__arx.csv",
+  "target_id_col": "record_id",
+  "known_attrs": [
+    "age",
+    "sex",
+    "native-country",
+    "relationship"
+  ],
+  "n_full_dataset_rows": 32561,
+  "target_population_mode": "released_only",
+  "target_population_size": 29540,
+  "n_auxiliary_rows": 295,
+  "sample_size": 295,
+  "sample_frac_within_target_population": 0.00998645903859174,
+  "sample_frac_within_full_dataset": 0.009059918307177298,
+  "seed": 42,
+  "sensitive_attr": "income",
+  "released_eval_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\anonymized_eval\\qi_native-country-sex-race-marital-status-workclass-education-occupation-age__k_5__l_2__t_None__supp_0.1__arx.csv",
+  "n_released_rows_in_eval": 29540,
+  "n_unique_released_ids": 29540,
+  "n_overlap_rows_with_full_dataset": 29540,
+  "n_missing_released_ids_in_full_dataset": 0
+}

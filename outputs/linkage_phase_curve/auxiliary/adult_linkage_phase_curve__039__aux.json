@@ -1,0 +1,25 @@
+{
+  "full_dataset_with_record_id": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\data\\adult_with_record_id.csv",
+  "auxiliary_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\outputs\\linkage_phase_curve\\auxiliary\\adult_linkage_phase_curve__039__aux.csv",
+  "target_id_col": "record_id",
+  "known_attrs": [
+    "education",
+    "occupation",
+    "race",
+    "sex"
+  ],
+  "n_full_dataset_rows": 32561,
+  "target_population_mode": "released_only",
+  "target_population_size": 31427,
+  "n_auxiliary_rows": 314,
+  "sample_size": 314,
+  "sample_frac_within_target_population": 0.009991408661342158,
+  "sample_frac_within_full_dataset": 0.00964343846933448,
+  "seed": 42,
+  "sensitive_attr": "income",
+  "released_eval_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\outputs\\anonymized_eval\\adult_linkage_phase_curve__039.csv",
+  "n_released_rows_in_eval": 31427,
+  "n_unique_released_ids": 31427,
+  "n_overlap_rows_with_full_dataset": 31427,
+  "n_missing_released_ids_in_full_dataset": 0
+}

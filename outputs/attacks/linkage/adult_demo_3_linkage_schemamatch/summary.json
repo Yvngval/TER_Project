@@ -1,0 +1,83 @@
+{
+  "attack_id": "adult_demo_3_linkage_schemamatch",
+  "config_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\configs\\adult_demo_3.json",
+  "auxiliary_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\auxiliary\\adult_demo_3.aux.csv",
+  "anonymized_public_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\anonymized\\adult_demo_3.csv",
+  "anonymized_eval_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\anonymized_eval\\adult_demo_3.csv",
+  "known_attrs": [
+    "sex",
+    "race",
+    "age"
+  ],
+  "qid_filter_attrs": [
+    "age"
+  ],
+  "stage1_filter_attrs": [
+    "age"
+  ],
+  "refine_attrs": [
+    "sex",
+    "race"
+  ],
+  "stage2_refine_attrs": [
+    "sex",
+    "race"
+  ],
+  "skipped_refine_attrs": [],
+  "target_id_col": "record_id",
+  "sensitive_attr": "income",
+  "n_targets": 200,
+  "n_targets_requested": "200",
+  "seed": 42,
+  "n_anonymized_rows": 29966,
+  "attacker_knowledge_json": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\attacks\\linkage\\adult_demo_3_linkage_schemamatch\\attacker_knowledge.json",
+  "prefilter_debug_dir": null,
+  "attacker_visible_levels": {
+    "sex": 0,
+    "race": 0,
+    "age": 2
+  },
+  "attacker_raw_visible_levels": {
+    "sex": 0,
+    "race": 0,
+    "age": 2
+  },
+  "use_privjedai_fuzzy": false,
+  "n_distinct_stage1_groups": 7,
+  "operation_counter": {
+    "value_index_row_visits": 29966,
+    "targets_evaluated": 200,
+    "array_cells_initialized": 4652870,
+    "attribute_positive_mask_cells": 209762,
+    "matching_row_visits": 29895,
+    "mask_and_cells": 209762,
+    "final_mask_reads": 209762,
+    "equivalence_class_candidate_rows_output": 1271274,
+    "refinement_candidate_row_visits": 2542548,
+    "refinement_exact_tests": 2542548,
+    "refinement_fuzzy_tests": 0,
+    "refinement_mask_cells": 2542548,
+    "reduced_equivalence_class_candidate_rows_output": 563427,
+    "estimated_total_operations": 14804425
+  },
+  "unique_reidentification_rate": 0.0,
+  "avg_qid_equivalence_class_size": 6356.37,
+  "avg_stage1_equivalence_class_size": 6356.37,
+  "median_qid_equivalence_class_size": 6745.0,
+  "median_stage1_equivalence_class_size": 6745.0,
+  "avg_equivalence_class_size": 2817.135,
+  "median_equivalence_class_size": 2686.0,
+  "avg_reduction_rate": 0.546451,
+  "max_equivalence_class_size": 5024,
+  "certainty_sensitive_inference_rate": 0.0,
+  "avg_true_sensitive_probability": 0.6806,
+  "median_true_sensitive_probability": 0.670382,
+  "avg_top_sensitive_probability": 0.732209,
+  "targets_csv": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\attacks\\linkage\\adult_demo_3_linkage_schemamatch\\targets.csv",
+  "equivalence_class_candidates_csv": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\attacks\\linkage\\adult_demo_3_linkage_schemamatch\\equivalence_class_candidates.csv",
+  "schema_matching_enabled": true,
+  "schema_matcher_name": "jaccard",
+  "schema_matcher_min_score": 0.0,
+  "schema_matching_results_json": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\attacks\\linkage\\adult_demo_3_linkage_schemamatch\\schema_matching_results.json",
+  "schema_matching_pairs_csv": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\attacks\\linkage\\adult_demo_3_linkage_schemamatch\\schema_matching_pairs.csv"
+}

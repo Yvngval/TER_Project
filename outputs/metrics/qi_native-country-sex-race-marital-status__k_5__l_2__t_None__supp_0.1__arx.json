@@ -1,0 +1,36 @@
+{
+  "anonymization_time_ms": 38,
+  "transformations": {
+    "native-country": 1,
+    "race": 0,
+    "sex": 0,
+    "marital-status": 0
+  },
+  "number_of_equivalence_classes": 97,
+  "average_equivalence_class_size": 308.2783505154639,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 10633,
+  "number_of_suppressed_records": 1030,
+  "discernibility_metric": null,
+  "ambiguity_metric": 0.9663101673158158,
+  "average_class_size_metric": 0.9917862702179473,
+  "granularity_metric": "<error: ARXResult.get_granularity_metric() missing 1 required positional argument: 'attribute'>",
+  "non_uniform_entropy_metric": "<error: ARXResult.get_non_uniform_entropy_metric() missing 1 required positional argument: 'attribute'>",
+  "experiment_id": "qi_native-country-sex-race-marital-status__k_5__l_2__t_None__supp_0.1__arx",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "outputs\\anonymized\\qi_native-country-sex-race-marital-status__k_5__l_2__t_None__supp_0.1__arx.csv",
+  "eval_csv_path": "outputs\\anonymized_eval\\qi_native-country-sex-race-marital-status__k_5__l_2__t_None__supp_0.1__arx.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "native-country",
+    "sex",
+    "race",
+    "marital-status"
+  ],
+  "n_rows_before_full_suppression_drop": 30933,
+  "n_rows_dropped_full_suppression": 1030,
+  "n_rows_after_full_suppression_drop": 29903
+}

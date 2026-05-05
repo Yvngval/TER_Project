@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from common import ensure_dir, iter_qi_subsets, load_json, make_experiment_id, save_json
-from run_one_experiment import run_one_experiment_from_config
+from run_ano import run_one_experiment_from_config
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

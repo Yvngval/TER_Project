@@ -1,0 +1,72 @@
+[
+  {
+    "stage": "linkage",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A1_demographic",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  },
+  {
+    "stage": "mia",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A1_demographic",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  },
+  {
+    "stage": "linkage",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A2_demographic_geo",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  },
+  {
+    "stage": "mia",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A2_demographic_geo",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  },
+  {
+    "stage": "linkage",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A3_professional",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  },
+  {
+    "stage": "mia",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A3_professional",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  },
+  {
+    "stage": "linkage",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A4_social",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  },
+  {
+    "stage": "mia",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A4_social",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  },
+  {
+    "stage": "linkage",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A5_strong",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  },
+  {
+    "stage": "mia",
+    "study": "baseline",
+    "release_name": "baseline_no_anonymization",
+    "profile": "A5_strong",
+    "error": "The supplied config must be a runtime config containing a 'hierarchies' mapping. Use a generated config from outputs/configs/... rather than the original base config."
+  }
+]

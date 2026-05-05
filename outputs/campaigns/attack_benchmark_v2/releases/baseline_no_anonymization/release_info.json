@@ -1,0 +1,53 @@
+{
+  "release_name": "baseline_no_anonymization",
+  "release_key": [
+    [],
+    1,
+    null,
+    null,
+    0.0,
+    true
+  ],
+  "is_baseline": true,
+  "qi": [],
+  "k": 1,
+  "l": null,
+  "t": null,
+  "suppression_limit": 0.0,
+  "config_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\baseline_no_anonymization\\runtime_config.json",
+  "public_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\baseline_no_anonymization\\anonymized.csv",
+  "eval_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\baseline_no_anonymization\\anonymized_eval.csv",
+  "metrics_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\baseline_no_anonymization\\metrics.json",
+  "status": "baseline_passthrough",
+  "payload": {
+    "data": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\mia_split\\published.csv",
+    "hierarchy_dir": "hierarchies",
+    "identifiers": [],
+    "quasi_identifiers": [],
+    "sensitive_attributes": [
+      "income"
+    ],
+    "insensitive_attributes": [
+      "age",
+      "capital-gain",
+      "capital-loss",
+      "education",
+      "education-num",
+      "fnlwgt",
+      "hours-per-week",
+      "marital-status",
+      "native-country",
+      "occupation",
+      "race",
+      "record_id",
+      "relationship",
+      "sex",
+      "workclass"
+    ],
+    "k": 1,
+    "l": null,
+    "t": null,
+    "suppression_limit": 0.0,
+    "backend": "arx"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "data": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\outputs\\prepared_data\\adult_mia_demo_2.published.csv",
+  "hierarchy_dir": "hierarchies",
+  "identifiers": [],
+  "quasi_identifiers": [
+    "native-country",
+    "sex",
+    "race",
+    "marital-status",
+    "workclass",
+    "education",
+    "occupation",
+    "age"
+  ],
+  "sensitive_attributes": [
+    "income"
+  ],
+  "insensitive_attributes": [
+    "fnlwgt",
+    "education-num",
+    "capital-gain",
+    "capital-loss",
+    "relationship",
+    "hours-per-week",
+    "record_id"
+  ],
+  "k": 5,
+  "l": 2,
+  "t": null,
+  "suppression_limit": 0.1,
+  "backend": "arx"
+}

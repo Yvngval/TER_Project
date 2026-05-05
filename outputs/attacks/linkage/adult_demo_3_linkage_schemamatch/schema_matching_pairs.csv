@@ -1,0 +1,4 @@
+anon_column,true_column,predicted_column,score,is_mapped,is_correct,matcher,min_score
+col_0,sex,sex,1.0,True,True,jaccard,0.0
+col_1,race,race,1.0,True,True,jaccard,0.0
+col_2,native-country,,,False,False,jaccard,0.0

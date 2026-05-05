@@ -1,0 +1,28 @@
+{
+  "published_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\outputs\\prepared_data\\adult_mia_demo_2.published.csv",
+  "out_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\outputs\\prepared_data\\adult_mia_demo_2.out.csv",
+  "anonymized_eval_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\outputs\\anonymized_eval\\adult_mia_demo_2.csv",
+  "known_qids": [
+    "age",
+    "sex",
+    "native-country",
+    "relationship"
+  ],
+  "targets_per_class": 1628,
+  "seed": 42,
+  "target_id_col": "record_id",
+  "member_col": "is_member",
+  "n_published_records": 30933,
+  "n_surviving_in_eval": 27962,
+  "n_dropped_by_suppression": 2971,
+  "drop_rate": 0.096046,
+  "n_out_pool": 1628,
+  "n_in_pool": 1628,
+  "expected_in_size": 1628,
+  "attacker_base_size": 3256,
+  "n_targets_in": 1628,
+  "n_targets_out": 1628,
+  "n_targets_total": 3256,
+  "targets_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\outputs\\mia_targets\\adult_mia_demo_2.targets_post_ano.csv",
+  "attacker_base_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\outputs\\prepared_data\\adult_mia_demo_2.attacker_base.csv"
+}

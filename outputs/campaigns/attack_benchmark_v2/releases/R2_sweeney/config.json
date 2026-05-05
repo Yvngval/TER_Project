@@ -1,0 +1,32 @@
+{
+  "data": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\mia_split\\published.csv",
+  "hierarchy_dir": "hierarchies",
+  "identifiers": [],
+  "quasi_identifiers": [
+    "age",
+    "sex",
+    "native-country"
+  ],
+  "sensitive_attributes": [
+    "income"
+  ],
+  "insensitive_attributes": [
+    "capital-gain",
+    "capital-loss",
+    "education",
+    "education-num",
+    "fnlwgt",
+    "hours-per-week",
+    "marital-status",
+    "occupation",
+    "race",
+    "record_id",
+    "relationship",
+    "workclass"
+  ],
+  "k": 5,
+  "l": 2,
+  "t": null,
+  "suppression_limit": 0.1,
+  "backend": "arx"
+}

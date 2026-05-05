@@ -1,0 +1,54 @@
+{
+  "optimization_score_min": 0.027528344729955467,
+  "optimization_score_max": 0.027528344729955467,
+  "anonymization_time_ms": 6,
+  "transformations": {
+    "sex": 0,
+    "age": 1
+  },
+  "number_of_equivalence_classes": 29,
+  "average_equivalence_class_size": 1065.7241379310344,
+  "min_equivalence_class_size": 13,
+  "max_equivalence_class_size": 2855,
+  "number_of_suppressed_records": 27,
+  "discernibility_metric": 0.9517931237441516,
+  "ambiguity_metric": 0.9723029863208247,
+  "average_class_size_metric": 0.9722994191004585,
+  "ssesst_metric": 0.9853331222566067,
+  "record_level_squared_error_metric": 0.9476203630182468,
+  "granularity_metric": {
+    "age": 0.9451062691049432,
+    "sex": 0.9991271457666571
+  },
+  "non_uniform_entropy_metric": {
+    "age": 0.5997896833821877,
+    "sex": 0.9993412123967393
+  },
+  "generalization_intensity_metric": {
+    "age": 0.7493453593249928,
+    "sex": 0.999127145766657
+  },
+  "attribute_level_squared_error_metric": {
+    "age": 0.9951402746219125,
+    "sex": 0.999127145766657
+  },
+  "missings_metric": {
+    "age": 0.0008728542333430456,
+    "sex": 0.0008728542333430456
+  },
+  "experiment_id": "R1_minimal",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\releases\\R1_minimal\\anonymized\\R1_minimal.csv",
+  "eval_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\releases\\R1_minimal\\anonymized_eval\\R1_minimal.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "age",
+    "sex"
+  ],
+  "n_rows_before_full_suppression_drop": 30933,
+  "n_rows_dropped_full_suppression": 27,
+  "n_rows_after_full_suppression_drop": 30906
+}

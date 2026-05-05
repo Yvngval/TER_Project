@@ -1,0 +1,36 @@
+{
+  "anonymization_time_ms": 51,
+  "transformations": {
+    "race": 0,
+    "sex": 0,
+    "marital-status": 0,
+    "age": 2
+  },
+  "number_of_equivalence_classes": 140,
+  "average_equivalence_class_size": 207.64285714285714,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 3395,
+  "number_of_suppressed_records": 1863,
+  "discernibility_metric": null,
+  "ambiguity_metric": 0.938150447424246,
+  "average_class_size_metric": 0.9938588470011223,
+  "granularity_metric": "<error: ARXResult.get_granularity_metric() missing 1 required positional argument: 'attribute'>",
+  "non_uniform_entropy_metric": "<error: ARXResult.get_non_uniform_entropy_metric() missing 1 required positional argument: 'attribute'>",
+  "experiment_id": "qi_age-sex-race-marital-status__k_5__l_2__t_None__supp_0.1__arx",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "outputs\\anonymized\\qi_age-sex-race-marital-status__k_5__l_2__t_None__supp_0.1__arx.csv",
+  "eval_csv_path": "outputs\\anonymized_eval\\qi_age-sex-race-marital-status__k_5__l_2__t_None__supp_0.1__arx.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "age",
+    "sex",
+    "race",
+    "marital-status"
+  ],
+  "n_rows_before_full_suppression_drop": 30933,
+  "n_rows_dropped_full_suppression": 1863,
+  "n_rows_after_full_suppression_drop": 29070
+}

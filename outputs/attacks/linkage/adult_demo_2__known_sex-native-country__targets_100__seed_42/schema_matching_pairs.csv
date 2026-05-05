@@ -1,0 +1,2 @@
+anon_column,true_column,predicted_column,score,is_mapped,is_correct,matcher,min_score
+col_0,age,,,False,False,jaccard,0.0

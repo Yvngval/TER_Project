@@ -1,0 +1,89 @@
+{
+  "optimization_score_min": 0.30446984609084016,
+  "optimization_score_max": 0.30446984609084016,
+  "anonymization_time_ms": 1170,
+  "transformations": {
+    "education": 2,
+    "occupation": 2,
+    "race": 0,
+    "native-country": 1,
+    "sex": 0,
+    "marital-status": 0,
+    "age": 4
+  },
+  "number_of_equivalence_classes": 184,
+  "average_equivalence_class_size": 152.32065217391303,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 4177,
+  "number_of_suppressed_records": 2906,
+  "discernibility_metric": 0.8613604909004212,
+  "ambiguity_metric": 0.9059088547454205,
+  "average_class_size_metric": 0.9951386043985971,
+  "ssesst_metric": 0.0,
+  "record_level_squared_error_metric": 0.24912886325728656,
+  "granularity_metric": {
+    "age": 0.0,
+    "sex": 0.9060550221446351,
+    "race": 0.9060550221447438,
+    "native-country": 0.8805143768631943,
+    "marital-status": 0.9060550221446904,
+    "education": 0.49187383484735825,
+    "occupation": 0.5459957234758583
+  },
+  "non_uniform_entropy_metric": {
+    "age": 0.0,
+    "sex": 0.904580429434534,
+    "race": 0.7766304073665581,
+    "native-country": 0.5672811539506664,
+    "marital-status": 0.8816463060411097,
+    "education": 0.3107611189730113,
+    "occupation": 0.31587756082617435
+  },
+  "generalization_intensity_metric": {
+    "age": 0.0,
+    "sex": 0.9060550221446352,
+    "race": 0.9060550221446352,
+    "native-country": 0.6040366814296483,
+    "marital-status": 0.9060550221446352,
+    "education": 0.30201834071478106,
+    "occupation": 0.314701667043752
+  },
+  "attribute_level_squared_error_metric": {
+    "age": 0.0,
+    "sex": 0.9060550221446352,
+    "race": 0.9305811721099533,
+    "native-country": 0.10892844417148784,
+    "marital-status": 0.8998747628020707,
+    "education": 0.39498323538418445,
+    "occupation": 0.19531917885684236
+  },
+  "missings_metric": {
+    "age": 1.0,
+    "sex": 0.09394497785536482,
+    "race": 0.09394497785536482,
+    "native-country": 0.09394497785536482,
+    "marital-status": 0.09394497785536482,
+    "education": 0.09394497785536482,
+    "occupation": 0.09394497785536482
+  },
+  "experiment_id": "R5_broad",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\R5_broad\\anonymized\\R5_broad.csv",
+  "eval_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\R5_broad\\anonymized_eval\\R5_broad.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "age",
+    "sex",
+    "race",
+    "native-country",
+    "marital-status",
+    "education",
+    "occupation"
+  ],
+  "n_rows_before_full_suppression_drop": 30933,
+  "n_rows_dropped_full_suppression": 2906,
+  "n_rows_after_full_suppression_drop": 28027
+}

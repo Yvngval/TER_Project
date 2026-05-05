@@ -6,38 +6,34 @@ from typing import Any
 
 import pandas as pd
 
-from common import ensure_dir, load_json, save_json
+from common import ensure_dir, load_json, parse_csv_list, save_json
 
 
-# Create a published subset, a holdout subset, and balanced MIA targets for one attacker knowledge setting.
+# Split the original dataset into a published subset and an OUT holdout pool
+# for membership inference attack evaluation.
+#
+# Target creation is handled AFTER anonymization by make_mia_targets_post_ano.py,
+# which verifies that IN candidates actually survived in the anonymized release.
 
 
-# Parse a comma-separated string into a list of values.
-def parse_csv_list(raw: str | None) -> list[str]:
-    if raw is None:
-        return []
-    return [part.strip() for part in raw.split(",") if part.strip()]
+# ---------------------------------------------------------------------------
+# Default output paths
+# ---------------------------------------------------------------------------
 
 
 # Build the default output path for the published dataset.
-def default_publish_output(output_root: str | Path, original_path: str | Path, target_id_col: str) -> Path:
-    output_root = Path(output_root)
-    original_path = Path(original_path)
-    return output_root / "prepared_data" / f"{original_path.stem}_published_with_{target_id_col}.csv"
+def default_publish_output(output_root: str | Path, name: str) -> Path:
+    return Path(output_root) / "prepared_data" / f"{name}.published.csv"
 
 
-# Build the default output path for the holdout dataset.
-def default_holdout_output(output_root: str | Path, original_path: str | Path, target_id_col: str) -> Path:
-    output_root = Path(output_root)
-    original_path = Path(original_path)
-    return output_root / "prepared_data" / f"{original_path.stem}_holdout_with_{target_id_col}.csv"
+# Build the default output path for the OUT subset.
+def default_out_output(output_root: str | Path, name: str) -> Path:
+    return Path(output_root) / "prepared_data" / f"{name}.out.csv"
 
 
-# Build the default output path for the balanced MIA targets dataset.
-def default_targets_output(output_root: str | Path, known_qids: list[str], targets_per_class: int, seed: int) -> Path:
-    output_root = Path(output_root)
-    q_part = "-".join(known_qids)
-    return output_root / "mia_targets" / f"mia_targets__known_{q_part}__n_{targets_per_class}__seed_{seed}.csv"
+# ---------------------------------------------------------------------------
+# Shared helpers (importable by run_mia_benchmark, make_mia_targets_post_ano)
+# ---------------------------------------------------------------------------
 
 
 # Ensure the dataset contains a unique internal record identifier column.
@@ -52,35 +48,6 @@ def ensure_record_id(df: pd.DataFrame, target_id_col: str) -> pd.DataFrame:
 
     df.insert(0, target_id_col, [str(i) for i in range(len(df))])
     return df
-
-
-# Split the full dataset into a published subset and a holdout subset.
-def split_publish_holdout(
-    df: pd.DataFrame,
-    *,
-    publish_size: int | None,
-    publish_frac: float | None,
-    seed: int,
-) -> tuple[pd.DataFrame, pd.DataFrame]:
-    if publish_size is None and publish_frac is None:
-        publish_frac = 0.5
-
-    if publish_size is not None and publish_frac is not None:
-        raise ValueError("Use either publish_size or publish_frac, not both.")
-
-    if publish_frac is not None:
-        if not 0.0 < float(publish_frac) < 1.0:
-            raise ValueError("publish_frac must be in (0, 1).")
-        publish_size = int(round(len(df) * float(publish_frac)))
-
-    assert publish_size is not None
-    if publish_size <= 0 or publish_size >= len(df):
-        raise ValueError("publish_size must be between 1 and len(df)-1.")
-
-    shuffled = df.sample(frac=1.0, random_state=seed, replace=False).reset_index(drop=True)
-    publish_df = shuffled.iloc[:publish_size].copy().reset_index(drop=True)
-    holdout_df = shuffled.iloc[publish_size:].copy().reset_index(drop=True)
-    return publish_df, holdout_df
 
 
 # Resolve one size parameter from either an absolute size or a fraction of the full dataset.
@@ -112,7 +79,90 @@ def _resolve_subset_size(
     return subset_size
 
 
-# Split the original dataset for MIA with a 5% OUT pool and a 5% IN pool sampled from the remaining published rows.
+# Build a balanced targets dataset with members from one source and non-members from another.
+# Kept here so that run_mia_benchmark and make_mia_targets_post_ano can import it.
+def build_targets_df(
+    member_source_df: pd.DataFrame,
+    non_member_source_df: pd.DataFrame,
+    *,
+    known_qids: list[str],
+    target_id_col: str,
+    member_col: str,
+    targets_per_class: int,
+    seed: int,
+) -> pd.DataFrame:
+    if not known_qids:
+        raise ValueError("known_qids cannot be empty.")
+
+    member_missing = [qi for qi in known_qids if qi not in member_source_df.columns]
+    non_member_missing = [qi for qi in known_qids if qi not in non_member_source_df.columns]
+    if member_missing or non_member_missing:
+        raise ValueError(f"Missing known QI columns. member_missing={member_missing}, non_member_missing={non_member_missing}")
+
+    if target_id_col not in member_source_df.columns or target_id_col not in non_member_source_df.columns:
+        raise ValueError(f"Both datasets must contain '{target_id_col}'.")
+
+    if targets_per_class <= 0:
+        raise ValueError("targets_per_class must be > 0.")
+    if targets_per_class > len(member_source_df):
+        raise ValueError(f"targets_per_class ({targets_per_class}) is larger than the member source size ({len(member_source_df)}).")
+    if targets_per_class > len(non_member_source_df):
+        raise ValueError(f"targets_per_class ({targets_per_class}) is larger than the non-member source size ({len(non_member_source_df)}).")
+
+    member_df = member_source_df.sample(n=targets_per_class, random_state=seed, replace=False).copy()
+    non_member_df = non_member_source_df.sample(n=targets_per_class, random_state=seed, replace=False).copy()
+
+    keep_cols = [target_id_col] + list(known_qids)
+    member_targets = member_df[keep_cols].copy()
+    member_targets[member_col] = 1
+    non_member_targets = non_member_df[keep_cols].copy()
+    non_member_targets[member_col] = 0
+
+    targets_df = pd.concat([member_targets, non_member_targets], ignore_index=True)
+    targets_df = targets_df.sample(frac=1.0, random_state=seed + 1, replace=False).reset_index(drop=True)
+    for col in targets_df.columns:
+        targets_df[col] = targets_df[col].astype(str)
+    return targets_df
+
+
+# ---------------------------------------------------------------------------
+# Legacy split functions (kept for run_mia_benchmark backward compatibility)
+# ---------------------------------------------------------------------------
+
+
+# Split the full dataset into a published subset and a holdout subset.
+# Legacy helper kept for run_mia_benchmark compatibility.
+def split_publish_holdout(
+    df: pd.DataFrame,
+    *,
+    publish_size: int | None,
+    publish_frac: float | None,
+    seed: int,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    if publish_size is None and publish_frac is None:
+        publish_frac = 0.5
+
+    if publish_size is not None and publish_frac is not None:
+        raise ValueError("Use either publish_size or publish_frac, not both.")
+
+    if publish_frac is not None:
+        if not 0.0 < float(publish_frac) < 1.0:
+            raise ValueError("publish_frac must be in (0, 1).")
+        publish_size = int(round(len(df) * float(publish_frac)))
+
+    assert publish_size is not None
+    if publish_size <= 0 or publish_size >= len(df):
+        raise ValueError("publish_size must be between 1 and len(df)-1.")
+
+    shuffled = df.sample(frac=1.0, random_state=seed, replace=False).reset_index(drop=True)
+    publish_df = shuffled.iloc[:publish_size].copy().reset_index(drop=True)
+    holdout_df = shuffled.iloc[publish_size:].copy().reset_index(drop=True)
+    return publish_df, holdout_df
+
+
+# Split the original dataset with an OUT pool and an IN pool sampled from the published rows.
+# Legacy helper kept for run_mia_benchmark compatibility.  The standalone CLI now uses
+# split_published_out (2-way split) and defers target creation to post-anonymization.
 def split_mia_candidate_pools(
     df: pd.DataFrame,
     *,
@@ -142,212 +192,275 @@ def split_mia_candidate_pools(
     )
 
     if out_size + in_size >= n_total:
-        raise ValueError(
-            f"The requested OUT ({out_size}) and IN ({in_size}) auxiliary pools leave no published data."
-        )
+        raise ValueError(f"The requested OUT ({out_size}) and IN ({in_size}) pools leave no published data.")
 
     shuffled = df.sample(frac=1.0, random_state=seed, replace=False).reset_index(drop=True)
     out_df = shuffled.iloc[:out_size].copy().reset_index(drop=True)
     published_df = shuffled.iloc[out_size:].copy().reset_index(drop=True)
 
     if in_size > len(published_df):
-        raise ValueError(
-            f"in_size ({in_size}) is larger than the published subset size ({len(published_df)})."
-        )
+        raise ValueError(f"in_size ({in_size}) is larger than the published subset size ({len(published_df)}).")
 
     auxiliary_in_df = published_df.sample(n=in_size, random_state=seed + 1, replace=False).copy().reset_index(drop=True)
     return published_df, out_df, auxiliary_in_df
 
 
-# Build a balanced targets dataset with members from one source and non-members from another.
-def build_targets_df(
-    member_source_df: pd.DataFrame,
-    non_member_source_df: pd.DataFrame,
+# ---------------------------------------------------------------------------
+# Current split function (2-way: published + OUT only)
+# ---------------------------------------------------------------------------
+
+
+# Split the original dataset into a published subset (sent to anonymization)
+# and an OUT pool (never anonymized, used as non-member candidates post-ano).
+def split_published_out(
+    df: pd.DataFrame,
     *,
-    known_qids: list[str],
-    target_id_col: str,
-    member_col: str,
-    targets_per_class: int,
+    out_size: int | None = None,
+    out_frac: float | None = 0.05,
     seed: int,
-) -> pd.DataFrame:
-    if not known_qids:
-        raise ValueError("known_qids cannot be empty.")
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    n_total = len(df)
+    if n_total < 2:
+        raise ValueError("The dataset must contain at least 2 rows.")
 
-    member_missing = [qi for qi in known_qids if qi not in member_source_df.columns]
-    non_member_missing = [qi for qi in known_qids if qi not in non_member_source_df.columns]
-    if member_missing or non_member_missing:
-        raise ValueError(
-            f"Missing known QI columns. member_missing={member_missing}, non_member_missing={non_member_missing}"
-        )
+    resolved_out_size = _resolve_subset_size(
+        n_total=n_total,
+        subset_size=out_size,
+        subset_frac=out_frac,
+        default_frac=0.05,
+        subset_name="out",
+    )
 
-    if target_id_col not in member_source_df.columns or target_id_col not in non_member_source_df.columns:
-        raise ValueError(f"Both datasets must contain '{target_id_col}'.")
+    shuffled = df.sample(frac=1.0, random_state=seed, replace=False).reset_index(drop=True)
+    out_df = shuffled.iloc[:resolved_out_size].copy().reset_index(drop=True)
+    published_df = shuffled.iloc[resolved_out_size:].copy().reset_index(drop=True)
+    return published_df, out_df
 
-    if targets_per_class <= 0:
-        raise ValueError("targets_per_class must be > 0.")
-    if targets_per_class > len(member_source_df):
-        raise ValueError(
-            f"targets_per_class ({targets_per_class}) is larger than the member source size ({len(member_source_df)})."
-        )
-    if targets_per_class > len(non_member_source_df):
-        raise ValueError(
-            f"targets_per_class ({targets_per_class}) is larger than the non-member source size ({len(non_member_source_df)})."
-        )
 
-    member_df = member_source_df.sample(n=targets_per_class, random_state=seed, replace=False).copy()
-    non_member_df = non_member_source_df.sample(n=targets_per_class, random_state=seed, replace=False).copy()
-
-    keep_cols = [target_id_col] + list(known_qids)
-    member_targets = member_df[keep_cols].copy()
-    member_targets[member_col] = 1
-    non_member_targets = non_member_df[keep_cols].copy()
-    non_member_targets[member_col] = 0
-
-    targets_df = pd.concat([member_targets, non_member_targets], ignore_index=True)
-    targets_df = targets_df.sample(frac=1.0, random_state=seed, replace=False).reset_index(drop=True)
-    for col in targets_df.columns:
-        targets_df[col] = targets_df[col].astype(str)
-    return targets_df
+# ---------------------------------------------------------------------------
+# Config helpers
+# ---------------------------------------------------------------------------
 
 
 # Create an updated config copy that points to the published subset.
+# Also guarantees that the record_id column is treated as an insensitive,
+# non-quasi-identifier passthrough attribute so that post-anonymization
+# targeting can match surviving rows back to the original published dataset.
 def update_config_copy(
     base_config_path: str | Path,
     config_output_path: str | Path,
     published_dataset_path: str | Path,
+    target_id_col: str = "record_id",
 ) -> dict[str, Any]:
     payload = load_json(base_config_path)
     payload["data"] = str(Path(published_dataset_path).resolve())
+
+    # Make sure the record-id column is NEVER listed as a quasi-identifier:
+    # otherwise it would be generalized/suppressed and we would lose the
+    # one-to-one mapping needed by make_mia_targets_post_ano.py.
+    qis = payload.get("quasi_identifiers")
+    if isinstance(qis, list) and target_id_col in qis:
+        payload["quasi_identifiers"] = [q for q in qis if q != target_id_col]
+
+    # Same for sensitive attributes (if this schema uses them): a record id
+    # is an identifier, not a sensitive value.
+    sens = payload.get("sensitive_attributes")
+    if isinstance(sens, list) and target_id_col in sens:
+        payload["sensitive_attributes"] = [s for s in sens if s != target_id_col]
+
+    # Register the record-id column as an insensitive attribute so that any
+    # downstream tool that inspects this list knows it must pass through
+    # unchanged.  Creates the key if missing, appends otherwise (de-duplicated).
+    insens = payload.get("insensitive_attributes")
+    if not isinstance(insens, list):
+        insens = []
+    if target_id_col not in insens:
+        insens.append(target_id_col)
+    payload["insensitive_attributes"] = insens
+
     save_json(config_output_path, payload)
     return payload
 
 
-# Parse CLI arguments and generate published, holdout, and target datasets for one MIA setup.
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Create published/holdout subsets and balanced MIA targets.")
-    parser.add_argument("--original", required=True, help="Path to the original CSV dataset.")
-    parser.add_argument("--known-qids", required=True, help="Comma-separated attacker-known QIs.")
-    parser.add_argument("--publish-size", type=int, default=None, help="Legacy mode only: number of rows kept in the published subset.")
-    parser.add_argument("--publish-frac", type=float, default=None, help="Legacy mode only: fraction of rows kept in the published subset.")
-    parser.add_argument("--out-size", type=int, default=None, help="Number of OUT candidates kept in the attacker auxiliary pool.")
-    parser.add_argument("--out-frac", type=float, default=0.05, help="Fraction of the original dataset used as OUT candidates.")
-    parser.add_argument("--in-size", type=int, default=None, help="Number of IN candidates kept in the attacker auxiliary pool.")
-    parser.add_argument("--in-frac", type=float, default=0.05, help="Fraction of the original dataset used as IN candidates.")
-    parser.add_argument("--legacy-publish-holdout", action="store_true", help="Use the old published/holdout split instead of the mixed IN/OUT auxiliary pool.")
-    parser.add_argument("--targets-per-class", type=int, default=500, help="Number of member and non-member targets.")
-    parser.add_argument("--seed", type=int, default=42, help="Random seed used for splitting and sampling.")
-    parser.add_argument("--target-id-col", default="record_id", help="Internal identifier column name.")
-    parser.add_argument("--member-col", default="is_member", help="Ground-truth membership label column name.")
-    parser.add_argument("--output-root", default="outputs", help="Root directory for generated files.")
-    parser.add_argument("--published-output", default=None, help="Optional path for the published subset CSV.")
-    parser.add_argument("--holdout-output", default=None, help="Optional path for the holdout subset CSV.")
-    parser.add_argument("--targets-output", default=None, help="Optional path for the MIA targets CSV.")
-    parser.add_argument("--base-config", default=None, help="Optional base config JSON to copy and retarget to the published subset.")
-    parser.add_argument("--config-output", default=None, help="Optional output path for the updated config JSON.")
-    args = parser.parse_args()
+# ---------------------------------------------------------------------------
+# Main pipeline: pre-anonymization split only
+# ---------------------------------------------------------------------------
 
-    original_path = Path(args.original).resolve()
-    known_qids = parse_csv_list(args.known_qids)
-    output_root = Path(args.output_root).resolve()
 
-    published_output = (
-        Path(args.published_output).resolve()
-        if args.published_output
-        else default_publish_output(output_root, original_path, args.target_id_col)
-    )
-    holdout_output = (
-        Path(args.holdout_output).resolve()
-        if args.holdout_output
-        else default_holdout_output(output_root, original_path, args.target_id_col)
-    )
-    targets_output = (
-        Path(args.targets_output).resolve()
-        if args.targets_output
-        else default_targets_output(output_root, known_qids, args.targets_per_class, args.seed)
-    )
+# Derive the OUT fraction from the total attacker knowledge base fraction.
+# The attacker KB is split evenly: half OUT (held out), half IN (sampled post-ano).
+def resolve_out_frac_from_attacker(
+    *,
+    attacker_frac: float | None,
+    attacker_size: int | None,
+    n_total: int,
+) -> tuple[float | None, int | None]:
+    if attacker_frac is not None and attacker_size is not None:
+        raise ValueError("Use either --attacker-frac or --attacker-size, not both.")
+
+    if attacker_size is not None:
+        if attacker_size <= 0:
+            raise ValueError("--attacker-size must be > 0.")
+        if attacker_size >= n_total:
+            raise ValueError(f"--attacker-size ({attacker_size}) must be < dataset size ({n_total}).")
+        out_size = attacker_size // 2
+        if out_size <= 0:
+            raise ValueError(f"--attacker-size ({attacker_size}) is too small to split into OUT and IN pools.")
+        return None, out_size
+
+    if attacker_frac is not None:
+        if not 0.0 < attacker_frac < 1.0:
+            raise ValueError("--attacker-frac must be in (0, 1).")
+        out_frac = attacker_frac / 2.0
+        return out_frac, None
+
+    # Default: 10% attacker KB → 5% OUT
+    return 0.05, None
+
+
+# Split the original dataset into published and OUT subsets for MIA evaluation.
+# Targets are created AFTER anonymization by make_mia_targets_post_ano.py.
+def prepare_mia_split(
+    *,
+    original_path: str | Path,
+    attacker_frac: float | None = 0.10,
+    attacker_size: int | None = None,
+    seed: int = 42,
+    target_id_col: str = "record_id",
+    output_root: str | Path = "outputs",
+    published_output: str | Path | None = None,
+    out_output: str | Path | None = None,
+    base_config: str | Path | None = None,
+    config_output: str | Path | None = None,
+    name: str | None = None,
+) -> dict[str, Any]:
+    original_path = Path(original_path).resolve()
+    output_root = Path(output_root).resolve()
 
     df = pd.read_csv(original_path, dtype=str, keep_default_na=False)
-    df = ensure_record_id(df, args.target_id_col)
+    df = ensure_record_id(df, target_id_col)
 
-    if args.legacy_publish_holdout:
-        publish_df, holdout_df = split_publish_holdout(
-            df,
-            publish_size=args.publish_size,
-            publish_frac=args.publish_frac,
-            seed=args.seed,
-        )
-        member_source_df = publish_df
-        non_member_source_df = holdout_df
-        split_metadata = {
-            "split_mode": "legacy_publish_holdout",
-            "publish_size": len(publish_df),
-            "holdout_size": len(holdout_df),
-        }
-    else:
-        publish_df, holdout_df, auxiliary_in_df = split_mia_candidate_pools(
-            df,
-            out_size=args.out_size,
-            out_frac=args.out_frac,
-            in_size=args.in_size,
-            in_frac=args.in_frac,
-            seed=args.seed,
-        )
-        member_source_df = auxiliary_in_df
-        non_member_source_df = holdout_df
-        split_metadata = {
-            "split_mode": "mixed_auxiliary_pool",
-            "published_size": len(publish_df),
-            "auxiliary_out_size": len(holdout_df),
-            "auxiliary_in_size": len(auxiliary_in_df),
-            "out_frac": args.out_frac,
-            "in_frac": args.in_frac,
-        }
-
-    ensure_dir(published_output.parent)
-    ensure_dir(holdout_output.parent)
-    ensure_dir(targets_output.parent)
-    publish_df.to_csv(published_output, index=False)
-    holdout_df.to_csv(holdout_output, index=False)
-
-    targets_df = build_targets_df(
-        member_source_df,
-        non_member_source_df,
-        known_qids=known_qids,
-        target_id_col=args.target_id_col,
-        member_col=args.member_col,
-        targets_per_class=args.targets_per_class,
-        seed=args.seed,
+    out_frac, out_size = resolve_out_frac_from_attacker(
+        attacker_frac=attacker_frac,
+        attacker_size=attacker_size,
+        n_total=len(df),
     )
-    targets_df.to_csv(targets_output, index=False)
+
+    run_name = name or original_path.stem
+    published_df, out_df = split_published_out(
+        df,
+        out_size=out_size,
+        out_frac=out_frac,
+        seed=seed,
+    )
+
+    # The IN pool will be the same size as OUT (balanced attacker KB).
+    expected_in_size = len(out_df)
+
+    published_output_path = Path(published_output).resolve() if published_output else default_publish_output(output_root, run_name)
+    out_output_path = Path(out_output).resolve() if out_output else default_out_output(output_root, run_name)
+
+    ensure_dir(published_output_path.parent)
+    ensure_dir(out_output_path.parent)
+    published_df.to_csv(published_output_path, index=False)
+    out_df.to_csv(out_output_path, index=False)
 
     metadata = {
         "original_path": str(original_path),
-        "published_output": str(published_output),
-        "holdout_output": str(holdout_output),
-        "targets_output": str(targets_output),
-        "known_qids": known_qids,
-        "targets_per_class": args.targets_per_class,
-        "seed": args.seed,
-        "target_id_col": args.target_id_col,
-        "member_col": args.member_col,
-        **split_metadata,
+        "published_output": str(published_output_path),
+        "out_output": str(out_output_path),
+        "seed": seed,
+        "target_id_col": target_id_col,
+        "original_size": len(df),
+        "published_size": len(published_df),
+        "out_size": len(out_df),
+        "expected_in_size": expected_in_size,
+        "attacker_frac": attacker_frac,
+        "attacker_size": attacker_size,
     }
-    metadata_path = targets_output.with_suffix(".json")
+    metadata_path = published_output_path.with_suffix(".json")
     save_json(metadata_path, metadata)
 
-    if args.base_config and args.config_output:
+    config_output_path = None
+    if base_config:
+        if config_output:
+            config_output_path = Path(config_output).resolve()
+        else:
+            config_output_path = output_root / "configs" / f"{run_name}.runtime.json"
         update_config_copy(
-            base_config_path=Path(args.base_config).resolve(),
-            config_output_path=Path(args.config_output).resolve(),
-            published_dataset_path=published_output,
+            base_config_path=Path(base_config).resolve(),
+            config_output_path=config_output_path,
+            published_dataset_path=published_output_path,
+            target_id_col=target_id_col,
         )
 
-    print(f"[OK] Published subset : {published_output}")
-    print(f"[OK] Holdout subset   : {holdout_output}")
-    print(f"[OK] Targets CSV      : {targets_output}")
-    print(f"[OK] Metadata JSON    : {metadata_path}")
-    if args.base_config and args.config_output:
-        print(f"[OK] Updated config   : {Path(args.config_output).resolve()}")
+    return {
+        "published_output_path": published_output_path,
+        "out_output_path": out_output_path,
+        "metadata_path": metadata_path,
+        "config_output_path": config_output_path,
+        "metadata": metadata,
+    }
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+
+# Parse CLI arguments and split the original dataset into published + OUT.
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Split the original dataset into a published subset (input for anonymization) "
+            "and an OUT holdout pool (non-members for MIA).  The attacker knowledge base "
+            "fraction is split evenly: half OUT, half IN.  Balanced IN/OUT targets are "
+            "created AFTER anonymization with make_mia_targets_post_ano.py."
+        )
+    )
+    parser.add_argument("--original", required=True, help="Path to the original CSV dataset.")
+    parser.add_argument(
+        "--attacker-frac", type=float, default=0.10,
+        help="Fraction of the original dataset in the attacker knowledge base (default 0.10). Split evenly into OUT and IN.",
+    )
+    parser.add_argument(
+        "--attacker-size", type=int, default=None,
+        help="Absolute number of records in the attacker knowledge base. Split evenly into OUT and IN.",
+    )
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for the split.")
+    parser.add_argument("--target-id-col", default="record_id", help="Internal identifier column name.")
+    parser.add_argument("--output-root", default="outputs", help="Root directory for generated files.")
+    parser.add_argument("--name", default=None, help="Optional prefix for generated filenames.")
+    parser.add_argument("--published-output", default=None, help="Optional path for the published subset CSV.")
+    parser.add_argument("--out-output", default=None, help="Optional path for the OUT subset CSV.")
+    parser.add_argument("--base-config", default=None, help="Optional base config JSON to retarget to the published subset.")
+    parser.add_argument("--config-output", default=None, help="Optional output path for the updated config JSON.")
+    args = parser.parse_args()
+
+    result = prepare_mia_split(
+        original_path=args.original,
+        attacker_frac=args.attacker_frac if args.attacker_size is None else None,
+        attacker_size=args.attacker_size,
+        seed=args.seed,
+        target_id_col=args.target_id_col,
+        output_root=args.output_root,
+        published_output=args.published_output,
+        out_output=args.out_output,
+        base_config=args.base_config,
+        config_output=args.config_output,
+        name=args.name,
+    )
+
+    m = result['metadata']
+    print(f"[OK] Published subset : {result['published_output_path']}  ({m['published_size']} rows)")
+    print(f"[OK] OUT holdout      : {result['out_output_path']}  ({m['out_size']} rows)")
+    print(f"     Expected IN size : {m['expected_in_size']} (sampled post-ano from survivors)")
+    print(f"     Attacker KB      : {m['out_size'] + m['expected_in_size']} rows ({m['out_size']} OUT + {m['expected_in_size']} IN)")
+    print(f"[OK] Metadata JSON    : {result['metadata_path']}")
+    if result['config_output_path'] is not None:
+        print(f"[OK] Updated config   : {result['config_output_path']}")
+    print()
+    print("Next step: anonymize the published subset, then run make_mia_targets_post_ano.py")
 
 
 if __name__ == "__main__":

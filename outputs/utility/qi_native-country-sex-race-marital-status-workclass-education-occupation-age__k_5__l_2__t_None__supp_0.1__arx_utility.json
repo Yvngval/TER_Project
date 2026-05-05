@@ -1,0 +1,73 @@
+{
+  "experiment_id": "qi_native-country-sex-race-marital-status-workclass-education-occupation-age__k_5__l_2__t_None__supp_0.1__arx",
+  "status": "success",
+  "quasi_identifiers": [
+    "native-country",
+    "sex",
+    "race",
+    "marital-status",
+    "workclass",
+    "education",
+    "occupation",
+    "age"
+  ],
+  "k": "5",
+  "l": "2",
+  "t": "",
+  "suppression_limit": "0.1",
+  "backend": "arx",
+  "metrics": {
+    "n_records_orig": 32561,
+    "n_records_anon": 29540,
+    "suppression_rate": 0.09278,
+    "per_column": {
+      "native-country": {
+        "kl_divergence": 32.66516235592112,
+        "total_variation_distance": 1.0
+      },
+      "sex": {
+        "kl_divergence": 0.0024615039548908854,
+        "total_variation_distance": 0.032419424137149405
+      },
+      "race": {
+        "kl_divergence": 4.394802832085266,
+        "total_variation_distance": 0.1457264826018857
+      },
+      "marital-status": {
+        "kl_divergence": 21.141073341123512,
+        "total_variation_distance": 0.6830399458361545
+      },
+      "workclass": {
+        "kl_divergence": 32.17706092509368,
+        "total_variation_distance": 1.0
+      },
+      "education": {
+        "kl_divergence": 31.2874938759809,
+        "total_variation_distance": 1.0
+      },
+      "occupation": {
+        "kl_divergence": 30.881620042673205,
+        "total_variation_distance": 1.0
+      },
+      "age": {
+        "kl_divergence": 29.37997120445319,
+        "total_variation_distance": 1.0
+      },
+      "income": {
+        "kl_divergence": 0.00090858827136844,
+        "total_variation_distance": 0.01853370592567502
+      }
+    },
+    "correlation_delta": {
+      "frobenius_norm": 2.215548604882649,
+      "frobenius_norm_normalized": 0.07644368936392588,
+      "n_columns": 15
+    },
+    "mean_tvd_qi": 0.7326482315718987,
+    "mean_tvd_sensitive": 0.01853370592567502,
+    "mean_tvd_all": 0.6533021731667628,
+    "mean_kl_qi": 22.74120576016072,
+    "mean_wasserstein_qi": null,
+    "mean_wasserstein_all": null
+  }
+}

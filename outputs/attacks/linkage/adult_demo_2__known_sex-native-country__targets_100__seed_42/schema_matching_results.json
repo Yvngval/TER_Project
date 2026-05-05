@@ -1,0 +1,40 @@
+{
+  "enabled": true,
+  "matcher": "jaccard",
+  "min_score": 0.0,
+  "obfuscated_columns": [
+    "age"
+  ],
+  "anon_unknown_cols": [
+    "col_0"
+  ],
+  "kb_candidate_cols": [
+    "age",
+    "sex",
+    "native-country"
+  ],
+  "truth": {
+    "col_0": "age"
+  },
+  "recovered": {},
+  "metrics": {
+    "n_obfuscated": 1,
+    "n_mapped": 0,
+    "n_correct": 0,
+    "coverage": 0.0,
+    "accuracy_on_mapped": null,
+    "recall": 0.0
+  },
+  "pairs": [
+    {
+      "anon_column": "col_0",
+      "true_column": "age",
+      "predicted_column": null,
+      "score": null,
+      "is_mapped": false,
+      "is_correct": false,
+      "matcher": "jaccard",
+      "min_score": 0.0
+    }
+  ]
+}

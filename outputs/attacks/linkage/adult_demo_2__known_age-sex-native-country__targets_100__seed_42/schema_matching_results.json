@@ -1,0 +1,46 @@
+{
+  "enabled": true,
+  "matcher": "jaccard",
+  "min_score": 0.0,
+  "obfuscated_columns": [
+    "relationship"
+  ],
+  "anon_unknown_cols": [
+    "col_0"
+  ],
+  "kb_candidate_cols": [
+    "age",
+    "sex",
+    "native-country",
+    "relationship"
+  ],
+  "truth": {
+    "col_0": "relationship"
+  },
+  "recovered": {
+    "col_0": {
+      "predicted_column": "relationship",
+      "score": 1.0
+    }
+  },
+  "metrics": {
+    "n_obfuscated": 1,
+    "n_mapped": 1,
+    "n_correct": 1,
+    "coverage": 1.0,
+    "accuracy_on_mapped": 1.0,
+    "recall": 1.0
+  },
+  "pairs": [
+    {
+      "anon_column": "col_0",
+      "true_column": "relationship",
+      "predicted_column": "relationship",
+      "score": 1.0,
+      "is_mapped": true,
+      "is_correct": true,
+      "matcher": "jaccard",
+      "min_score": 0.0
+    }
+  ]
+}

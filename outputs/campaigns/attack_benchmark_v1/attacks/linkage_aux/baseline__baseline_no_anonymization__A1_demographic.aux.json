@@ -1,0 +1,24 @@
+{
+  "full_dataset_with_record_id": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\mia_split\\published.csv",
+  "auxiliary_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\attacks\\linkage_aux\\baseline__baseline_no_anonymization__A1_demographic.aux.csv",
+  "target_id_col": "record_id",
+  "known_attrs": [
+    "age",
+    "sex",
+    "race"
+  ],
+  "n_full_dataset_rows": 30933,
+  "target_population_mode": "released_only",
+  "target_population_size": 30933,
+  "n_auxiliary_rows": 1547,
+  "sample_size": 1547,
+  "sample_frac_within_target_population": 0.05001131477709889,
+  "sample_frac_within_full_dataset": 0.05001131477709889,
+  "seed": 42,
+  "sensitive_attr": "income",
+  "released_eval_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\releases\\baseline_no_anonymization\\anonymized_eval.csv",
+  "n_released_rows_in_eval": 30933,
+  "n_unique_released_ids": 30933,
+  "n_overlap_rows_with_full_dataset": 30933,
+  "n_missing_released_ids_in_full_dataset": 0
+}

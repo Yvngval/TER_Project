@@ -1,0 +1,41 @@
+{
+  "data": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_14_04\\outputs\\prepared_data\\adult_mia_demo_2.published.csv",
+  "identifiers": [],
+  "quasi_identifiers": [
+    "native-country",
+    "sex",
+    "race",
+    "marital-status",
+    "workclass",
+    "education",
+    "occupation",
+    "age"
+  ],
+  "sensitive_attributes": [
+    "income"
+  ],
+  "insensitive_attributes": [
+    "fnlwgt",
+    "education-num",
+    "capital-gain",
+    "capital-loss",
+    "relationship",
+    "hours-per-week",
+    "record_id"
+  ],
+  "k": 5,
+  "l": 2,
+  "t": null,
+  "suppression_limit": 0.1,
+  "backend": "arx",
+  "hierarchies": {
+    "native-country": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\native-country.csv",
+    "sex": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\sex.csv",
+    "race": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\race.csv",
+    "marital-status": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\marital-status.csv",
+    "workclass": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\workclass.csv",
+    "education": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\education.csv",
+    "occupation": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\occupation.csv",
+    "age": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\hierarchies\\age.csv"
+  }
+}

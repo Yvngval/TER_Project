@@ -1,0 +1,61 @@
+{
+  "optimization_score_min": 0.05208991913991867,
+  "optimization_score_max": 0.05208991913991867,
+  "anonymization_time_ms": 16,
+  "transformations": {
+    "native-country": 1,
+    "sex": 0,
+    "age": 1
+  },
+  "number_of_equivalence_classes": 139,
+  "average_equivalence_class_size": 216.9208633093525,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 2557,
+  "number_of_suppressed_records": 781,
+  "discernibility_metric": 0.9365458178434062,
+  "ambiguity_metric": 0.9731980858256096,
+  "average_class_size_metric": 0.9935721947556134,
+  "ssesst_metric": 0.2801185333778854,
+  "record_level_squared_error_metric": 0.3074669371574732,
+  "granularity_metric": {
+    "age": 0.9219908978904678,
+    "sex": 0.9747518831021886,
+    "native-country": 0.9463238013235323
+  },
+  "non_uniform_entropy_metric": {
+    "age": 0.5848415867142744,
+    "sex": 0.9728371051988705,
+    "native-country": 0.7346669682848183
+  },
+  "generalization_intensity_metric": {
+    "age": 0.7310639123266415,
+    "sex": 0.9747518831021886,
+    "native-country": 0.6498345887347383
+  },
+  "attribute_level_squared_error_metric": {
+    "age": 0.966236539121278,
+    "sex": 0.9747518831021886,
+    "native-country": 0.12400696428542413
+  },
+  "missings_metric": {
+    "age": 0.025248116897811368,
+    "sex": 0.025248116897811368,
+    "native-country": 0.025248116897811368
+  },
+  "experiment_id": "R2_sweeney",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\releases\\R2_sweeney\\anonymized\\R2_sweeney.csv",
+  "eval_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\releases\\R2_sweeney\\anonymized_eval\\R2_sweeney.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "age",
+    "sex",
+    "native-country"
+  ],
+  "n_rows_before_full_suppression_drop": 30933,
+  "n_rows_dropped_full_suppression": 781,
+  "n_rows_after_full_suppression_drop": 30152
+}

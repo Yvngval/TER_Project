@@ -1,0 +1,402 @@
+[
+  {
+    "run_index": 1,
+    "experiment_name": "adult_linkage_phase_curve__001__qi_native-country-age",
+    "quasi_identifiers": "native-country|age",
+    "n_qi": 2,
+    "attacker_known_qi_in_config": "native-country|age",
+    "n_attacker_known_qi_in_config": 2
+  },
+  {
+    "run_index": 2,
+    "experiment_name": "adult_linkage_phase_curve__002__qi_sex-education-occupation",
+    "quasi_identifiers": "sex|education|occupation",
+    "n_qi": 3,
+    "attacker_known_qi_in_config": "sex|education|occupation",
+    "n_attacker_known_qi_in_config": 3
+  },
+  {
+    "run_index": 3,
+    "experiment_name": "adult_linkage_phase_curve__003__qi_native-country-sex-education-age",
+    "quasi_identifiers": "native-country|sex|education|age",
+    "n_qi": 4,
+    "attacker_known_qi_in_config": "native-country|sex|education|age",
+    "n_attacker_known_qi_in_config": 4
+  },
+  {
+    "run_index": 4,
+    "experiment_name": "adult_linkage_phase_curve__004__qi_sex-workclass-occupation-relationship-age",
+    "quasi_identifiers": "sex|workclass|occupation|relationship|age",
+    "n_qi": 5,
+    "attacker_known_qi_in_config": "sex|workclass|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 5
+  },
+  {
+    "run_index": 5,
+    "experiment_name": "adult_linkage_phase_curve__005__qi_native-country-sex-marital-status-workclass-education-occupation",
+    "quasi_identifiers": "native-country|sex|marital-status|workclass|education|occupation",
+    "n_qi": 6,
+    "attacker_known_qi_in_config": "native-country|sex|marital-status|workclass|education|occupation",
+    "n_attacker_known_qi_in_config": 6
+  },
+  {
+    "run_index": 6,
+    "experiment_name": "adult_linkage_phase_curve__006__qi_native-country-race-marital-status-workclass-occupation-relationship-age",
+    "quasi_identifiers": "native-country|race|marital-status|workclass|occupation|relationship|age",
+    "n_qi": 7,
+    "attacker_known_qi_in_config": "native-country|race|marital-status|workclass|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 7
+  },
+  {
+    "run_index": 7,
+    "experiment_name": "adult_linkage_phase_curve__007__qi_native-country-sex-marital-status-workclass-education-occupation-relationship-age",
+    "quasi_identifiers": "native-country|sex|marital-status|workclass|education|occupation|relationship|age",
+    "n_qi": 8,
+    "attacker_known_qi_in_config": "native-country|sex|marital-status|workclass|education|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 8
+  },
+  {
+    "run_index": 8,
+    "experiment_name": "adult_linkage_phase_curve__008__qi_native-country-sex-race-marital-status-workclass-education-occupation-relationship-age",
+    "quasi_identifiers": "native-country|sex|race|marital-status|workclass|education|occupation|relationship|age",
+    "n_qi": 9,
+    "attacker_known_qi_in_config": "native-country|sex|race|marital-status|workclass|education|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 9
+  },
+  {
+    "run_index": 9,
+    "experiment_name": "adult_linkage_phase_curve__009__qi_native-country-race",
+    "quasi_identifiers": "native-country|race",
+    "n_qi": 2,
+    "attacker_known_qi_in_config": "native-country|race",
+    "n_attacker_known_qi_in_config": 2
+  },
+  {
+    "run_index": 10,
+    "experiment_name": "adult_linkage_phase_curve__010__qi_sex-marital-status-education",
+    "quasi_identifiers": "sex|marital-status|education",
+    "n_qi": 3,
+    "attacker_known_qi_in_config": "sex|marital-status|education",
+    "n_attacker_known_qi_in_config": 3
+  },
+  {
+    "run_index": 11,
+    "experiment_name": "adult_linkage_phase_curve__011__qi_sex-race-education-occupation",
+    "quasi_identifiers": "sex|race|education|occupation",
+    "n_qi": 4,
+    "attacker_known_qi_in_config": "sex|race|education|occupation",
+    "n_attacker_known_qi_in_config": 4
+  },
+  {
+    "run_index": 12,
+    "experiment_name": "adult_linkage_phase_curve__012__qi_native-country-race-education-occupation-age",
+    "quasi_identifiers": "native-country|race|education|occupation|age",
+    "n_qi": 5,
+    "attacker_known_qi_in_config": "native-country|race|education|occupation|age",
+    "n_attacker_known_qi_in_config": 5
+  },
+  {
+    "run_index": 13,
+    "experiment_name": "adult_linkage_phase_curve__013__qi_sex-race-marital-status-workclass-education-occupation",
+    "quasi_identifiers": "sex|race|marital-status|workclass|education|occupation",
+    "n_qi": 6,
+    "attacker_known_qi_in_config": "sex|race|marital-status|workclass|education|occupation",
+    "n_attacker_known_qi_in_config": 6
+  },
+  {
+    "run_index": 14,
+    "experiment_name": "adult_linkage_phase_curve__014__qi_native-country-sex-race-marital-status-workclass-education-age",
+    "quasi_identifiers": "native-country|sex|race|marital-status|workclass|education|age",
+    "n_qi": 7,
+    "attacker_known_qi_in_config": "native-country|sex|race|marital-status|workclass|education|age",
+    "n_attacker_known_qi_in_config": 7
+  },
+  {
+    "run_index": 15,
+    "experiment_name": "adult_linkage_phase_curve__015__qi_native-country-sex-race-workclass-education-occupation-relationship-age",
+    "quasi_identifiers": "native-country|sex|race|workclass|education|occupation|relationship|age",
+    "n_qi": 8,
+    "attacker_known_qi_in_config": "native-country|sex|race|workclass|education|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 8
+  },
+  {
+    "run_index": 16,
+    "experiment_name": "adult_linkage_phase_curve__016__qi_race-education",
+    "quasi_identifiers": "race|education",
+    "n_qi": 2,
+    "attacker_known_qi_in_config": "race|education",
+    "n_attacker_known_qi_in_config": 2
+  },
+  {
+    "run_index": 17,
+    "experiment_name": "adult_linkage_phase_curve__017__qi_native-country-workclass-occupation",
+    "quasi_identifiers": "native-country|workclass|occupation",
+    "n_qi": 3,
+    "attacker_known_qi_in_config": "native-country|workclass|occupation",
+    "n_attacker_known_qi_in_config": 3
+  },
+  {
+    "run_index": 18,
+    "experiment_name": "adult_linkage_phase_curve__018__qi_sex-race-workclass-relationship",
+    "quasi_identifiers": "sex|race|workclass|relationship",
+    "n_qi": 4,
+    "attacker_known_qi_in_config": "sex|race|workclass|relationship",
+    "n_attacker_known_qi_in_config": 4
+  },
+  {
+    "run_index": 19,
+    "experiment_name": "adult_linkage_phase_curve__019__qi_native-country-sex-marital-status-relationship-age",
+    "quasi_identifiers": "native-country|sex|marital-status|relationship|age",
+    "n_qi": 5,
+    "attacker_known_qi_in_config": "native-country|sex|marital-status|relationship|age",
+    "n_attacker_known_qi_in_config": 5
+  },
+  {
+    "run_index": 20,
+    "experiment_name": "adult_linkage_phase_curve__020__qi_sex-race-workclass-occupation-relationship-age",
+    "quasi_identifiers": "sex|race|workclass|occupation|relationship|age",
+    "n_qi": 6,
+    "attacker_known_qi_in_config": "sex|race|workclass|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 6
+  },
+  {
+    "run_index": 21,
+    "experiment_name": "adult_linkage_phase_curve__021__qi_sex-race-marital-status-workclass-education-relationship-age",
+    "quasi_identifiers": "sex|race|marital-status|workclass|education|relationship|age",
+    "n_qi": 7,
+    "attacker_known_qi_in_config": "sex|race|marital-status|workclass|education|relationship|age",
+    "n_attacker_known_qi_in_config": 7
+  },
+  {
+    "run_index": 22,
+    "experiment_name": "adult_linkage_phase_curve__022__qi_native-country-race-marital-status-workclass-education-occupation-relationship-age",
+    "quasi_identifiers": "native-country|race|marital-status|workclass|education|occupation|relationship|age",
+    "n_qi": 8,
+    "attacker_known_qi_in_config": "native-country|race|marital-status|workclass|education|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 8
+  },
+  {
+    "run_index": 23,
+    "experiment_name": "adult_linkage_phase_curve__023__qi_race-marital-status",
+    "quasi_identifiers": "race|marital-status",
+    "n_qi": 2,
+    "attacker_known_qi_in_config": "race|marital-status",
+    "n_attacker_known_qi_in_config": 2
+  },
+  {
+    "run_index": 24,
+    "experiment_name": "adult_linkage_phase_curve__024__qi_native-country-relationship-age",
+    "quasi_identifiers": "native-country|relationship|age",
+    "n_qi": 3,
+    "attacker_known_qi_in_config": "native-country|relationship|age",
+    "n_attacker_known_qi_in_config": 3
+  },
+  {
+    "run_index": 25,
+    "experiment_name": "adult_linkage_phase_curve__025__qi_native-country-sex-workclass-education",
+    "quasi_identifiers": "native-country|sex|workclass|education",
+    "n_qi": 4,
+    "attacker_known_qi_in_config": "native-country|sex|workclass|education",
+    "n_attacker_known_qi_in_config": 4
+  },
+  {
+    "run_index": 26,
+    "experiment_name": "adult_linkage_phase_curve__026__qi_native-country-sex-race-occupation-relationship",
+    "quasi_identifiers": "native-country|sex|race|occupation|relationship",
+    "n_qi": 5,
+    "attacker_known_qi_in_config": "native-country|sex|race|occupation|relationship",
+    "n_attacker_known_qi_in_config": 5
+  },
+  {
+    "run_index": 27,
+    "experiment_name": "adult_linkage_phase_curve__027__qi_native-country-race-marital-status-workclass-occupation-relationship",
+    "quasi_identifiers": "native-country|race|marital-status|workclass|occupation|relationship",
+    "n_qi": 6,
+    "attacker_known_qi_in_config": "native-country|race|marital-status|workclass|occupation|relationship",
+    "n_attacker_known_qi_in_config": 6
+  },
+  {
+    "run_index": 28,
+    "experiment_name": "adult_linkage_phase_curve__028__qi_native-country-sex-race-education-occupation-relationship-age",
+    "quasi_identifiers": "native-country|sex|race|education|occupation|relationship|age",
+    "n_qi": 7,
+    "attacker_known_qi_in_config": "native-country|sex|race|education|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 7
+  },
+  {
+    "run_index": 29,
+    "experiment_name": "adult_linkage_phase_curve__029__qi_native-country-sex-race-marital-status-workclass-education-relationship-age",
+    "quasi_identifiers": "native-country|sex|race|marital-status|workclass|education|relationship|age",
+    "n_qi": 8,
+    "attacker_known_qi_in_config": "native-country|sex|race|marital-status|workclass|education|relationship|age",
+    "n_attacker_known_qi_in_config": 8
+  },
+  {
+    "run_index": 30,
+    "experiment_name": "adult_linkage_phase_curve__030__qi_sex-age",
+    "quasi_identifiers": "sex|age",
+    "n_qi": 2,
+    "attacker_known_qi_in_config": "sex|age",
+    "n_attacker_known_qi_in_config": 2
+  },
+  {
+    "run_index": 31,
+    "experiment_name": "adult_linkage_phase_curve__031__qi_occupation-relationship-age",
+    "quasi_identifiers": "occupation|relationship|age",
+    "n_qi": 3,
+    "attacker_known_qi_in_config": "occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 3
+  },
+  {
+    "run_index": 32,
+    "experiment_name": "adult_linkage_phase_curve__032__qi_race-marital-status-education-relationship",
+    "quasi_identifiers": "race|marital-status|education|relationship",
+    "n_qi": 4,
+    "attacker_known_qi_in_config": "race|marital-status|education|relationship",
+    "n_attacker_known_qi_in_config": 4
+  },
+  {
+    "run_index": 33,
+    "experiment_name": "adult_linkage_phase_curve__033__qi_marital-status-workclass-education-relationship-age",
+    "quasi_identifiers": "marital-status|workclass|education|relationship|age",
+    "n_qi": 5,
+    "attacker_known_qi_in_config": "marital-status|workclass|education|relationship|age",
+    "n_attacker_known_qi_in_config": 5
+  },
+  {
+    "run_index": 34,
+    "experiment_name": "adult_linkage_phase_curve__034__qi_race-marital-status-workclass-education-occupation-age",
+    "quasi_identifiers": "race|marital-status|workclass|education|occupation|age",
+    "n_qi": 6,
+    "attacker_known_qi_in_config": "race|marital-status|workclass|education|occupation|age",
+    "n_attacker_known_qi_in_config": 6
+  },
+  {
+    "run_index": 35,
+    "experiment_name": "adult_linkage_phase_curve__035__qi_native-country-sex-race-workclass-education-relationship-age",
+    "quasi_identifiers": "native-country|sex|race|workclass|education|relationship|age",
+    "n_qi": 7,
+    "attacker_known_qi_in_config": "native-country|sex|race|workclass|education|relationship|age",
+    "n_attacker_known_qi_in_config": 7
+  },
+  {
+    "run_index": 36,
+    "experiment_name": "adult_linkage_phase_curve__036__qi_native-country-sex-race-marital-status-workclass-occupation-relationship-age",
+    "quasi_identifiers": "native-country|sex|race|marital-status|workclass|occupation|relationship|age",
+    "n_qi": 8,
+    "attacker_known_qi_in_config": "native-country|sex|race|marital-status|workclass|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 8
+  },
+  {
+    "run_index": 37,
+    "experiment_name": "adult_linkage_phase_curve__037__qi_native-country-education",
+    "quasi_identifiers": "native-country|education",
+    "n_qi": 2,
+    "attacker_known_qi_in_config": "native-country|education",
+    "n_attacker_known_qi_in_config": 2
+  },
+  {
+    "run_index": 38,
+    "experiment_name": "adult_linkage_phase_curve__038__qi_native-country-marital-status-workclass",
+    "quasi_identifiers": "native-country|marital-status|workclass",
+    "n_qi": 3,
+    "attacker_known_qi_in_config": "native-country|marital-status|workclass",
+    "n_attacker_known_qi_in_config": 3
+  },
+  {
+    "run_index": 39,
+    "experiment_name": "adult_linkage_phase_curve__039__qi_native-country-sex-marital-status-workclass",
+    "quasi_identifiers": "native-country|sex|marital-status|workclass",
+    "n_qi": 4,
+    "attacker_known_qi_in_config": "native-country|sex|marital-status|workclass",
+    "n_attacker_known_qi_in_config": 4
+  },
+  {
+    "run_index": 40,
+    "experiment_name": "adult_linkage_phase_curve__040__qi_sex-race-workclass-occupation-age",
+    "quasi_identifiers": "sex|race|workclass|occupation|age",
+    "n_qi": 5,
+    "attacker_known_qi_in_config": "sex|race|workclass|occupation|age",
+    "n_attacker_known_qi_in_config": 5
+  },
+  {
+    "run_index": 41,
+    "experiment_name": "adult_linkage_phase_curve__041__qi_sex-race-workclass-education-occupation-age",
+    "quasi_identifiers": "sex|race|workclass|education|occupation|age",
+    "n_qi": 6,
+    "attacker_known_qi_in_config": "sex|race|workclass|education|occupation|age",
+    "n_attacker_known_qi_in_config": 6
+  },
+  {
+    "run_index": 42,
+    "experiment_name": "adult_linkage_phase_curve__042__qi_native-country-race-workclass-education-occupation-relationship-age",
+    "quasi_identifiers": "native-country|race|workclass|education|occupation|relationship|age",
+    "n_qi": 7,
+    "attacker_known_qi_in_config": "native-country|race|workclass|education|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 7
+  },
+  {
+    "run_index": 43,
+    "experiment_name": "adult_linkage_phase_curve__043__qi_native-country-sex-race-marital-status-workclass-education-occupation-relationship",
+    "quasi_identifiers": "native-country|sex|race|marital-status|workclass|education|occupation|relationship",
+    "n_qi": 8,
+    "attacker_known_qi_in_config": "native-country|sex|race|marital-status|workclass|education|occupation|relationship",
+    "n_attacker_known_qi_in_config": 8
+  },
+  {
+    "run_index": 44,
+    "experiment_name": "adult_linkage_phase_curve__044__qi_marital-status-occupation",
+    "quasi_identifiers": "marital-status|occupation",
+    "n_qi": 2,
+    "attacker_known_qi_in_config": "marital-status|occupation",
+    "n_attacker_known_qi_in_config": 2
+  },
+  {
+    "run_index": 45,
+    "experiment_name": "adult_linkage_phase_curve__045__qi_native-country-race-relationship",
+    "quasi_identifiers": "native-country|race|relationship",
+    "n_qi": 3,
+    "attacker_known_qi_in_config": "native-country|race|relationship",
+    "n_attacker_known_qi_in_config": 3
+  },
+  {
+    "run_index": 46,
+    "experiment_name": "adult_linkage_phase_curve__046__qi_race-occupation-relationship-age",
+    "quasi_identifiers": "race|occupation|relationship|age",
+    "n_qi": 4,
+    "attacker_known_qi_in_config": "race|occupation|relationship|age",
+    "n_attacker_known_qi_in_config": 4
+  },
+  {
+    "run_index": 47,
+    "experiment_name": "adult_linkage_phase_curve__047__qi_native-country-marital-status-workclass-education-occupation",
+    "quasi_identifiers": "native-country|marital-status|workclass|education|occupation",
+    "n_qi": 5,
+    "attacker_known_qi_in_config": "native-country|marital-status|workclass|education|occupation",
+    "n_attacker_known_qi_in_config": 5
+  },
+  {
+    "run_index": 48,
+    "experiment_name": "adult_linkage_phase_curve__048__qi_native-country-sex-race-marital-status-workclass-occupation",
+    "quasi_identifiers": "native-country|sex|race|marital-status|workclass|occupation",
+    "n_qi": 6,
+    "attacker_known_qi_in_config": "native-country|sex|race|marital-status|workclass|occupation",
+    "n_attacker_known_qi_in_config": 6
+  },
+  {
+    "run_index": 49,
+    "experiment_name": "adult_linkage_phase_curve__049__qi_sex-race-marital-status-workclass-education-occupation-age",
+    "quasi_identifiers": "sex|race|marital-status|workclass|education|occupation|age",
+    "n_qi": 7,
+    "attacker_known_qi_in_config": "sex|race|marital-status|workclass|education|occupation|age",
+    "n_attacker_known_qi_in_config": 7
+  },
+  {
+    "run_index": 50,
+    "experiment_name": "adult_linkage_phase_curve__050__qi_native-country-sex-race-marital-status-workclass-education-occupation-age",
+    "quasi_identifiers": "native-country|sex|race|marital-status|workclass|education|occupation|age",
+    "n_qi": 8,
+    "attacker_known_qi_in_config": "native-country|sex|race|marital-status|workclass|education|occupation|age",
+    "n_attacker_known_qi_in_config": 8
+  }
+]

@@ -1,0 +1,96 @@
+{
+  "optimization_score_min": 0.31220324158527135,
+  "optimization_score_max": 0.31220324158527135,
+  "anonymization_time_ms": 3693,
+  "transformations": {
+    "education": 2,
+    "occupation": 2,
+    "workclass": 1,
+    "race": 2,
+    "native-country": 1,
+    "sex": 0,
+    "marital-status": 1,
+    "age": 4
+  },
+  "number_of_equivalence_classes": 222,
+  "average_equivalence_class_size": 125.95495495495496,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 2650,
+  "number_of_suppressed_records": 2971,
+  "discernibility_metric": 0.8784804981333713,
+  "ambiguity_metric": 0.9038986772778865,
+  "average_class_size_metric": 0.995980471094371,
+  "ssesst_metric": 0.0,
+  "record_level_squared_error_metric": 0.2500377156967578,
+  "granularity_metric": {
+    "age": 0.0,
+    "workclass": 0.8617374648432609,
+    "education": 0.4905828726602657,
+    "marital-status": 0.7721365531956654,
+    "occupation": 0.545991105199493,
+    "race": 0.8339798920246615,
+    "sex": 0.9039537063976983,
+    "native-country": 0.8788207084863019
+  },
+  "non_uniform_entropy_metric": {
+    "age": 0.0,
+    "workclass": 0.7160355816715946,
+    "education": 0.30948156289365814,
+    "marital-status": 0.7733669170274867,
+    "occupation": 0.31588429424805087,
+    "race": 0.6311440284096456,
+    "sex": 0.9004256428312247,
+    "native-country": 0.5501585804718454
+  },
+  "generalization_intensity_metric": {
+    "age": 0.0,
+    "workclass": 0.6026358042650239,
+    "education": 0.301317902132469,
+    "marital-status": 0.6975829480921313,
+    "occupation": 0.3145939072618592,
+    "race": 0.8417547602883653,
+    "sex": 0.9039537063976982,
+    "native-country": 0.6026358042650239
+  },
+  "attribute_level_squared_error_metric": {
+    "age": 0.0,
+    "workclass": 0.7243440157122947,
+    "education": 0.39339804642237675,
+    "marital-status": 0.5757089467667461,
+    "occupation": 0.19767699136066008,
+    "race": 0.9007934658365794,
+    "sex": 0.9039537063976982,
+    "native-country": 0.10800682061586209
+  },
+  "missings_metric": {
+    "age": 1.0,
+    "workclass": 0.09604629360230177,
+    "education": 0.09604629360230177,
+    "marital-status": 0.09604629360230177,
+    "occupation": 0.09604629360230177,
+    "race": 0.09604629360230177,
+    "sex": 0.09604629360230177,
+    "native-country": 0.09604629360230177
+  },
+  "experiment_id": "R6_maximal",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\R6_maximal\\anonymized\\R6_maximal.csv",
+  "eval_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\R6_maximal\\anonymized_eval\\R6_maximal.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "age",
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "race",
+    "sex",
+    "native-country"
+  ],
+  "n_rows_before_full_suppression_drop": 30933,
+  "n_rows_dropped_full_suppression": 2971,
+  "n_rows_after_full_suppression_drop": 27962
+}

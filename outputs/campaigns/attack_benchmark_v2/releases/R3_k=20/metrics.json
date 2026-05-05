@@ -1,0 +1,68 @@
+{
+  "optimization_score_min": 0.08793323952325793,
+  "optimization_score_max": 0.08793323952325793,
+  "anonymization_time_ms": 7,
+  "transformations": {
+    "race": 0,
+    "native-country": 1,
+    "sex": 0,
+    "age": 2
+  },
+  "number_of_equivalence_classes": 80,
+  "average_equivalence_class_size": 365.95,
+  "min_equivalence_class_size": 20,
+  "max_equivalence_class_size": 4629,
+  "number_of_suppressed_records": 1657,
+  "discernibility_metric": 0.8792288796393228,
+  "ambiguity_metric": 0.9458098713155769,
+  "average_class_size_metric": 0.9885979276686917,
+  "ssesst_metric": 0.216838208926023,
+  "record_level_squared_error_metric": 0.40463238366544074,
+  "granularity_metric": {
+    "age": 0.8323091664063325,
+    "sex": 0.9464326124203926,
+    "race": 0.9464326124205374,
+    "native-country": 0.9191722787171948
+  },
+  "non_uniform_entropy_metric": {
+    "age": 0.40814331399601544,
+    "sex": 0.9415195112741326,
+    "race": 0.8603637186045049,
+    "native-country": 0.6367513162997305
+  },
+  "generalization_intensity_metric": {
+    "age": 0.4732163062101963,
+    "sex": 0.9464326124203924,
+    "race": 0.9464326124203924,
+    "native-country": 0.6309550749468499
+  },
+  "attribute_level_squared_error_metric": {
+    "age": 0.9239892178693393,
+    "sex": 0.9464326124203924,
+    "race": 0.9600048828666866,
+    "native-country": 0.11423800487589553
+  },
+  "missings_metric": {
+    "age": 0.05356738757960755,
+    "sex": 0.05356738757960755,
+    "race": 0.05356738757960755,
+    "native-country": 0.05356738757960755
+  },
+  "experiment_id": "R3_k=20",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\R3_k=20\\anonymized\\R3_k=20.csv",
+  "eval_csv_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v2\\releases\\R3_k=20\\anonymized_eval\\R3_k=20.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "age",
+    "sex",
+    "race",
+    "native-country"
+  ],
+  "n_rows_before_full_suppression_drop": 30933,
+  "n_rows_dropped_full_suppression": 1657,
+  "n_rows_after_full_suppression_drop": 29276
+}

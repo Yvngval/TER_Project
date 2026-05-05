@@ -1,0 +1,56 @@
+{
+  "campaign_name": "attack_benchmark_v1",
+  "seed": 42,
+  "n_runs_planned": 5,
+  "n_unique_releases": 1,
+  "n_linkage_success": 5,
+  "n_mia_success": 5,
+  "n_failures": 0,
+  "linkage_results_csv": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\linkage_results.csv",
+  "mia_results_csv": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\mia_results.csv",
+  "split_metadata": {
+    "original_path": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\data\\adult_with_record_id.csv",
+    "published_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\mia_split\\published.csv",
+    "out_output": "C:\\Users\\Louis\\TER\\TER_v2\\ter_benchmark_starter_branch_24_04\\outputs\\campaigns\\attack_benchmark_v1\\mia_split\\out.csv",
+    "seed": 42,
+    "target_id_col": "record_id",
+    "original_size": 32561,
+    "published_size": 30933,
+    "out_size": 1628,
+    "expected_in_size": 1628,
+    "attacker_frac": 0.1,
+    "attacker_size": null
+  },
+  "studies": {
+    "study_1": [
+      "R3_current/A1_demographic",
+      "R3_current/A2_demographic_geo",
+      "R3_current/A3_professional",
+      "R3_current/A4_social",
+      "R3_current/A5_strong"
+    ],
+    "study_2": [
+      "R1_minimal/A5_strong",
+      "R2_sweeney/A5_strong",
+      "R3_current/A5_strong",
+      "R4_demo_work/A5_strong",
+      "R5_broad/A5_strong",
+      "R6_maximal/A5_strong"
+    ],
+    "study_3": [
+      "R3_k=2/A5_strong",
+      "R3_current/A5_strong",
+      "R3_k=10/A5_strong",
+      "R3_k=20/A5_strong",
+      "R3_k=50/A5_strong"
+    ],
+    "baseline": [
+      "baseline_no_anonymization/A1_demographic",
+      "baseline_no_anonymization/A2_demographic_geo",
+      "baseline_no_anonymization/A3_professional",
+      "baseline_no_anonymization/A4_social",
+      "baseline_no_anonymization/A5_strong"
+    ]
+  },
+  "failures": []
+}

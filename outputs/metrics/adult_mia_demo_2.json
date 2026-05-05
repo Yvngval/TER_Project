@@ -1,0 +1,96 @@
+{
+  "optimization_score_min": 0.31220324158527135,
+  "optimization_score_max": 0.31220324158527135,
+  "anonymization_time_ms": 3415,
+  "transformations": {
+    "education": 2,
+    "occupation": 2,
+    "workclass": 1,
+    "native-country": 1,
+    "race": 2,
+    "sex": 0,
+    "marital-status": 1,
+    "age": 4
+  },
+  "number_of_equivalence_classes": 222,
+  "average_equivalence_class_size": 125.95495495495496,
+  "min_equivalence_class_size": 5,
+  "max_equivalence_class_size": 2650,
+  "number_of_suppressed_records": 2971,
+  "discernibility_metric": 0.8784804981333713,
+  "ambiguity_metric": 0.9038986772778865,
+  "average_class_size_metric": 0.995980471094371,
+  "ssesst_metric": 0.0,
+  "record_level_squared_error_metric": 0.2500377156967578,
+  "granularity_metric": {
+    "native-country": 0.8788207084863019,
+    "sex": 0.9039537063976983,
+    "race": 0.8339798920246615,
+    "marital-status": 0.7721365531956654,
+    "workclass": 0.8617374648432609,
+    "education": 0.4905828726602657,
+    "occupation": 0.545991105199493,
+    "age": 0.0
+  },
+  "non_uniform_entropy_metric": {
+    "native-country": 0.5501585804718454,
+    "sex": 0.9004256428312247,
+    "race": 0.6311440284096456,
+    "marital-status": 0.7733669170274867,
+    "workclass": 0.7160355816715946,
+    "education": 0.30948156289365814,
+    "occupation": 0.31588429424805087,
+    "age": 0.0
+  },
+  "generalization_intensity_metric": {
+    "native-country": 0.6026358042650239,
+    "sex": 0.9039537063976982,
+    "race": 0.8417547602883653,
+    "marital-status": 0.6975829480921313,
+    "workclass": 0.6026358042650239,
+    "education": 0.301317902132469,
+    "occupation": 0.3145939072618592,
+    "age": 0.0
+  },
+  "attribute_level_squared_error_metric": {
+    "native-country": 0.10800682061586209,
+    "sex": 0.9039537063976982,
+    "race": 0.9007934658365794,
+    "marital-status": 0.5757089467667461,
+    "workclass": 0.7243440157122947,
+    "education": 0.39339804642237675,
+    "occupation": 0.19767699136066008,
+    "age": 0.0
+  },
+  "missings_metric": {
+    "native-country": 0.09604629360230177,
+    "sex": 0.09604629360230177,
+    "race": 0.09604629360230177,
+    "marital-status": 0.09604629360230177,
+    "workclass": 0.09604629360230177,
+    "education": 0.09604629360230177,
+    "occupation": 0.09604629360230177,
+    "age": 1.0
+  },
+  "experiment_id": "adult_mia_demo_2",
+  "status": "success",
+  "public_drop_columns": [
+    "record_id"
+  ],
+  "public_csv_path": "outputs\\anonymized\\adult_mia_demo_2.csv",
+  "eval_csv_path": "outputs\\anonymized_eval\\adult_mia_demo_2.csv",
+  "fully_suppressed_drop_enabled": true,
+  "fully_suppressed_qis": [
+    "native-country",
+    "sex",
+    "race",
+    "marital-status",
+    "workclass",
+    "education",
+    "occupation",
+    "age"
+  ],
+  "n_rows_before_full_suppression_drop": 30933,
+  "n_rows_dropped_full_suppression": 2971,
+  "n_rows_after_full_suppression_drop": 27962
+}
