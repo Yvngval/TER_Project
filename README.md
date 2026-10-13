@@ -11,15 +11,15 @@
   <a href="https://yvngval.github.io/TER_Project/"><img src="https://img.shields.io/badge/docs-MkDocs%20Material-526CFE?style=flat-square&logo=materialformkdocs&logoColor=white" alt="Documentation"></a>
 </p>
 
-<p align="center">
-  <img src="outputs/linkage_phase_curve/adult_linkage_phase_curve__eq_size_v2.png" alt="Linkage attack on the Adult dataset: median equivalence class size after phase 1 (generalized QIs) vs phase 2 (refinement on clear-text attributes)" width="760">
-</p>
-
 TER_Project is a research benchmark, built for a **TER (Travail d'Étude et de Recherche)**, that measures the **privacy–utility trade-off of data anonymization** end to end. It anonymizes the UCI Adult census dataset with ARX (through the RECITALS framework), measures how much useful information survives, and then attacks the released data with **linkage** and **membership inference** attacks to measure how much privacy actually survives.
 
 **Two questions, one pipeline.** *How much does anonymization cost?* We answer with ARX quality metrics, statistical distances, and classifiers trained on the anonymized data. *How much does it protect?* We answer with realistic attackers who hold background knowledge, can recover obfuscated column names via schema matching, and match fuzzily via privacy-preserving record linkage. Every experiment is driven by a JSON config, is reproducible from a seed, and produces machine-readable metrics plus a self-contained HTML report.
 
 [Documentation](https://yvngval.github.io/TER_Project/) · [Quick start](#quick-start) · [How it fits together](#how-it-fits-together) · [Attacks](#privacy-attacks) · [Key findings](#key-findings) · [Scripts](#script-reference) · [Outputs](#outputs)
+
+<div align="center">
+  <img src="outputs/linkage_phase_curve/adult_linkage_phase_curve__eq_size_v2.png" alt="Linkage attack on the Adult dataset: median equivalence class size after phase 1 (generalized QIs) vs phase 2 (refinement on clear-text attributes)" width="760">
+</div>
 
 ---
 
