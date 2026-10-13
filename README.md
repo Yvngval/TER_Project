@@ -1,6 +1,8 @@
 # TER - Anonymize the data, then try to break it
 
-
+<p align="center">
+  <b>🇬🇧 English</b> · <a href="README.fr.md">🇫🇷 Français</a>
+</p>
 
 <p align="center">
   <a href="https://github.com/Yvngval/TER_Project/actions/workflows/deploy.yml"><img src="https://img.shields.io/github/actions/workflow/status/Yvngval/TER_Project/deploy.yml?branch=main&style=flat-square&label=docs" alt="Docs deployment status"></a>
