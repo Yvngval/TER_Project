@@ -10,6 +10,7 @@
   <a href="https://arx.deidentifier.org"><img src="https://img.shields.io/badge/anonymization-ARX-6f42c1?style=flat-square" alt="ARX"></a>
   <a href="https://scikit-learn.org"><img src="https://img.shields.io/badge/ML-scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white" alt="scikit-learn"></a>
   <a href="https://archive.ics.uci.edu/dataset/2/adult"><img src="https://img.shields.io/badge/dataset-UCI%20Adult-0a7d5a?style=flat-square" alt="UCI Adult dataset"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License: MIT"></a>
   <a href="https://yvngval.github.io/TER_Project/"><img src="https://img.shields.io/badge/docs-MkDocs%20Material-526CFE?style=flat-square&logo=materialformkdocs&logoColor=white" alt="Documentation"></a>
 </p>
 
@@ -423,6 +424,14 @@ This project attacks anonymized data **only to measure risk**. It uses a public,
 - [Valentine](https://github.com/delftdata/valentine): schema matching
 - [scikit-learn](https://scikit-learn.org), [pandas](https://pandas.pydata.org), [NumPy](https://numpy.org), [Matplotlib](https://matplotlib.org)
 - [MkDocs Material](https://squidfunk.github.io/mkdocs-material/): documentation
+
+---
+
+## License
+
+The project's code is released under the [MIT License](LICENSE) © 2026 Louis Jauniau and Yvngval.
+
+Third-party components keep their own licenses: the vendored [`privJedAI-main/`](privJedAI-main/LICENSE) library is under Apache 2.0, and the [UCI Adult](https://archive.ics.uci.edu/dataset/2/adult) dataset is under CC BY 4.0.
 
 ---
 
