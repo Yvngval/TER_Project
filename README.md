@@ -1,8 +1,6 @@
-# TER 🛡️ — Anonymize the data, then try to break it
+# TER - Anonymize the data, then try to break it
 
-<p align="center">
-  <img src="outputs/linkage_phase_curve/adult_linkage_phase_curve__eq_size_v2.png" alt="Linkage attack on the Adult dataset: median equivalence class size after phase 1 (generalized QIs) vs phase 2 (refinement on clear-text attributes)" width="760">
-</p>
+
 
 <p align="center">
   <a href="https://github.com/Yvngval/TER_Project/actions/workflows/deploy.yml"><img src="https://img.shields.io/github/actions/workflow/status/Yvngval/TER_Project/deploy.yml?branch=main&style=flat-square&label=docs" alt="Docs deployment status"></a>
@@ -11,6 +9,10 @@
   <a href="https://scikit-learn.org"><img src="https://img.shields.io/badge/ML-scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white" alt="scikit-learn"></a>
   <a href="https://archive.ics.uci.edu/dataset/2/adult"><img src="https://img.shields.io/badge/dataset-UCI%20Adult-0a7d5a?style=flat-square" alt="UCI Adult dataset"></a>
   <a href="https://yvngval.github.io/TER_Project/"><img src="https://img.shields.io/badge/docs-MkDocs%20Material-526CFE?style=flat-square&logo=materialformkdocs&logoColor=white" alt="Documentation"></a>
+</p>
+
+<p align="center">
+  <img src="outputs/linkage_phase_curve/adult_linkage_phase_curve__eq_size_v2.png" alt="Linkage attack on the Adult dataset: median equivalence class size after phase 1 (generalized QIs) vs phase 2 (refinement on clear-text attributes)" width="760">
 </p>
 
 TER_Project is a research benchmark, built for a **TER (Travail d'Étude et de Recherche)**, that measures the **privacy–utility trade-off of data anonymization** end to end. It anonymizes the UCI Adult census dataset with ARX (through the RECITALS framework), measures how much useful information survives, and then attacks the released data with **linkage** and **membership inference** attacks to measure how much privacy actually survives.
